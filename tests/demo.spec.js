@@ -212,3 +212,59 @@ test("versão clara, alternância persistente e revelação da marca", async ({
   }
   expect(errors).toEqual([]);
 });
+
+test("menu compacto: tema independente, submenu, teclado e fecho", async ({
+  page,
+}, testInfo) => {
+  const errors = [];
+  page.on("pageerror", (e) => errors.push(e.message));
+  await page.goto("/?tema=claro");
+  const painel = page.locator("#navegacao");
+  await expect(painel).toBeHidden();
+  await expect(
+    page.getByRole("button", { name: "Mudar para versão escura" }),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "Mudar para versão escura" }).click();
+  await expect(page.locator("html")).toHaveAttribute("data-tema", "escuro");
+  await expect(painel).toBeHidden();
+  await page.getByRole("button", { name: "Abrir menu" }).click();
+  await expect(
+    painel.getByRole("link", { name: "Início", exact: true }),
+  ).toBeFocused();
+  expect(await page.locator("main").evaluate((el) => el.inert)).toBe(true);
+  await page.getByRole("button", { name: "Expandir soluções" }).click();
+  await expect(page.locator("#menu-solucoes")).toBeVisible();
+  await expect(page.locator("[data-menu-solucao]")).toHaveCount(3);
+  await page.waitForTimeout(300);
+  await page.screenshot({
+    path: `test-results/${testInfo.project.name}-menu-aberto.png`,
+  });
+  await page.locator(".nav__marca").focus();
+  await page.keyboard.press("Shift+Tab");
+  await expect(
+    painel.getByRole("link", { name: "Contacto", exact: true }),
+  ).toBeFocused();
+  await page.keyboard.press("Tab");
+  await expect(page.locator(".nav__marca")).toBeFocused();
+  await page.getByRole("button", { name: "Nearshore", exact: true }).click();
+  await expect(painel).toBeHidden();
+  await expect(page.getByRole("dialog")).toBeVisible();
+  await expect(page.locator("#detalhe-titulo")).toHaveText("Nearshore");
+  await page.keyboard.press("Escape");
+  await expect(page.getByRole("dialog")).toBeHidden();
+  await expect(page.getByRole("button", { name: "Abrir menu" })).toBeFocused();
+  expect(await page.locator("main").evaluate((el) => el.inert)).toBe(false);
+  await page.getByRole("button", { name: "Abrir menu" }).click();
+  await page.keyboard.press("Escape");
+  await expect(painel).toBeHidden();
+  await expect(page.getByRole("button", { name: "Abrir menu" })).toBeFocused();
+  await page.getByRole("button", { name: "Abrir menu" }).click();
+  await page.locator(".nav__fundo").click({ position: { x: 2, y: 400 } });
+  await expect(painel).toBeHidden();
+  await page.getByRole("button", { name: "Abrir menu" }).click();
+  await painel.getByRole("link", { name: "Carreiras", exact: true }).click();
+  await expect(painel).toBeHidden();
+  await expect(page).toHaveURL(/#carreiras$/);
+  expect(await page.locator("main").evaluate((el) => el.inert)).toBe(false);
+  expect(errors).toEqual([]);
+});

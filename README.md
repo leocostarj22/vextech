@@ -48,10 +48,12 @@ Estrutura: dados em src/data, secções em src/sections, animações em src/moti
 
 ## Versões clara e escura
 
-A versão clara é a predefinida. O botão circular de sol/lua na navegação alterna as superfícies do túnel, método, diálogos e rodapé, incluindo o fundo e o nevoeiro do Three.js. O ícone indica o modo que será ativado; o nome acessível e a dica ao passar o rato descrevem essa ação. A preferência fica guardada no navegador. Em telemóvel o botão está no menu.
+A versão clara é a predefinida. O botão circular de sol/lua na navegação alterna as superfícies do túnel, método, diálogos e rodapé, incluindo o fundo e o nevoeiro do Three.js. O ícone indica o modo que será ativado; o nome acessível e a dica ao passar o rato descrevem essa ação. A preferência fica guardada no navegador. O controlo de tema fica sempre visível, ao lado do botão circular do menu.
 
 Pode forçar uma versão por URL: `/?tema=claro` ou `/?tema=escuro`. A versão anterior exclusivamente escura está preservada na tag `vextech-escuro-v1`.
 
 No rodapé, uma máscara suave acompanha o cursor para revelar o wordmark original da Vextech. Esta interpretação foi feita a partir das capturas e da descrição fornecidas pelo utilizador como referência da Affinity; não se conseguiu inspecionar diretamente o site externo. No teclado a marca revela-se por inteiro ao receber foco; no toque e com movimento reduzido mantém uma apresentação estática.
 
 A versão escura usa um degradê de azuis escuros com base em `#10111E`. O túnel mantém fundo transparente sobre o degradê e nevoeiro na cor de base. O nome VEXTECH da primeira secção também usa a revelação pelo cursor. A experiência anterior com fundo ciano está preservada no commit `b694a4d`.
+
+A navegação usa um painel compacto em desktop e telemóvel, com links para as secções e um submenu que abre as três soluções. O painel fecha por Escape, pelo botão, por um toque fora ou ao escolher um destino. O foco fica dentro da navegação enquanto está aberta, e o fundo fica temporariamente sem interação.

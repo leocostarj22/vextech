@@ -1,3 +1,4 @@
+import { ligarMenu } from "./motion/menu";
 import { revelarMarca } from "./motion/revelar-marca";
 import "./styles/marca-interativa.css";
 import { iniciarTema, ligarBotaoTema } from "./theme";
@@ -56,27 +57,8 @@ animarIndice(reduzido);
 animarContato(reduzido);
 revelarMarca(document.querySelector(".tunel__marca"), reduzido);
 const lenis = scrollSuave(reduzido);
-const header = document.querySelector(".nav"),
-  toggle = document.querySelector(".nav__toggle");
-function fecharMenu() {
-  header.classList.remove("is-open");
-  toggle.setAttribute("aria-expanded", "false");
-  toggle.setAttribute("aria-label", "Abrir menu");
-}
-toggle.addEventListener("click", () => {
-  const open = header.classList.toggle("is-open");
-  toggle.setAttribute("aria-expanded", String(open));
-  toggle.setAttribute("aria-label", open ? "Fechar menu" : "Abrir menu");
-});
-header
-  .querySelectorAll("a")
-  .forEach((link) => link.addEventListener("click", fecharMenu));
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape" && header.classList.contains("is-open")) {
-    fecharMenu();
-    toggle.focus();
-  }
-});
+const header = document.querySelector(".nav");
+ligarMenu(lenis, abrirSolucao);
 let lastY = scrollY;
 function atualizarNav() {
   const y = scrollY;
