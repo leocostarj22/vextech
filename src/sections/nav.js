@@ -1,0 +1,1 @@
+import logo from '../brand/margem.svg?raw';import './nav.css';export const nav=()=>`<header class="nav"><a class="nav__marca" href="#inicio" aria-label="Margem — início">${logo}</a><nav aria-label="Principal"><a class="pilula" href="#indice">Projetos</a><a class="pilula" href="#estudio">Estúdio</a><a class="pilula" href="#contato">Contato</a></nav></header>`;
