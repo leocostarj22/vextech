@@ -36,3 +36,7 @@ As proporções originais das soluções constam dos dados e são respeitadas pe
 ## Padronização do enquadramento
 
 A apresentação usa agora uma proporção comum de 16:9, definida em `--imagem-aspecto` nos tokens e lida também pelo Three.js. As paredes do túnel têm as mesmas dimensões físicas; a perspetiva continua a criar profundidade. O método, o detalhe e a pré-visualização do índice usam o mesmo formato, com recorte proporcional (`cover` / coordenadas UV) sem esticar as fotografias. Os originais e as suas resoluções permanecem inalterados. Os destaques em desktop continuam a cobrir o ecrã, e no telemóvel a área de texto acompanha a altura do enquadramento.
+
+## Ícones das redes sociais
+
+As imagens de LinkedIn e Instagram em `public/media/redes/` foram fornecidas em `sociais.zip` e copiadas sem alterações. São apresentadas com a mesma dimensão visual, preservando a proporção, nos links do menu e do rodapé. Os nomes acessíveis e os destinos dos perfis são mantidos.

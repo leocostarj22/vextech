@@ -1,24 +1,27 @@
 .redes {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px 24px;
+  gap: 8px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 .redes a {
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  min-height: 40px;
-  font-size: 13px;
-  text-underline-offset: 5px;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  transition: background 0.2s;
 }
 .redes a:hover {
-  text-decoration: underline;
+  background: color-mix(in srgb, currentColor 8%, transparent);
 }
-.redes a span {
-  font-size: 16px;
+.redes img {
+  display: block;
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
 }
 .nav__rodape .redes {
   margin-top: 16px;
@@ -27,9 +30,4 @@
 .contato__iniciar .redes {
   margin-top: 25px;
   color: var(--rodape-tinta);
-}
-@media (max-width: 600px) {
-  .redes a {
-    min-height: 44px;
-  }
 }
