@@ -22,7 +22,8 @@
 }
 .detalhe__conteudo > img {
   width: 100%;
-  height: 42svh;
+  height: auto;
+  aspect-ratio: var(--imagem-aspecto);
   object-fit: cover;
 }
 .detalhe__conteudo > div {
@@ -69,7 +70,7 @@
     padding: 25px 20px;
   }
   .detalhe__conteudo > img {
-    height: 28svh;
+    height: auto;
   }
   .detalhe h2 {
     font-size: 38px;

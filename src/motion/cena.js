@@ -5,6 +5,12 @@ import { casos } from "../data/casos";
 export const PROF_DESTAQUES = [-16, -40, -64];
 const Z_FIM = -96;
 export function criarCena(host, reduzido) {
+  const aspecto =
+    Number(
+      getComputedStyle(document.documentElement).getPropertyValue(
+        "--imagem-aspecto",
+      ),
+    ) || 16 / 9;
   const fundo = new THREE.Color(
     getComputedStyle(document.documentElement)
       .getPropertyValue("--imersao-fundo")
@@ -33,7 +39,15 @@ export function criarCena(host, reduzido) {
   };
   function texture(src) {
     if (!cache.has(src)) {
-      const t = loader.load("/" + src, render);
+      const t = loader.load("/" + src, (textura) => {
+        const origem = textura.image.width / textura.image.height;
+        // Equivalente a object-fit: cover: enquadramento comum sem deformação.
+        const x = Math.min(1, aspecto / origem);
+        const y = Math.min(1, origem / aspecto);
+        textura.repeat.set(x, y);
+        textura.offset.set((1 - x) / 2, (1 - y) / 2);
+        render();
+      });
       t.colorSpace = THREE.SRGBColorSpace;
       cache.set(src, t);
     }
@@ -60,13 +74,13 @@ export function criarCena(host, reduzido) {
     const foto = pecas[i % pecas.length],
       ang = i * 2.39996 + (rand() - 0.5) * 0.5,
       r = 3.5 + rand() * 2.1,
-      h = 1.05 + rand() * 1.15;
+      h = 1.65;
     const mesh = new THREE.Mesh(geometry, material(foto.src));
     mesh.userData = {
       ang,
       r,
       h,
-      aspect: foto.w / foto.h,
+      aspect: aspecto,
       z: 3.5 - (i * (3.5 - Z_FIM)) / 65,
     };
     scene.add(mesh);
@@ -77,7 +91,7 @@ export function criarCena(host, reduzido) {
     mesh.userData = {
       ang: [0.4, 2.6, 5.3][i],
       r: 4.6,
-      altura: 6 / (c.aspecto || 1.5),
+      altura: 6 / aspecto,
       z: PROF_DESTAQUES[i],
     };
     scene.add(mesh);

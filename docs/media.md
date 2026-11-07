@@ -32,3 +32,7 @@ Cinco fotografias fornecidas pelo utilizador em `imagens.zip`, copiadas sem alte
 | evoluir.jpg | public/media/evoluir.jpg | Método: Evoluir |
 
 As proporções originais das soluções constam dos dados e são respeitadas pelo Three.js. Os quadros do método mantêm o recorte responsivo da tira de filme. Os ficheiros anteriores continuam no histórico e nos materiais recebidos; a fotografia de Consultoria permanece inalterada.
+
+## Padronização do enquadramento
+
+A apresentação usa agora uma proporção comum de 16:9, definida em `--imagem-aspecto` nos tokens e lida também pelo Three.js. As paredes do túnel têm as mesmas dimensões físicas; a perspetiva continua a criar profundidade. O método, o detalhe e a pré-visualização do índice usam o mesmo formato, com recorte proporcional (`cover` / coordenadas UV) sem esticar as fotografias. Os originais e as suas resoluções permanecem inalterados. Os destaques em desktop continuam a cobrir o ecrã, e no telemóvel a área de texto acompanha a altura do enquadramento.

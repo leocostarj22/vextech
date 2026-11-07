@@ -1,4 +1,7 @@
 .metodo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   height: 100svh;
   min-height: 650px;
   overflow: hidden;
@@ -30,8 +33,8 @@
   padding: 0 var(--margem);
 }
 .metodo__quadro {
-  width: min(48vw, calc(57svh * 1.25));
-  aspect-ratio: 5/4;
+  width: min(68vw, calc(56svh * var(--imagem-aspecto)));
+  aspect-ratio: var(--imagem-aspecto);
   position: relative;
   opacity: 0.6;
 }
@@ -129,7 +132,7 @@
   .metodo__quadro {
     width: 80vw;
     max-width: none;
-    aspect-ratio: 4/5;
+    aspect-ratio: var(--imagem-aspecto);
   }
   .metodo__quadro figcaption {
     color: var(--branco);
@@ -155,7 +158,7 @@
 @media (max-height: 720px) and (max-width: 600px) {
   .metodo__quadro {
     width: 65vw;
-    aspect-ratio: 1;
+    aspect-ratio: var(--imagem-aspecto);
   }
   .metodo h2 {
     font-size: 39px;

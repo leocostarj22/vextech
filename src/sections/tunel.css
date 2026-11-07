@@ -189,7 +189,8 @@
 }
 .fallback-cases img {
   width: 100%;
-  max-height: 65svh;
+  height: auto;
+  aspect-ratio: var(--imagem-aspecto);
   object-fit: cover;
 }
 .fallback-cases h2 {
@@ -248,7 +249,7 @@
   }
   .case__base {
     position: absolute;
-    top: calc(50% + 45vw / var(--case-aspect, 1.5) + 22px);
+    top: calc(50% + 45vw / var(--imagem-aspecto) + 22px);
     left: 20px;
     right: 20px;
     display: block;
@@ -257,7 +258,7 @@
   .case:after {
     content: "";
     position: absolute;
-    inset: calc(50% + 45vw / var(--case-aspect, 1.5) + 10px) 0 0;
+    inset: calc(50% + 45vw / var(--imagem-aspecto) + 10px) 0 0;
     background: var(--imersao-background);
     z-index: -1;
   }
@@ -283,10 +284,10 @@
 }
 @media (max-height: 700px) and (max-width: 600px) {
   .case__base {
-    top: calc(50% + 45vw / var(--case-aspect, 1.5) + 14px);
+    top: calc(50% + 45vw / var(--imagem-aspecto) + 14px);
   }
   .case:after {
-    top: calc(50% + 45vw / var(--case-aspect, 1.5) + 8px);
+    top: calc(50% + 45vw / var(--imagem-aspecto) + 8px);
   }
   .case h2 {
     font-size: 31px;

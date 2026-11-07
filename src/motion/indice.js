@@ -7,8 +7,14 @@ export function animarIndice(reduzido) {
   const x = gsap.quickTo(floating, "x", { duration: 0.55 }),
     y = gsap.quickTo(floating, "y", { duration: 0.55 });
   const position = (px, py) => ({
-    x: Math.min(innerWidth - innerWidth * 0.2 - 20, px + 110),
-    y: Math.min(innerHeight - innerWidth * 0.24 - 20, Math.max(20, py - 100)),
+    x: Math.max(20, Math.min(innerWidth - floating.offsetWidth - 20, px + 110)),
+    y: Math.max(
+      20,
+      Math.min(
+        innerHeight - floating.offsetHeight - 20,
+        py - floating.offsetHeight / 2,
+      ),
+    ),
   });
   const hide = () =>
     gsap.to(floating, { autoAlpha: 0, scale: 0.6, duration: 0.2 });

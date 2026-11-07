@@ -5,7 +5,6 @@ export const casos = [
     categoria: "Conhecimento que acrescenta",
     foto: "consultoria",
     src: "/media/consultoria.png",
-    aspecto: 1672 / 941,
     posicao: "50% 20%",
     resumo:
       "Reforçamos a sua capacidade técnica com especialistas alinhados com os objetivos do seu negócio.",
@@ -23,7 +22,6 @@ export const casos = [
     categoria: "Responsabilidade de ponta a ponta",
     foto: "chave-na-mao",
     src: "/media/chave-na-mao.jpg",
-    aspecto: 5384 / 3029,
     resumo:
       "Do planeamento à implementação, assumimos o percurso para entregar uma solução à medida.",
     detalhe:
@@ -40,7 +38,6 @@ export const casos = [
     categoria: "Equipas ligadas ao seu mundo",
     foto: "nearshore",
     src: "/media/nearshore.jpg",
-    aspecto: 7373 / 4147,
     resumo:
       "Equipas remotas com proximidade geográfica, cultural e de fuso horário, para trabalhar consigo.",
     detalhe:
