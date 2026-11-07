@@ -1,2 +1,76 @@
-import gsap from 'gsap';import {ScrollTrigger} from 'gsap/ScrollTrigger';
-export function animarEstudio(reduzido){const root=document.querySelector('.estudio__pagina'),svg=root.querySelector('svg');let progress=reduzido?1:0;function pintar(){svg.querySelectorAll('path').forEach(p=>{const length=p.getTotalLength();p.style.strokeDasharray=length;p.style.strokeDashoffset=length*(1-progress)})}function fios(){svg.innerHTML='';const r=root.getBoundingClientRect();if(innerWidth<=600)return;root.querySelectorAll('[data-ancora]').forEach((a,i)=>{const b=a.getClientRects()[a.getClientRects().length-1],n=root.querySelector(`[data-nota="${i}"]`);n.style.top=(b.bottom-r.top-15)+'px';const walker=document.createTreeWalker(root.querySelector('h2'),NodeFilter.SHOW_TEXT);let node;let lineEnd=b.right;while((node=walker.nextNode())){const range=document.createRange();range.selectNodeContents(node);for(const rect of range.getClientRects()){if(Math.abs(rect.bottom-b.bottom)<12)lineEnd=Math.max(lineEnd,rect.right)}}const nb=n.getBoundingClientRect(),x=lineEnd-r.left+8,y=b.bottom-r.top-8,ex=nb.left-r.left-5,ey=nb.top-r.top+10;const p=document.createElementNS('http://www.w3.org/2000/svg','path');p.setAttribute('d',`M${x},${y} C${x+25},${y+25} ${ex-30},${ey-5} ${ex},${ey}`);svg.append(p)});pintar()}fios();window.addEventListener('resize',fios);ScrollTrigger.addEventListener('refresh',fios);if(!reduzido){ScrollTrigger.create({trigger:root,start:'top 65%',end:'bottom 70%',scrub:true,onUpdate:s=>{progress=s.progress;pintar()}});gsap.from('.estudio h2',{opacity:.45,y:24,scrollTrigger:{trigger:root,start:'top 85%',end:'top 30%',scrub:true}});gsap.from('.equipe span',{scale:0,y:12,stagger:.08,scrollTrigger:{trigger:'.equipe',start:'top 90%'}})}}
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+export function animarEstudio(reduzido) {
+  const root = document.querySelector(".estudio__pagina");
+  const svg = root.querySelector("svg");
+  let progress = reduzido ? 1 : 0;
+  function pintar() {
+    svg.querySelectorAll("path").forEach((path) => {
+      const length = path.getTotalLength();
+      path.style.strokeDasharray = length;
+      path.style.strokeDashoffset = length * (1 - progress);
+    });
+  }
+  function fios() {
+    svg.innerHTML = "";
+    if (innerWidth <= 600) return;
+    const bounds = root.getBoundingClientRect();
+    root.querySelectorAll("[data-ancora]").forEach((anchor, i) => {
+      const rects = anchor.getClientRects(),
+        box = rects[rects.length - 1];
+      let lineEnd = box.right;
+      const walker = document.createTreeWalker(
+        root.querySelector("h2"),
+        NodeFilter.SHOW_TEXT,
+      );
+      let node;
+      while ((node = walker.nextNode())) {
+        const range = document.createRange();
+        range.selectNodeContents(node);
+        for (const rect of range.getClientRects())
+          if (Math.abs(rect.bottom - box.bottom) < 12)
+            lineEnd = Math.max(lineEnd, rect.right);
+      }
+      const note = root.querySelector(`[data-nota="${i}"]`);
+      const y = box.top - bounds.top + box.height * 0.55;
+      note.style.top = y - note.offsetHeight / 2 + "px";
+      const noteBox = note.getBoundingClientRect();
+      const x = lineEnd - bounds.left + 12,
+        endX = noteBox.left - bounds.left - 15;
+      const path = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "path",
+      );
+      path.setAttribute(
+        "d",
+        `M${x},${y} C${x + 30},${y + 17} ${endX - 30},${y + 8} ${endX},${y}`,
+      );
+      svg.append(path);
+    });
+    pintar();
+  }
+  fios();
+  window.addEventListener("resize", fios);
+  ScrollTrigger.addEventListener("refresh", fios);
+  if (!reduzido) {
+    ScrollTrigger.create({
+      trigger: root,
+      start: "top 70%",
+      end: "top 20%",
+      onUpdate: (s) => {
+        progress = s.progress;
+        pintar();
+      },
+    });
+    gsap.from(".estudio h2", {
+      opacity: 0.5,
+      scrollTrigger: {
+        trigger: root,
+        start: "top 85%",
+        end: "top 30%",
+        scrub: true,
+      },
+    });
+  }
+}

@@ -1,5 +1,173 @@
-import './styles/tokens.css';import './styles/base.css';import gsap from 'gsap';import {ScrollTrigger} from 'gsap/ScrollTrigger';import {nav} from './sections/nav';import {tunel} from './sections/tunel';import {estudio} from './sections/estudio';import {metodo} from './sections/metodo';import {indice} from './sections/indice';import {contato} from './sections/contato';import {criarCena} from './motion/cena';import {animarTunel} from './motion/percurso';import {animarEstudio} from './motion/estudio';import {animarMetodo} from './motion/metodo';import {animarIndice} from './motion/indice';import {animarContato} from './motion/contato';import {scrollSuave} from './motion/suave';import {casos} from './data/casos';import {projetos} from './data/projetos';import './sections/dialog.css';
-gsap.registerPlugin(ScrollTrigger);const reduzido=matchMedia('(prefers-reduced-motion: reduce)').matches;document.querySelector('#app').innerHTML=nav()+`<main>${tunel()+estudio()+metodo()+indice()}</main>`+contato()+`<dialog class="detalhe" aria-labelledby="detalhe-titulo"><button class="pilula detalhe__fechar" aria-label="Fechar projeto">Fechar ×</button><div class="detalhe__conteudo"></div></dialog>`;
-try{const cena=criarCena(document.querySelector('.tunel__canvas'),reduzido);animarTunel(cena,reduzido)}catch(error){console.warn('WebGL indisponível; usando apresentação estática.',error);document.querySelector('.tunel').classList.add('tunel--fallback');const container=document.querySelector('.tunel');const fallback=document.createElement('div');fallback.className='fallback-cases';fallback.innerHTML=casos.map((c,i)=>`<article><img src="/trabalhos/${c.foto}.webp" alt="${c.nome}"><h2>${c.nome}</h2><p>${c.resumo}</p><button class="pilula pilula--tinta" data-abrir="${i}">Abrir o case →</button></article>`).join('');container.after(fallback)}
-animarMetodo();animarEstudio(reduzido);animarIndice(reduzido);animarContato(reduzido);const lenis=scrollSuave(reduzido);let lastY=0;window.addEventListener('scroll',()=>{const y=scrollY;document.querySelector('.nav').classList.toggle('nav--oculta',y>innerHeight*.5&&y>lastY);lastY=y},{passive:true});
-const dialog=document.querySelector('dialog');function abrir(c){document.querySelector('.detalhe__conteudo').innerHTML=`<img src="/trabalhos/${c.foto}.webp" alt="Projeto demonstrativo ${c.nome}"><div><p class="rotulo">${c.ano} · ${c.disciplina} · ${c.cidade}</p><h2 id="detalhe-titulo">${c.nome}</h2><p>${c.resumo}</p><p class="detalhe__aviso">Projeto fictício da demo Margem. Imagens geradas para demonstração.</p></div>`;dialog.showModal();lenis?.stop()}document.querySelectorAll('[data-abrir]').forEach(b=>b.addEventListener('click',()=>abrir(casos[Number(b.dataset.abrir)])));document.querySelectorAll('[data-projeto]').forEach(b=>b.addEventListener('click',()=>{const [ano,nome,disciplina,cidade,,foto]=projetos[Number(b.dataset.projeto)];abrir(casos.find(c=>c.nome===nome)||{ano,nome,disciplina,cidade,foto,resumo:'Uma seleção do portfólio demonstrativo da Margem.'})}));document.querySelector('.detalhe__fechar').addEventListener('click',()=>dialog.close());dialog.addEventListener('click',e=>{if(e.target===dialog)dialog.close()});dialog.addEventListener('close',()=>lenis?.start());document.fonts.ready.then(()=>{ScrollTrigger.refresh();lenis?.resize()});window.addEventListener('load',()=>{ScrollTrigger.refresh();lenis?.resize()});
+import "@fontsource/geist/latin-400.css";
+import "@fontsource/geist/latin-500.css";
+import "./styles/tokens.css";
+import "./styles/base.css";
+import "./sections/dialog.css";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { nav } from "./sections/nav";
+import { tunel } from "./sections/tunel";
+import { estudio } from "./sections/estudio";
+import { metodo } from "./sections/metodo";
+import { indice } from "./sections/indice";
+import { carreiras } from "./sections/carreiras";
+import { contato } from "./sections/contato";
+import { criarCena } from "./motion/cena";
+import { animarTunel } from "./motion/percurso";
+import { animarEstudio } from "./motion/estudio";
+import { animarMetodo } from "./motion/metodo";
+import { animarIndice } from "./motion/indice";
+import { animarContato } from "./motion/contato";
+import { scrollSuave } from "./motion/suave";
+import { casos } from "./data/casos";
+
+gsap.registerPlugin(ScrollTrigger);
+const reduzido = matchMedia("(prefers-reduced-motion: reduce)").matches;
+document.querySelector("#app").innerHTML =
+  nav() +
+  `<main>${tunel() + estudio() + indice() + metodo() + carreiras()}</main>` +
+  contato() +
+  `<dialog class="detalhe" aria-labelledby="detalhe-titulo" data-lenis-prevent><button class="pilula detalhe__fechar" aria-label="Fechar solução">Fechar ×</button><div class="detalhe__conteudo"></div></dialog>`;
+
+try {
+  const cena = criarCena(document.querySelector(".tunel__canvas"), reduzido);
+  animarTunel(cena, reduzido);
+} catch (error) {
+  console.warn("WebGL indisponível; apresentação estática ativada.", error);
+  document.querySelector(".tunel").classList.add("tunel--fallback");
+  const fallback = document.createElement("div");
+  fallback.className = "fallback-cases";
+  fallback.innerHTML = casos
+    .map(
+      (c, i) =>
+        `<article><img src="${c.src}" alt="Imagem ilustrativa de ${c.nome.toLowerCase()}"><h2>${c.nome}</h2><p>${c.resumo}</p><button class="pilula pilula--ciano" data-abrir="${i}">Conhecer a solução →</button></article>`,
+    )
+    .join("");
+  document.querySelector(".tunel").after(fallback);
+}
+animarMetodo();
+animarEstudio(reduzido);
+animarIndice(reduzido);
+animarContato(reduzido);
+const lenis = scrollSuave(reduzido);
+const header = document.querySelector(".nav"),
+  toggle = document.querySelector(".nav__toggle");
+function fecharMenu() {
+  header.classList.remove("is-open");
+  toggle.setAttribute("aria-expanded", "false");
+  toggle.setAttribute("aria-label", "Abrir menu");
+}
+toggle.addEventListener("click", () => {
+  const open = header.classList.toggle("is-open");
+  toggle.setAttribute("aria-expanded", String(open));
+  toggle.setAttribute("aria-label", open ? "Fechar menu" : "Abrir menu");
+});
+header
+  .querySelectorAll("a")
+  .forEach((link) => link.addEventListener("click", fecharMenu));
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && header.classList.contains("is-open")) {
+    fecharMenu();
+    toggle.focus();
+  }
+});
+let lastY = scrollY;
+function atualizarNav() {
+  const y = scrollY;
+  header.classList.toggle(
+    "nav--oculta",
+    y > innerHeight * 0.5 && y > lastY + 1,
+  );
+  lastY = y;
+  const section = [...document.querySelectorAll("[data-theme]")].find((s) => {
+    const r = s.getBoundingClientRect();
+    return r.top <= 80 && r.bottom > 80;
+  });
+  header.classList.toggle("nav--clara", section?.dataset.theme === "light");
+  header.classList.toggle(
+    "nav--escura",
+    section?.dataset.theme === "dark" && y > innerHeight * 0.5,
+  );
+}
+window.addEventListener("scroll", atualizarNav, { passive: true });
+atualizarNav();
+
+const dialog = document.querySelector("dialog");
+function abrirSolucao(index) {
+  const c = casos[index];
+  document.querySelector(".detalhe__conteudo").innerHTML =
+    `<img src="${c.src}" alt="Imagem ilustrativa de ${c.nome.toLowerCase()}"><div><p class="rotulo">0${index + 1} / 0${casos.length} — ${c.categoria}</p><h2 id="detalhe-titulo">${c.nome}</h2><p class="detalhe__descricao">${c.detalhe}</p><ul class="detalhe__pontos">${c.pontos.map((p) => `<li>${p}</li>`).join("")}</ul><button class="pilula pilula--ciano" data-interesse="${index}">Falar sobre esta solução →</button></div>`;
+  dialog.scrollTop = 0;
+  dialog.showModal();
+  lenis?.stop();
+  dialog.querySelector("[data-interesse]").addEventListener("click", () => {
+    dialog.close();
+    abrirContacto(c.nome);
+  });
+}
+document
+  .querySelectorAll("[data-abrir]")
+  .forEach((b) =>
+    b.addEventListener("click", () => abrirSolucao(Number(b.dataset.abrir))),
+  );
+document
+  .querySelector(".detalhe__fechar")
+  .addEventListener("click", () => dialog.close());
+dialog.addEventListener("click", (e) => {
+  const r = dialog.getBoundingClientRect();
+  if (
+    e.clientX < r.left ||
+    e.clientX > r.right ||
+    e.clientY < r.top ||
+    e.clientY > r.bottom
+  )
+    dialog.close();
+});
+dialog.addEventListener("close", () => lenis?.start());
+
+const formPanel = document.querySelector("#contacto-formulario"),
+  form = formPanel.querySelector("form"),
+  formToggle = document.querySelector("[data-formulario]");
+function abrirContacto(assunto) {
+  formPanel.hidden = false;
+  formToggle.setAttribute("aria-expanded", "true");
+  if (assunto) form.elements.assunto.value = assunto;
+  ScrollTrigger.refresh();
+  lenis?.resize();
+  const top = formPanel.getBoundingClientRect().top + scrollY - 100;
+  if (lenis) lenis.scrollTo(top, { immediate: true });
+  else window.scrollTo({ top, behavior: "instant" });
+  form.elements.nome.focus({ preventScroll: true });
+}
+formToggle.addEventListener("click", () => {
+  if (formPanel.hidden) abrirContacto();
+  else fecharContacto();
+});
+function fecharContacto() {
+  formPanel.hidden = true;
+  formToggle.setAttribute("aria-expanded", "false");
+  ScrollTrigger.refresh();
+  lenis?.resize();
+  formToggle.focus();
+}
+formPanel
+  .querySelector(".form__fechar")
+  .addEventListener("click", fecharContacto);
+document
+  .querySelectorAll("[data-contacto]")
+  .forEach((b) =>
+    b.addEventListener("click", () => abrirContacto(b.dataset.contacto)),
+  );
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  form.querySelector(".form__resultado").textContent =
+    `Obrigado, ${form.elements.nome.value.trim()}. O formulário foi testado. A mensagem não foi enviada: esta versão é uma demonstração.`;
+});
+
+function atualizarLayout() {
+  ScrollTrigger.refresh();
+  lenis?.resize();
+  atualizarNav();
+}
+document.fonts.ready.then(atualizarLayout);
+window.addEventListener("load", atualizarLayout);

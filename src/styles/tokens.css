@@ -1,1 +1,17 @@
- :root{--fundo:#f2f0eb;--tinta:#141414;--tinta-2:#5d5b56;--fio:#dcd8cf;--pilula:#fff;--terracota:#d9653b;--mata:#2f4a3a;--equipe-3:#b9a888;--equipe-4:#3a3a38;--equipe-5:#cfc9bd;--equipe-6:#7d8467;--grade:#a9a49a;--papel:#f7f5f0;--fonte:'Geist',sans-serif;--margem:clamp(16px,2.6vw,40px);--titulo:clamp(44px,5.4vw,92px)}
+:root {
+  --noite: #11111f;
+  --ciano: #68d2df;
+  --branco: #fff;
+  --fundo: #fff;
+  --tinta: #11111f;
+  --tinta-2: #656574;
+  --fio: #dcdce3;
+  --pilula: #f1f2f4;
+  --terracota: var(--ciano);
+  --mata: #23525b;
+  --vidro: rgb(17 17 31 / 0.8);
+  --fio-escuro: rgb(255 255 255 / 0.2);
+  --fonte: "Geist", sans-serif;
+  --margem: clamp(20px, 3.3vw, 56px);
+  --titulo: clamp(44px, 5.5vw, 88px);
+}

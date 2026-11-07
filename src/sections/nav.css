@@ -1,1 +1,110 @@
- .nav{position:fixed;top:0;left:0;width:100%;z-index:30;display:flex;justify-content:space-between;align-items:center;padding:26px var(--margem);transition:transform .3s;background:linear-gradient(var(--fundo),transparent)}.nav--oculta{transform:translateY(-110%)}.nav__marca{width:104px}.nav nav{display:flex;gap:8px}@media(max-width:600px){.nav{padding-top:20px}.nav__marca{width:82px}.nav nav{gap:5px}.nav .pilula{min-height:30px;padding:5px 11px;font-size:12px}}
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 30;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 27px var(--margem);
+  color: var(--branco);
+  transition:
+    transform 0.3s,
+    background 0.3s,
+    color 0.3s;
+}
+.nav--oculta:not(:focus-within) {
+  transform: translateY(-110%);
+}
+.nav--clara {
+  color: var(--noite);
+  background: rgb(255 255 255 / 0.94);
+  backdrop-filter: blur(14px);
+}
+.nav--escura {
+  background: var(--vidro);
+  backdrop-filter: blur(14px);
+}
+.nav nav {
+  display: flex;
+  gap: 9px;
+}
+.nav .pilula {
+  background: transparent;
+  border: 1px solid currentColor;
+  padding: 6px 17px;
+  min-height: 32px;
+  font-weight: 400;
+}
+.nav .pilula:hover {
+  background: var(--ciano);
+  border-color: var(--ciano);
+  color: var(--noite);
+}
+.nav__toggle {
+  display: none;
+}
+.nav__marca {
+  display: block;
+}
+.nav__marca .marca__nome {
+  width: 130px;
+}
+@media (max-width: 600px) {
+  .nav {
+    padding: 22px 20px;
+  }
+  .nav__marca .marca__nome {
+    width: 110px;
+  }
+  .nav__toggle {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--fio-escuro);
+    background: transparent;
+    color: inherit;
+    width: 40px;
+    height: 35px;
+    border-radius: 7px;
+  }
+  .nav--clara .nav__toggle {
+    border-color: var(--fio);
+  }
+  .nav__toggle span {
+    width: 17px;
+    height: 1px;
+    background: currentColor;
+  }
+  .nav nav {
+    display: none;
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    top: 78px;
+    padding: 20px;
+    flex-direction: column;
+    gap: 12px;
+    background: var(--noite);
+    color: var(--branco);
+    border: 1px solid var(--fio-escuro);
+  }
+  .nav.is-open nav {
+    display: flex;
+  }
+  .nav.is-open {
+    background: var(--noite);
+    color: var(--branco);
+  }
+  .nav nav .pilula {
+    justify-content: space-between;
+    padding: 13px 16px;
+    font-size: 15px;
+  }
+  .nav--oculta.is-open {
+    transform: none;
+  }
+}

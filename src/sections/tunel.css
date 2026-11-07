@@ -1,2 +1,292 @@
- .tunel{height:100svh;position:relative;overflow:hidden}.tunel__canvas{position:absolute;inset:0}.tunel canvas{display:block;width:100%;height:100%}.tunel__hero{position:absolute;inset:0;pointer-events:none}.tunel h1{position:absolute;top:44%;left:50%;transform:translate(-50%,-50%);width:90%;font-size:clamp(24px,2.9vw,52px);line-height:1.12;letter-spacing:-.035em;text-align:center}.tunel h1:before{content:'';position:absolute;inset:-100px -5%;z-index:-1;background:radial-gradient(ellipse,var(--fundo) 15%,transparent 70%)}.tunel__marca{position:absolute;left:var(--margem);bottom:44px;width:49vw}.tunel__dica,.tunel__local{position:absolute;bottom:calc(44px + 49vw * .214 * .22);font-size:13px;padding:5px 10px;border-radius:99px;background:color-mix(in srgb,var(--fundo) 82%,transparent);backdrop-filter:blur(10px)}.tunel__dica{left:53vw}.tunel__dica span{margin-left:22px}.tunel__local{right:var(--margem)}.tunel__progresso{height:1px;background:var(--tinta);position:absolute;bottom:0;width:100%;transform:scaleX(0);transform-origin:left}.case{position:absolute;inset:0;padding:var(--margem);opacity:0;visibility:hidden;pointer-events:none;display:flex;flex-direction:column;justify-content:space-between;background:linear-gradient(transparent 40%,color-mix(in srgb,var(--fundo) 92%,transparent))}.case.is-active{pointer-events:auto}.case__numero{font-size:13px;margin-top:75px}.case__base{display:flex;justify-content:space-between;align-items:flex-end;padding-bottom:25px;gap:24px}.case h2{font-size:clamp(56px,8.4vw,150px);font-weight:500;line-height:.9;margin:20px 0}.case__meta{font-size:13px}.case__resumo{max-width:430px}.case .pilula{margin-bottom:4px}.tunel__fim{position:absolute;inset:0;display:flex;gap:25px;flex-direction:column;align-items:center;justify-content:center;visibility:hidden;opacity:0}.tunel__fim p{font-size:var(--titulo);letter-spacing:-.045em}.tunel--fallback .tunel__canvas{background:url('/trabalhos/torra-alta.webp') center/cover}.tunel--fallback .tunel__hero{background:color-mix(in srgb,var(--fundo) 65%,transparent)}@media(max-width:600px){.tunel h1{top:40%;font-size:26px}.tunel__marca{width:calc(100% - 32px);bottom:28px}.tunel__dica,.tunel__local{bottom:calc(50px + (100vw - 32px)*.214);font-size:10px;padding:4px 5px}.tunel__dica{left:16px}.tunel__dica span{margin-left:8px}.tunel__local{right:16px}.case{background:none;padding:16px}.case__numero{margin-top:70px}.case__base{position:absolute;top:calc(50% + 30vw + 20px);left:16px;right:16px;display:block;padding:0}.case__meta{font-size:11px}.case h2{font-size:56px;margin:14px 0}.case__resumo{font-size:13px;max-width:330px}.case .pilula{margin-top:18px}}
-.tunel h1:before{inset:-80px -20%;background:radial-gradient(ellipse,var(--fundo) 48%,transparent 76%)}@media(max-width:600px){.case{isolation:isolate}.case:after{content:"";position:absolute;inset:calc(50% + 30vw + 12px) 0 0;background:var(--fundo);z-index:-1}.tunel h1:before{inset:-65px -24%;background:radial-gradient(ellipse,var(--fundo) 52%,transparent 76%)}}
+.tunel {
+  height: 100svh;
+  position: relative;
+  overflow: hidden;
+  background: var(--noite);
+  color: var(--branco);
+}
+.tunel__canvas {
+  position: absolute;
+  inset: 0;
+}
+.tunel canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.tunel__hero {
+  position: absolute;
+  inset: 0;
+}
+.tunel__sobre {
+  position: absolute;
+  top: 25%;
+  left: 0;
+  right: 0;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: var(--ciano);
+}
+.tunel h1 {
+  position: absolute;
+  top: 43%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  font-size: clamp(30px, 3.8vw, 62px);
+  font-weight: 500;
+  line-height: 1.08;
+  letter-spacing: -0.045em;
+  text-align: center;
+  isolation: isolate;
+}
+.tunel h1:before {
+  content: "";
+  position: absolute;
+  inset: -80px -10%;
+  z-index: -1;
+  background: radial-gradient(ellipse, var(--noite) 22%, transparent 72%);
+}
+.tunel h1:after {
+  content: "";
+  display: block;
+  width: 40px;
+  height: 2px;
+  background: var(--ciano);
+  margin: 30px auto 0;
+}
+.mobile-break {
+  display: none;
+}
+.tunel__marca {
+  position: absolute;
+  left: var(--margem);
+  bottom: 52px;
+  width: 48vw;
+  max-width: 800px;
+}
+.tunel__local,
+.tunel__dica {
+  position: absolute;
+  bottom: 57px;
+  font-size: 12px;
+  background: var(--vidro);
+  padding: 6px 12px;
+  border-radius: 99px;
+  backdrop-filter: blur(10px);
+}
+.tunel__local {
+  left: 57vw;
+}
+.tunel__dica {
+  right: var(--margem);
+  display: flex;
+  gap: 26px;
+  align-items: center;
+}
+.tunel__dica span {
+  font-size: 19px;
+}
+.tunel__progresso {
+  height: 1px;
+  background: var(--ciano);
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: left;
+}
+.case {
+  position: absolute;
+  inset: 0;
+  padding: var(--margem);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: linear-gradient(transparent 30%, var(--vidro));
+  isolation: isolate;
+}
+.case.is-active {
+  pointer-events: auto;
+}
+.case__numero {
+  font-size: 12px;
+  margin-top: 70px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.case__numero span {
+  width: 65px;
+  height: 1px;
+  background: var(--branco);
+}
+.case__base {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding-bottom: 30px;
+  gap: 35px;
+}
+.case h2 {
+  font-size: clamp(54px, 7vw, 114px);
+  font-weight: 500;
+  line-height: 0.95;
+  max-width: 1000px;
+  margin: 19px 0 25px;
+}
+.case__meta {
+  font-size: 12px;
+}
+.case__resumo {
+  max-width: 510px;
+  font-size: 15px;
+}
+.case .pilula {
+  margin-bottom: 4px;
+}
+.tunel__fim {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  gap: 32px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  visibility: hidden;
+  opacity: 0;
+}
+.tunel__fim p {
+  font-size: var(--titulo);
+  line-height: 1;
+  letter-spacing: -0.05em;
+  text-align: center;
+}
+.tunel--fallback .tunel__canvas {
+  background:
+    linear-gradient(var(--vidro), var(--vidro)),
+    url("/media/infraestrutura.jpg") center/cover;
+}
+.fallback-cases {
+  padding: 70px var(--margem);
+  background: var(--noite);
+  color: var(--branco);
+}
+.fallback-cases article {
+  margin-bottom: 65px;
+}
+.fallback-cases article:last-child {
+  margin-bottom: 0;
+}
+.fallback-cases img {
+  width: 100%;
+  max-height: 65svh;
+  object-fit: cover;
+}
+.fallback-cases h2 {
+  margin: 22px 0;
+  font-size: clamp(36px, 5vw, 70px);
+}
+.fallback-cases .pilula {
+  margin-top: 22px;
+}
+@media (max-width: 600px) {
+  .tunel__sobre {
+    top: 23%;
+    font-size: 8px;
+  }
+  .tunel h1 {
+    top: 41%;
+    font-size: 34px;
+    max-width: 350px;
+  }
+  .mobile-break {
+    display: block;
+  }
+  .tunel h1:before {
+    inset: -70px -8%;
+    background: radial-gradient(ellipse, var(--noite) 32%, transparent 75%);
+  }
+  .tunel__marca {
+    width: calc(100% - 40px);
+    bottom: 102px;
+  }
+  .tunel__local {
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 65px;
+    white-space: nowrap;
+    font-size: 10px;
+  }
+  .tunel__dica {
+    bottom: 24px;
+    right: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    font-size: 11px;
+  }
+  .case {
+    padding: 20px;
+    background: none;
+  }
+  .case__numero {
+    margin-top: 68px;
+  }
+  .case__base {
+    position: absolute;
+    top: calc(50% + 30vw + 22px);
+    left: 20px;
+    right: 20px;
+    display: block;
+    padding: 0;
+  }
+  .case:after {
+    content: "";
+    position: absolute;
+    inset: calc(50% + 30vw + 10px) 0 0;
+    background: var(--noite);
+    z-index: -1;
+  }
+  .case__meta {
+    font-size: 10px;
+  }
+  .case h2 {
+    font-size: clamp(34px, 10vw, 43px);
+    line-height: 0.98;
+    margin: 11px 0 14px;
+    max-width: 350px;
+  }
+  .case__resumo {
+    font-size: 12px;
+    max-width: 340px;
+  }
+  .case .pilula {
+    margin-top: 17px;
+    font-size: 11px;
+    min-height: 32px;
+    padding: 7px 14px;
+  }
+}
+@media (max-height: 700px) and (max-width: 600px) {
+  .case__base {
+    top: calc(50% + 25vw + 14px);
+  }
+  .case:after {
+    top: calc(50% + 25vw + 8px);
+  }
+  .case h2 {
+    font-size: 31px;
+  }
+  .case__resumo {
+    font-size: 11px;
+  }
+  .case .pilula {
+    margin-top: 10px;
+  }
+}

@@ -1,1 +1,87 @@
- .detalhe{border:0;background:var(--fundo);color:var(--tinta);padding:0;width:min(1000px,94vw);max-height:90svh}.detalhe::backdrop{background:color-mix(in srgb,var(--tinta) 65%,transparent);backdrop-filter:blur(8px)}.detalhe__fechar{position:sticky;top:16px;float:right;margin:16px;z-index:1}.detalhe__conteudo>img{width:100%;max-height:60svh;object-fit:contain;background:var(--fio)}.detalhe__conteudo>div{padding:35px}.detalhe h2{margin:15px 0}.detalhe__aviso{margin-top:30px;font-size:12px;color:var(--tinta-2)}.fallback-cases{padding:50px var(--margem)}.fallback-cases article{margin-bottom:70px}.fallback-cases h2{margin:20px 0}.fallback-cases .pilula{margin-top:20px}
+.detalhe {
+  border: 1px solid var(--fio-escuro);
+  background: var(--noite);
+  color: var(--branco);
+  padding: 0;
+  width: min(1060px, 94vw);
+  max-height: 90svh;
+  overscroll-behavior: contain;
+}
+.detalhe::backdrop {
+  background: rgb(0 0 0 / 0.75);
+  backdrop-filter: blur(8px);
+}
+.detalhe__fechar {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  z-index: 1;
+  background: var(--vidro);
+  color: var(--branco);
+  border: 1px solid var(--fio-escuro);
+}
+.detalhe__conteudo > img {
+  width: 100%;
+  height: 42svh;
+  object-fit: cover;
+}
+.detalhe__conteudo > div {
+  padding: 40px;
+}
+.detalhe h2 {
+  margin: 17px 0 25px;
+  font-size: clamp(37px, 5vw, 68px);
+  font-weight: 500;
+  max-width: 800px;
+}
+.detalhe .rotulo {
+  color: var(--ciano);
+  font-size: 11px;
+}
+.detalhe__descricao {
+  font-size: 15px;
+  max-width: 670px;
+  line-height: 1.7;
+  color: rgb(255 255 255 / 0.8);
+}
+.detalhe__pontos {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin: 30px 0 35px;
+  padding: 0;
+  list-style: none;
+  font-size: 12px;
+}
+.detalhe__pontos li {
+  border-top: 1px solid var(--fio-escuro);
+  padding-top: 14px;
+  flex: 1;
+  min-width: 170px;
+}
+.detalhe__pontos li:before {
+  content: "↗";
+  color: var(--ciano);
+  margin-right: 10px;
+}
+@media (max-width: 600px) {
+  .detalhe__conteudo > div {
+    padding: 25px 20px;
+  }
+  .detalhe__conteudo > img {
+    height: 28svh;
+  }
+  .detalhe h2 {
+    font-size: 38px;
+  }
+  .detalhe__descricao {
+    font-size: 13px;
+  }
+  .detalhe__pontos {
+    display: block;
+    margin: 25px 0;
+  }
+  .detalhe__pontos li {
+    margin-bottom: 14px;
+  }
+}

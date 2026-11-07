@@ -1,1 +1,41 @@
-import gsap from 'gsap';import {ScrollTrigger} from 'gsap/ScrollTrigger';export function animarIndice(reduzido){const rows=[...document.querySelectorAll('.projeto')],floating=document.querySelector('.indice__foto'),img=floating.querySelector('img');const x=gsap.quickTo(floating,'x',{duration:.55}),y=gsap.quickTo(floating,'y',{duration:.55});document.querySelectorAll('[data-filtro]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-filtro]').forEach(o=>{const active=o===b;o.setAttribute('aria-pressed',String(active));o.classList.toggle('pilula--tinta',active)});let n=0;rows.forEach(r=>{r.hidden=b.dataset.filtro!=='todos'&&r.dataset.categoria!==b.dataset.filtro;if(!r.hidden)n++});document.querySelector('.indice__contagem').textContent=`${n} de 41 projetos`;ScrollTrigger.refresh()}));if(reduzido||!matchMedia('(pointer:fine)').matches)return;rows.forEach((r,i)=>{const show=e=>{img.src='/trabalhos/'+r.dataset.foto+'.webp';const box=r.getBoundingClientRect();const px=e.clientX||box.left+box.width*.6,py=e.clientY||box.top;gsap.set(floating,{x:Math.min(innerWidth-innerWidth*.2-16,px+140),y:Math.min(innerHeight-innerWidth*.24-16,Math.max(16,py-100))});gsap.to(floating,{autoAlpha:1,scale:1,rotation:(i%2?1:-1)*(2+i%4),duration:.2})};r.addEventListener('pointerenter',show);r.addEventListener('focus',show);r.addEventListener('pointermove',e=>{x(Math.min(innerWidth-innerWidth*.2-16,e.clientX+140));y(Math.min(innerHeight-innerWidth*.24-16,Math.max(16,e.clientY-100)))});for(const name of ['pointerleave','blur'])r.addEventListener(name,()=>gsap.to(floating,{autoAlpha:0,scale:.5,duration:.2}))})}
+import gsap from "gsap";
+export function animarIndice(reduzido) {
+  if (reduzido || !matchMedia("(pointer:fine)").matches) return;
+  const rows = [...document.querySelectorAll(".projeto")],
+    floating = document.querySelector(".indice__foto"),
+    img = floating.querySelector("img");
+  const x = gsap.quickTo(floating, "x", { duration: 0.55 }),
+    y = gsap.quickTo(floating, "y", { duration: 0.55 });
+  const position = (px, py) => ({
+    x: Math.min(innerWidth - innerWidth * 0.2 - 20, px + 110),
+    y: Math.min(innerHeight - innerWidth * 0.24 - 20, Math.max(20, py - 100)),
+  });
+  const hide = () =>
+    gsap.to(floating, { autoAlpha: 0, scale: 0.6, duration: 0.2 });
+  rows.forEach((row, i) => {
+    const show = (e) => {
+      img.src = "/media/" + row.dataset.foto + ".jpg";
+      const box = row.getBoundingClientRect();
+      gsap.set(
+        floating,
+        position(e.clientX || box.left + box.width * 0.6, e.clientY || box.top),
+      );
+      gsap.to(floating, {
+        autoAlpha: 1,
+        scale: 1,
+        rotation: (i % 2 ? 1 : -1) * 3,
+        duration: 0.2,
+      });
+    };
+    row.addEventListener("pointerenter", show);
+    row.addEventListener("focus", show);
+    row.addEventListener("pointermove", (e) => {
+      const p = position(e.clientX, e.clientY);
+      x(p.x);
+      y(p.y);
+    });
+    for (const name of ["pointerleave", "blur", "click"])
+      row.addEventListener(name, hide);
+  });
+  window.addEventListener("scroll", hide, { passive: true });
+}

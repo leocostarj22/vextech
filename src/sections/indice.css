@@ -1,1 +1,145 @@
- .indice{padding:130px var(--margem)}.indice__cabecalho{display:flex;justify-content:space-between;align-items:flex-end;gap:35px}.filtros{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}.indice__contagem{text-align:right;color:var(--tinta-2);font-size:12px;margin:30px 0 18px}.projeto{position:relative;isolation:isolate;display:grid;grid-template-columns:9% 37% 39% 15%;align-items:center;text-align:left;background:none;border:0;border-top:1px solid var(--fio);width:100%;padding:19px 0;min-height:90px}.projeto:last-child{border-bottom:1px solid var(--fio)}.projeto:before{content:'';position:absolute;inset:-1px calc(-1 * var(--margem));background:var(--terracota);z-index:-1;transform:scaleY(0);transition:transform .25s}.projeto:hover:before,.projeto:focus-visible:before{transform:scaleY(1)}.projeto:hover,.projeto:focus-visible{color:var(--pilula)}.projeto__ano,.projeto__disciplina,.projeto__cidade{font-size:13px}.projeto__nome{font-size:clamp(26px,2.9vw,46px);letter-spacing:-.04em}.projeto__cidade{text-align:right}.projeto>img{display:none}.projeto[hidden]{display:none}.indice__foto{position:fixed;top:0;left:0;width:19vw;aspect-ratio:4/5;pointer-events:none;z-index:40;visibility:hidden;transform:scale(0);box-shadow:0 18px 35px #0002}.indice__foto img{width:100%;height:100%;object-fit:cover}@media(max-width:900px){.indice__cabecalho{display:block}.filtros{justify-content:flex-start;margin-top:25px}}@media(max-width:600px){.indice{padding:85px 16px}.indice__cabecalho h2{max-width:270px}.filtros{gap:5px}.filtros .pilula{font-size:11px;padding:6px 11px}.indice__contagem{margin-top:22px}.projeto{grid-template-columns:42px 1fr 64px;gap:0 6px;padding:18px 0}.projeto__nome{font-size:28px}.projeto__disciplina{grid-column:2;font-size:11px;color:var(--tinta-2)}.projeto__cidade{display:none}.projeto>img{display:block;grid-column:3;grid-row:1/3;width:64px;height:64px;object-fit:cover}.projeto__ano{font-size:11px}.projeto:hover .projeto__disciplina{color:inherit}.indice__foto{display:none}}
+.indice {
+  padding: 60px var(--margem) 110px;
+}
+.indice__cabecalho {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 35px;
+  margin-bottom: 45px;
+}
+.indice__cabecalho .rotulo {
+  margin-bottom: 20px;
+}
+.indice h2 {
+  font-size: clamp(32px, 3.8vw, 62px);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+}
+.indice__cabecalho > p {
+  font-size: 13px;
+  color: var(--tinta-2);
+}
+.projeto {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: 6% 51% 37% 6%;
+  align-items: center;
+  text-align: left;
+  background: none;
+  border: 0;
+  border-top: 1px solid var(--fio);
+  width: 100%;
+  padding: 30px 0;
+  min-height: 114px;
+  gap: 0;
+}
+.projeto:last-child {
+  border-bottom: 1px solid var(--fio);
+}
+.projeto:before {
+  content: "";
+  position: absolute;
+  inset: -1px calc(-1 * var(--margem));
+  background: var(--ciano);
+  z-index: -1;
+  transform: scaleY(0);
+  transition: transform 0.25s;
+}
+.projeto:hover:before,
+.projeto:focus-visible:before {
+  transform: scaleY(1);
+}
+.projeto__ano {
+  font-size: 13px;
+}
+.projeto__nome {
+  font-size: clamp(25px, 2.7vw, 44px);
+  line-height: 1.1;
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  padding-right: 30px;
+}
+.projeto__disciplina {
+  font-size: 13px;
+  max-width: 270px;
+}
+.projeto__seta {
+  text-align: right;
+  font-size: 29px;
+}
+.indice__foto {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 19vw;
+  aspect-ratio: 4/5;
+  pointer-events: none;
+  z-index: 40;
+  visibility: hidden;
+  transform: scale(0);
+  box-shadow: 0 18px 35px rgb(0 0 0 / 0.15);
+}
+.indice__foto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+@media (max-width: 900px) {
+  .projeto {
+    grid-template-columns: 7% 51% 36% 6%;
+  }
+  .projeto__nome {
+    font-size: 29px;
+  }
+}
+@media (max-width: 600px) {
+  .indice {
+    padding: 35px 20px 75px;
+  }
+  .indice__cabecalho {
+    display: block;
+    margin-bottom: 30px;
+  }
+  .indice__cabecalho > p {
+    margin-top: 17px;
+    font-size: 12px;
+  }
+  .indice__cabecalho > p br {
+    display: none;
+  }
+  .indice h2 {
+    font-size: 38px;
+    max-width: 320px;
+  }
+  .projeto {
+    grid-template-columns: 28px 1fr 24px;
+    padding: 25px 0;
+    min-height: 100px;
+  }
+  .projeto__nome {
+    font-size: 27px;
+    padding-right: 12px;
+  }
+  .projeto__disciplina {
+    grid-column: 2;
+    grid-row: 2;
+    font-size: 11px;
+    margin-top: 9px;
+    padding-right: 12px;
+  }
+  .projeto__seta {
+    grid-column: 3;
+    grid-row: 1/3;
+    font-size: 24px;
+  }
+  .projeto__ano {
+    font-size: 11px;
+    align-self: start;
+    margin-top: 5px;
+  }
+  .indice__foto {
+    display: none;
+  }
+}
