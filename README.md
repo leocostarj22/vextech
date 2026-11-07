@@ -48,7 +48,7 @@ Estrutura: dados em src/data, secções em src/sections, animações em src/moti
 
 ## Versões clara e escura
 
-A versão clara é a predefinida. O botão «Escuro»/«Claro» na navegação alterna as superfícies do túnel, método, diálogos e rodapé, incluindo o fundo e o nevoeiro do Three.js. A preferência fica guardada no navegador. Em telemóvel o botão está no menu.
+A versão clara é a predefinida. O botão circular de sol/lua na navegação alterna as superfícies do túnel, método, diálogos e rodapé, incluindo o fundo e o nevoeiro do Three.js. O ícone indica o modo que será ativado; o nome acessível e a dica ao passar o rato descrevem essa ação. A preferência fica guardada no navegador. Em telemóvel o botão está no menu.
 
 Pode forçar uma versão por URL: `/?tema=claro` ou `/?tema=escuro`. A versão anterior exclusivamente escura está preservada na tag `vextech-escuro-v1`.
 
