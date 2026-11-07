@@ -2,8 +2,8 @@
   height: 100svh;
   position: relative;
   overflow: hidden;
-  background: var(--noite);
-  color: var(--branco);
+  background: var(--imersao-fundo);
+  color: var(--imersao-tinta);
 }
 .tunel__canvas {
   position: absolute;
@@ -47,7 +47,11 @@
   position: absolute;
   inset: -80px -10%;
   z-index: -1;
-  background: radial-gradient(ellipse, var(--noite) 22%, transparent 72%);
+  background: radial-gradient(
+    ellipse,
+    var(--imersao-fundo) 22%,
+    transparent 72%
+  );
 }
 .tunel h1:after {
   content: "";
@@ -72,7 +76,7 @@
   position: absolute;
   bottom: 57px;
   font-size: 12px;
-  background: var(--vidro);
+  background: var(--imersao-vidro);
   padding: 6px 12px;
   border-radius: 99px;
   backdrop-filter: blur(10px);
@@ -174,8 +178,8 @@
 }
 .fallback-cases {
   padding: 70px var(--margem);
-  background: var(--noite);
-  color: var(--branco);
+  background: var(--imersao-fundo);
+  color: var(--imersao-tinta);
 }
 .fallback-cases article {
   margin-bottom: 65px;
@@ -210,7 +214,11 @@
   }
   .tunel h1:before {
     inset: -70px -8%;
-    background: radial-gradient(ellipse, var(--noite) 32%, transparent 75%);
+    background: radial-gradient(
+      ellipse,
+      var(--imersao-fundo) 32%,
+      transparent 75%
+    );
   }
   .tunel__marca {
     width: calc(100% - 40px);
@@ -250,7 +258,7 @@
     content: "";
     position: absolute;
     inset: calc(50% + 30vw + 10px) 0 0;
-    background: var(--noite);
+    background: var(--imersao-fundo);
     z-index: -1;
   }
   .case__meta {
@@ -288,5 +296,20 @@
   }
   .case .pilula {
     margin-top: 10px;
+  }
+}
+
+.tunel__sobre {
+  color: var(--imersao-acento);
+}
+.case {
+  color: var(--branco);
+}
+@media (max-width: 600px) {
+  .case {
+    color: var(--imersao-tinta);
+  }
+  .case__numero span {
+    background: currentColor;
   }
 }

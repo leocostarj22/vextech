@@ -1,16 +1,21 @@
 import * as THREE from "three";
 import pecas from "../data/pecas.json";
 import { casos } from "../data/casos";
-export const FUNDO = 0x11111f;
+
 export const PROF_DESTAQUES = [-16, -40, -64];
 const Z_FIM = -96;
 export function criarCena(host, reduzido) {
+  const fundo = new THREE.Color(
+    getComputedStyle(document.documentElement)
+      .getPropertyValue("--imersao-fundo")
+      .trim(),
+  );
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
   renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
-  renderer.setClearColor(FUNDO);
+  renderer.setClearColor(fundo);
   host.append(renderer.domElement);
   const scene = new THREE.Scene();
-  scene.fog = new THREE.Fog(FUNDO, 9, 44);
+  scene.fog = new THREE.Fog(fundo, 9, 44);
   const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 160);
   camera.position.z = 6;
   const loader = new THREE.TextureLoader(),
@@ -159,6 +164,16 @@ export function criarCena(host, reduzido) {
       alvo.y = -(e.clientY / innerHeight - 0.5) * 0.7;
       render();
     });
+  window.addEventListener("vextech:tema", () => {
+    fundo.set(
+      getComputedStyle(document.documentElement)
+        .getPropertyValue("--imersao-fundo")
+        .trim(),
+    );
+    renderer.setClearColor(fundo);
+    scene.fog.color.copy(fundo);
+    render();
+  });
   window.addEventListener("resize", resize);
   resize();
   return { estado, render, distancia, camera, resize };

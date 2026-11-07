@@ -118,19 +118,97 @@ test("Vextech: túnel, soluções, método, contacto e navegação", async ({
   expect(failed).toEqual([]);
 });
 
-test('as soluções continuam disponíveis sem WebGL', async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name !== 'desktop', 'Validação do fallback estático no desktop');
+test("as soluções continuam disponíveis sem WebGL", async ({
+  page,
+}, testInfo) => {
+  test.skip(
+    testInfo.project.name !== "desktop",
+    "Validação do fallback estático no desktop",
+  );
   await page.addInitScript(() => {
     const original = HTMLCanvasElement.prototype.getContext;
     HTMLCanvasElement.prototype.getContext = function (type, ...args) {
-      if (type === 'webgl' || type === 'webgl2' || type === 'experimental-webgl') return null;
+      if (
+        type === "webgl" ||
+        type === "webgl2" ||
+        type === "experimental-webgl"
+      )
+        return null;
       return original.call(this, type, ...args);
     };
   });
-  await page.goto('/');
-  await expect(page.locator('.tunel--fallback')).toHaveCount(1);
-  await expect(page.locator('.fallback-cases article')).toHaveCount(3);
-  await page.locator('.fallback-cases [data-abrir]').first().click();
-  await expect(page.getByRole('dialog')).toBeVisible();
-  await expect(page.locator('#detalhe-titulo')).toHaveText('Consultoria especializada');
+  await page.goto("/");
+  await expect(page.locator(".tunel--fallback")).toHaveCount(1);
+  await expect(page.locator(".fallback-cases article")).toHaveCount(3);
+  await page.locator(".fallback-cases [data-abrir]").first().click();
+  await expect(page.getByRole("dialog")).toBeVisible();
+  await expect(page.locator("#detalhe-titulo")).toHaveText(
+    "Consultoria especializada",
+  );
+});
+
+test("versão clara, alternância persistente e revelação da marca", async ({
+  page,
+}, testInfo) => {
+  const errors = [];
+  page.on("pageerror", (error) => errors.push(error.message));
+  await page.goto("/");
+  await expect(page.locator("html")).toHaveAttribute("data-tema", "claro");
+  await page.evaluate(() => document.fonts.ready);
+  await page.waitForTimeout(700);
+  await page.screenshot({
+    path: `test-results/${testInfo.project.name}-claro.png`,
+  });
+  const fundoClaro = await page
+    .locator(".tunel")
+    .evaluate((el) => getComputedStyle(el).backgroundColor);
+  if (testInfo.project.name === "mobile")
+    await page.getByRole("button", { name: "Abrir menu" }).click();
+  await page.getByRole("button", { name: "Mudar para versão escura" }).click();
+  await expect(page.locator("html")).toHaveAttribute("data-tema", "escuro");
+  await page.waitForTimeout(400);
+  const fundoEscuro = await page
+    .locator(".tunel")
+    .evaluate((el) => getComputedStyle(el).backgroundColor);
+  expect(fundoEscuro).not.toBe(fundoClaro);
+  await page.reload();
+  await expect(page.locator("html")).toHaveAttribute("data-tema", "escuro");
+  await page.goto("/?tema=claro");
+  await expect(page.locator("html")).toHaveAttribute("data-tema", "claro");
+  await page.locator(".contato__marca").scrollIntoViewIfNeeded();
+  await page.waitForTimeout(700);
+  const marca = page.locator(".contato__marca");
+  const box = await marca.boundingBox();
+  if (testInfo.project.name === "desktop") {
+    await page.mouse.move(box.x + box.width * 0.2, box.y + box.height * 0.5);
+    await expect(marca).toHaveClass(/is-revealing/);
+    await page.waitForTimeout(450);
+    const antes = await marca.screenshot({
+      path: "test-results/marca-revelada-esquerda.png",
+    });
+    await page.mouse.move(box.x + box.width * 0.8, box.y + box.height * 0.5);
+    await page.waitForTimeout(450);
+    const depois = await marca.screenshot({
+      path: "test-results/marca-revelada-direita.png",
+    });
+    expect(antes.equals(depois)).toBe(false);
+    const x = await marca.evaluate((el) =>
+      parseFloat(getComputedStyle(el).getPropertyValue("--reveal-x")),
+    );
+    expect(x).toBeGreaterThan(box.width * 0.65);
+    await page.mouse.move(0, 0);
+    await expect(marca).not.toHaveClass(/is-revealing/);
+    await marca.focus();
+    const mask = await page
+      .locator(".contato__marca-revelada")
+      .evaluate((el) => getComputedStyle(el).maskImage);
+    expect(mask).toBe("none");
+  } else {
+    await expect(page.locator(".contato__marca-revelada")).toBeHidden();
+    const opacity = await page
+      .locator(".contato__marca-base")
+      .evaluate((el) => getComputedStyle(el).opacity);
+    expect(Number(opacity)).toBeGreaterThanOrEqual(0.3);
+  }
+  expect(errors).toEqual([]);
 });

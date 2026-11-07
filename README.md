@@ -45,3 +45,11 @@ Para voltar à Vextech, pare o servidor e execute `git switch main`, `npm ci` e 
 - Proposta visual e pressupostos em docs/proposta-visual-01.md.
 
 Estrutura: dados em src/data, secções em src/sections, animações em src/motion e identidade em src/brand. Os materiais originais da Margem continuam em arquivos e no histórico, mas não são exibidos no site Vextech.
+
+## Versões clara e escura
+
+A versão clara é a predefinida. O botão «Escuro»/«Claro» na navegação alterna as superfícies do túnel, método, diálogos e rodapé, incluindo o fundo e o nevoeiro do Three.js. A preferência fica guardada no navegador. Em telemóvel o botão está no menu.
+
+Pode forçar uma versão por URL: `/?tema=claro` ou `/?tema=escuro`. A versão anterior exclusivamente escura está preservada na tag `vextech-escuro-v1`.
+
+No rodapé, uma máscara suave acompanha o cursor para revelar o wordmark original da Vextech. Esta interpretação foi feita a partir das capturas e da descrição fornecidas pelo utilizador como referência da Affinity; não se conseguiu inspecionar diretamente o site externo. No teclado a marca revela-se por inteiro ao receber foco; no toque e com movimento reduzido mantém uma apresentação estática.

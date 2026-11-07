@@ -15,3 +15,33 @@
   --margem: clamp(20px, 3.3vw, 56px);
   --titulo: clamp(44px, 5.5vw, 88px);
 }
+
+/* Superfícies que acompanham a versão escolhida. */
+:root {
+  color-scheme: light;
+  --imersao-fundo: #f2f4f3;
+  --imersao-tinta: var(--noite);
+  --imersao-suave: #656574;
+  --imersao-fio: #cdd3d4;
+  --imersao-vidro: rgb(242 244 243 / 0.88);
+  --imersao-acento: #23525b;
+  --rodape-fundo: #eaf5f5;
+  --rodape-tinta: var(--noite);
+  --rodape-suave: #59666b;
+  --rodape-fio: #c8dada;
+  --rodape-revelacao: #5cbfcf;
+}
+:root[data-tema="escuro"] {
+  color-scheme: dark;
+  --imersao-fundo: var(--noite);
+  --imersao-tinta: var(--branco);
+  --imersao-suave: rgb(255 255 255 / 0.65);
+  --imersao-fio: var(--fio-escuro);
+  --imersao-vidro: var(--vidro);
+  --imersao-acento: var(--ciano);
+  --rodape-fundo: var(--noite);
+  --rodape-tinta: var(--branco);
+  --rodape-suave: rgb(255 255 255 / 0.6);
+  --rodape-fio: var(--fio-escuro);
+  --rodape-revelacao: var(--ciano);
+}

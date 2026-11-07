@@ -1,3 +1,4 @@
+import { iniciarTema, ligarBotaoTema } from "./theme";
 import "@fontsource/geist/latin-400.css";
 import "@fontsource/geist/latin-500.css";
 import "./styles/tokens.css";
@@ -21,6 +22,7 @@ import { animarContato } from "./motion/contato";
 import { scrollSuave } from "./motion/suave";
 import { casos } from "./data/casos";
 
+iniciarTema();
 gsap.registerPlugin(ScrollTrigger);
 const reduzido = matchMedia("(prefers-reduced-motion: reduce)").matches;
 document.querySelector("#app").innerHTML =
@@ -45,6 +47,7 @@ try {
     .join("");
   document.querySelector(".tunel").after(fallback);
 }
+ligarBotaoTema();
 animarMetodo();
 animarEstudio(reduzido);
 animarIndice(reduzido);

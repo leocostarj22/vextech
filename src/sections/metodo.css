@@ -3,8 +3,8 @@
   min-height: 650px;
   overflow: hidden;
   padding: 45px 0 30px;
-  background: var(--noite);
-  color: var(--branco);
+  background: var(--imersao-fundo);
+  color: var(--imersao-tinta);
 }
 .metodo__cabecalho {
   padding: 0 var(--margem);
@@ -18,7 +18,7 @@
   font-weight: 500;
 }
 .metodo__cabecalho .rotulo {
-  color: var(--ciano);
+  color: var(--imersao-acento);
 }
 .metodo__janela {
   overflow: hidden;
@@ -47,6 +47,7 @@
   background: linear-gradient(transparent, var(--vidro));
 }
 .metodo__quadro figcaption {
+  color: var(--branco);
   position: absolute;
   bottom: 22px;
   left: 25px;
@@ -61,7 +62,7 @@
 }
 .metodo__regua {
   margin: 30px var(--margem) 0;
-  border-top: 1px solid var(--fio-escuro);
+  border-top: 1px solid var(--imersao-fio);
   display: flex;
   justify-content: space-between;
   position: relative;
@@ -70,7 +71,7 @@
   padding: 15px 0 0;
   background: none;
   border: 0;
-  color: var(--branco);
+  color: var(--imersao-tinta);
   opacity: 0.5;
   font-size: 13px;
   position: relative;
@@ -109,7 +110,7 @@
   margin: 22px var(--margem) 0;
   font-size: 15px;
   max-width: 510px;
-  color: var(--branco);
+  color: var(--imersao-tinta);
 }
 @media (max-width: 600px) {
   .metodo {
@@ -131,6 +132,7 @@
     aspect-ratio: 4/5;
   }
   .metodo__quadro figcaption {
+    color: var(--branco);
     font-size: 23px;
     left: 20px;
   }

@@ -1,7 +1,7 @@
 .detalhe {
-  border: 1px solid var(--fio-escuro);
-  background: var(--noite);
-  color: var(--branco);
+  border: 1px solid var(--imersao-fio);
+  background: var(--imersao-fundo);
+  color: var(--imersao-tinta);
   padding: 0;
   width: min(1060px, 94vw);
   max-height: 90svh;
@@ -17,8 +17,8 @@
   right: 18px;
   z-index: 1;
   background: var(--vidro);
-  color: var(--branco);
-  border: 1px solid var(--fio-escuro);
+  color: var(--imersao-tinta);
+  border: 1px solid var(--imersao-fio);
 }
 .detalhe__conteudo > img {
   width: 100%;
@@ -35,14 +35,14 @@
   max-width: 800px;
 }
 .detalhe .rotulo {
-  color: var(--ciano);
+  color: var(--imersao-acento);
   font-size: 11px;
 }
 .detalhe__descricao {
   font-size: 15px;
   max-width: 670px;
   line-height: 1.7;
-  color: rgb(255 255 255 / 0.8);
+  color: var(--imersao-suave);
 }
 .detalhe__pontos {
   display: flex;
@@ -54,14 +54,14 @@
   font-size: 12px;
 }
 .detalhe__pontos li {
-  border-top: 1px solid var(--fio-escuro);
+  border-top: 1px solid var(--imersao-fio);
   padding-top: 14px;
   flex: 1;
   min-width: 170px;
 }
 .detalhe__pontos li:before {
   content: "↗";
-  color: var(--ciano);
+  color: var(--imersao-acento);
   margin-right: 10px;
 }
 @media (max-width: 600px) {
@@ -84,4 +84,8 @@
   .detalhe__pontos li {
     margin-bottom: 14px;
   }
+}
+
+.detalhe__fechar {
+  background: var(--imersao-vidro);
 }

@@ -1,8 +1,8 @@
 .contato {
   padding: 85px var(--margem) 25px;
   overflow: hidden;
-  background: var(--noite);
-  color: var(--branco);
+  background: var(--rodape-fundo);
+  color: var(--rodape-tinta);
 }
 .contato__colunas {
   display: grid;
@@ -17,10 +17,10 @@
   letter-spacing: -0.055em;
 }
 .contato .rotulo {
-  color: var(--ciano);
+  color: var(--imersao-acento);
 }
 .contato__iniciar {
-  border-left: 1px solid var(--fio-escuro);
+  border-left: 1px solid var(--rodape-fio);
   padding-left: 50px;
   align-self: end;
   padding-bottom: 7px;
@@ -42,23 +42,23 @@
   display: grid;
   grid-template-columns: 32% 33% 35%;
   padding: 35px 0 75px;
-  border-top: 1px solid var(--fio-escuro);
+  border-top: 1px solid var(--rodape-fio);
 }
 .contato__moradas p {
   font-size: 12px;
   line-height: 1.65;
-  color: rgb(255 255 255 / 0.6);
+  color: var(--rodape-suave);
 }
 .contato__moradas span {
   display: block;
-  color: var(--branco);
+  color: var(--rodape-tinta);
   margin-bottom: 10px;
 }
 .contato__moradas .contato__assinatura {
   font-size: 13px;
   line-height: 1.3;
   letter-spacing: 0.08em;
-  color: var(--ciano);
+  color: var(--imersao-acento);
   padding-left: 50px;
 }
 .contato__marca {
@@ -70,14 +70,14 @@
   display: flex;
   justify-content: space-between;
   font-size: 10px;
-  color: rgb(255 255 255 / 0.55);
+  color: var(--rodape-suave);
   margin-top: 35px;
   gap: 20px;
 }
 .contato__formulario {
   margin-bottom: 45px;
   padding: 30px 0 40px;
-  border-top: 1px solid var(--fio-escuro);
+  border-top: 1px solid var(--rodape-fio);
 }
 .form__cabecalho {
   display: flex;
@@ -92,9 +92,9 @@
 }
 .form__fechar {
   background: none;
-  border: 1px solid var(--fio-escuro);
+  border: 1px solid var(--rodape-fio);
   border-radius: 50%;
-  color: var(--branco);
+  color: var(--rodape-tinta);
   width: 34px;
   height: 34px;
   font-size: 22px;
@@ -122,10 +122,10 @@
   width: 100%;
   margin-top: 10px;
   border: 0;
-  border-bottom: 1px solid var(--fio-escuro);
+  border-bottom: 1px solid var(--rodape-fio);
   border-radius: 0;
-  background: var(--noite);
-  color: var(--branco);
+  background: var(--rodape-fundo);
+  color: var(--rodape-tinta);
   padding: 12px 0;
   resize: vertical;
 }
@@ -135,7 +135,7 @@
 .form__resultado {
   font-size: 13px;
   margin-top: 18px;
-  color: var(--ciano);
+  color: var(--imersao-acento);
 }
 @media (max-width: 600px) {
   .contato {
@@ -190,5 +190,52 @@
   }
   .form__campos label {
     font-size: 11px;
+  }
+}
+
+/* Duas cópias do mesmo SVG: base discreta e cor revelada pelo cursor. */
+.contato__marca {
+  position: relative;
+  isolation: isolate;
+  --reveal-x: -200px;
+  --reveal-y: 50%;
+}
+.contato__marca-base {
+  display: block;
+  opacity: 0.08;
+}
+.contato__marca-revelada {
+  display: block;
+  position: absolute;
+  inset: 0;
+  color: var(--rodape-revelacao);
+  pointer-events: none;
+  opacity: 0;
+  mask-image: radial-gradient(
+    ellipse 24vw 30vw at var(--reveal-x) var(--reveal-y),
+    black 0%,
+    transparent 75%
+  );
+  -webkit-mask-image: radial-gradient(
+    ellipse 24vw 30vw at var(--reveal-x) var(--reveal-y),
+    black 0%,
+    transparent 75%
+  );
+  transition: opacity 0.35s;
+}
+.contato__marca.is-revealing .contato__marca-revelada {
+  opacity: 1;
+}
+.contato__marca:focus-visible .contato__marca-revelada {
+  opacity: 1;
+  mask-image: none;
+  -webkit-mask-image: none;
+}
+@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .contato__marca-base {
+    opacity: 0.35;
+  }
+  .contato__marca-revelada {
+    display: none;
   }
 }

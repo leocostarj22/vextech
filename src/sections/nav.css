@@ -8,7 +8,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 27px var(--margem);
-  color: var(--branco);
+  color: var(--imersao-tinta);
   transition:
     transform 0.3s,
     background 0.3s,
@@ -23,7 +23,7 @@
   backdrop-filter: blur(14px);
 }
 .nav--escura {
-  background: var(--vidro);
+  background: var(--imersao-vidro);
   backdrop-filter: blur(14px);
 }
 .nav nav {
@@ -64,7 +64,7 @@
     gap: 6px;
     align-items: center;
     justify-content: center;
-    border: 1px solid var(--fio-escuro);
+    border: 1px solid var(--imersao-fio);
     background: transparent;
     color: inherit;
     width: 40px;
@@ -88,16 +88,16 @@
     padding: 20px;
     flex-direction: column;
     gap: 12px;
-    background: var(--noite);
-    color: var(--branco);
-    border: 1px solid var(--fio-escuro);
+    background: var(--imersao-fundo);
+    color: var(--imersao-tinta);
+    border: 1px solid var(--imersao-fio);
   }
   .nav.is-open nav {
     display: flex;
   }
   .nav.is-open {
-    background: var(--noite);
-    color: var(--branco);
+    background: var(--imersao-fundo);
+    color: var(--imersao-tinta);
   }
   .nav nav .pilula {
     justify-content: space-between;
