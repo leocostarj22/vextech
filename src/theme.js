@@ -18,7 +18,7 @@ function aplicarTema(tema, guardar = false) {
     .querySelector('meta[name="theme-color"]')
     ?.setAttribute(
       "content",
-      root.dataset.tema === "escuro" ? "#11111f" : "#f2f4f3",
+      getComputedStyle(root).getPropertyValue("--imersao-fundo").trim(),
     );
   window.dispatchEvent(new Event("vextech:tema"));
 }

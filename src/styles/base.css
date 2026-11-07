@@ -88,8 +88,8 @@ svg {
   background: var(--mata);
 }
 .pilula--ciano {
-  background: var(--ciano);
-  color: var(--noite);
+  background: var(--acao-fundo);
+  color: var(--acao-tinta);
 }
 .pilula--ciano:hover {
   background: var(--branco);
@@ -132,7 +132,7 @@ svg {
 }
 .marca__icone {
   width: 27px;
-  color: var(--ciano);
+  color: var(--marca-icone);
 }
 .marca__nome {
   width: 124px;

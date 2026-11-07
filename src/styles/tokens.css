@@ -30,18 +30,27 @@
   --rodape-suave: #59666b;
   --rodape-fio: #c8dada;
   --rodape-revelacao: #5cbfcf;
+  --acao-fundo: var(--ciano);
+  --acao-tinta: var(--noite);
+  --marca-icone: var(--ciano);
+  --imersao-linha: var(--ciano);
 }
 :root[data-tema="escuro"] {
-  color-scheme: dark;
-  --imersao-fundo: var(--noite);
-  --imersao-tinta: var(--branco);
-  --imersao-suave: rgb(255 255 255 / 0.65);
-  --imersao-fio: var(--fio-escuro);
-  --imersao-vidro: var(--vidro);
-  --imersao-acento: var(--ciano);
-  --rodape-fundo: var(--noite);
-  --rodape-tinta: var(--branco);
-  --rodape-suave: rgb(255 255 255 / 0.6);
-  --rodape-fio: var(--fio-escuro);
-  --rodape-revelacao: var(--ciano);
+  /* Experiência: fundo ciano da marca, com contraste azul-escuro. */
+  color-scheme: light;
+  --imersao-fundo: var(--ciano);
+  --imersao-tinta: var(--noite);
+  --imersao-suave: var(--mata);
+  --imersao-fio: rgb(17 17 31 / 0.25);
+  --imersao-vidro: rgb(104 210 223 / 0.88);
+  --imersao-acento: var(--noite);
+  --rodape-fundo: var(--ciano);
+  --rodape-tinta: var(--noite);
+  --rodape-suave: var(--mata);
+  --rodape-fio: rgb(17 17 31 / 0.25);
+  --rodape-revelacao: var(--noite);
+  --acao-fundo: var(--noite);
+  --acao-tinta: var(--branco);
+  --marca-icone: var(--noite);
+  --imersao-linha: var(--noite);
 }

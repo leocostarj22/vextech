@@ -58,7 +58,7 @@
   display: block;
   width: 40px;
   height: 2px;
-  background: var(--ciano);
+  background: var(--imersao-linha);
   margin: 30px auto 0;
 }
 .mobile-break {
@@ -95,7 +95,7 @@
 }
 .tunel__progresso {
   height: 1px;
-  background: var(--ciano);
+  background: var(--imersao-linha);
   position: absolute;
   bottom: 0;
   width: 100%;

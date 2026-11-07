@@ -53,3 +53,5 @@ A versão clara é a predefinida. O botão circular de sol/lua na navegação al
 Pode forçar uma versão por URL: `/?tema=claro` ou `/?tema=escuro`. A versão anterior exclusivamente escura está preservada na tag `vextech-escuro-v1`.
 
 No rodapé, uma máscara suave acompanha o cursor para revelar o wordmark original da Vextech. Esta interpretação foi feita a partir das capturas e da descrição fornecidas pelo utilizador como referência da Affinity; não se conseguiu inspecionar diretamente o site externo. No teclado a marca revela-se por inteiro ao receber foco; no toque e com movimento reduzido mantém uma apresentação estática.
+
+Experiência atual: a opção anteriormente escura usa o ciano do logótipo (`#68d2df`) como fundo do túnel, método, detalhes e rodapé, com texto e botões em azul-escuro. A versão antes desta experiência está no commit `1f7a800`.
