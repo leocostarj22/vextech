@@ -21,8 +21,9 @@ export const casos = [
     nome: "Projetos chave-na-mão",
     curto: "Da ideia à entrega, com uma só equipa.",
     categoria: "Responsabilidade de ponta a ponta",
-    foto: "infraestrutura",
-    src: "/media/infraestrutura.jpg",
+    foto: "chave-na-mao",
+    src: "/media/chave-na-mao.jpg",
+    aspecto: 5384 / 3029,
     resumo:
       "Do planeamento à implementação, assumimos o percurso para entregar uma solução à medida.",
     detalhe:
@@ -37,8 +38,9 @@ export const casos = [
     nome: "Nearshore",
     curto: "Perto do seu negócio. Onde precisar.",
     categoria: "Equipas ligadas ao seu mundo",
-    foto: "conexoes",
-    src: "/media/conexoes.jpg",
+    foto: "nearshore",
+    src: "/media/nearshore.jpg",
+    aspecto: 7373 / 4147,
     resumo:
       "Equipas remotas com proximidade geográfica, cultural e de fuso horário, para trabalhar consigo.",
     detalhe:

@@ -18,3 +18,17 @@ Vídeo não foi adicionado nesta versão; mantém-se a renderização do túnel 
 ## Consultoria especializada
 
 A imagem `public/media/consultoria.png` foi fornecida pelo utilizador em `consultoria.zip` (1672 × 941 px). Foi copiada sem alterações. Substitui a imagem da solução no destaque 3D, no detalhe, no hover do índice e nas paredes do túnel. A fotografia anterior `equipa.jpg` continua apenas na etapa Entender do método. As proporções do novo original são preservadas no plano 3D e no posicionamento do texto em telemóvel.
+
+## Soluções e método — imagens.zip
+
+Cinco fotografias fornecidas pelo utilizador em `imagens.zip`, copiadas sem alterações:
+
+| Original no ZIP | Ficheiro local | Utilização |
+|---|---|---|
+| nearshore.jpg | public/media/nearshore.jpg | Nearshore: túnel, detalhe, índice e paredes |
+| chave na mao2.jpg | public/media/chave-na-mao.jpg | Projetos chave-na-mão: túnel, detalhe, índice e paredes |
+| entender.jpg | public/media/entender.jpg | Método: Entender |
+| construir.jpg | public/media/construir.jpg | Método: Construir e paredes do túnel |
+| evoluir.jpg | public/media/evoluir.jpg | Método: Evoluir |
+
+As proporções originais das soluções constam dos dados e são respeitadas pelo Three.js. Os quadros do método mantêm o recorte responsivo da tira de filme. Os ficheiros anteriores continuam no histórico e nos materiais recebidos; a fotografia de Consultoria permanece inalterada.
