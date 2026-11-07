@@ -57,3 +57,9 @@ No rodapé, uma máscara suave acompanha o cursor para revelar o wordmark origin
 A versão escura usa um degradê de azuis escuros com base em `#10111E`. O túnel mantém fundo transparente sobre o degradê e nevoeiro na cor de base. O nome VEXTECH da primeira secção também usa a revelação pelo cursor. A experiência anterior com fundo ciano está preservada no commit `b694a4d`.
 
 A navegação usa um painel compacto em desktop e telemóvel, com links para as secções e um submenu que abre as três soluções. O painel fecha por Escape, pelo botão, por um toque fora ou ao escolher um destino. O foco fica dentro da navegação enquanto está aberta, e o fundo fica temporariamente sem interação.
+
+## Páginas legais
+
+As páginas `/pt/termos-e-condicoes/`, `/pt/politica-de-privacidade/` e `/pt/politica-de-cookies/` são entradas HTML independentes, com o mesmo menu, temas e identidade visual. O build gera um `index.html` em cada diretório, servível por alojamento estático sem reescrever os pedidos para a página inicial. As versões sem a barra final também são reconhecidas pelo servidor de desenvolvimento e pelos servidores que normalizam diretórios.
+
+Os textos foram mantidos conforme as capturas e a instrução expressa do utilizador. As expressões «Morada Empresa» e «Email Empresa» continuam no texto original. Ver docs/paginas-legais.md para a origem e as referências que ainda não foram confirmadas face à implementação atual.

@@ -158,4 +158,7 @@ function atualizarLayout() {
   atualizarNav();
 }
 document.fonts.ready.then(atualizarLayout);
+const pedido = new URLSearchParams(location.search).get("solucao");
+const index = casos.findIndex((c) => c.foto === pedido);
+if (index >= 0) abrirSolucao(index);
 window.addEventListener("load", atualizarLayout);

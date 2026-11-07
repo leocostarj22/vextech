@@ -178,7 +178,8 @@
   margin: 3px 0 14px 1px;
   padding-left: 15px;
 }
-.nav__submenu button {
+.nav__submenu button,
+.nav__submenu .nav__sub-link {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -192,7 +193,8 @@
   line-height: 1.4;
   text-align: left;
 }
-.nav__submenu button:hover {
+.nav__submenu button:hover,
+.nav__submenu .nav__sub-link:hover {
   color: var(--nav-acento);
 }
 .nav__submenu span {

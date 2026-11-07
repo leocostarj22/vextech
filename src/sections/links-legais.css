@@ -1,0 +1,31 @@
+.links-legais {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 20px;
+}
+.links-legais a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  font-size: 11px;
+  line-height: 1.5;
+  text-underline-offset: 4px;
+}
+.links-legais a:hover,
+.links-legais a[aria-current="page"] {
+  text-decoration: underline;
+}
+.contato__rodape {
+  align-items: center;
+}
+@media (max-width: 600px) {
+  .contato__rodape .links-legais {
+    order: 3;
+    width: 100%;
+    gap: 2px 15px;
+  }
+  .links-legais a {
+    min-height: 40px;
+    font-size: 11px;
+  }
+}
