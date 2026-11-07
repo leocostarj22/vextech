@@ -15,6 +15,7 @@
   --margem: clamp(20px, 3.3vw, 56px);
   --titulo: clamp(44px, 5.5vw, 88px);
   --imagem-aspecto: 1.7777777778; /* 16:9, partilhado com o túnel 3D. */
+  --hero-imagens-opacidade: 0.55;
 }
 
 /* Superfícies que acompanham a versão escolhida. */

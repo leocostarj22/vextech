@@ -27,6 +27,7 @@ export function animarTunel(cena, reduzido) {
     },
   });
   tl.to(".tunel__hero", { autoAlpha: 0, y: reduzido ? 0 : -30, duration: 0.9 });
+  tl.to(cena.estado, { entrada: 0, duration: 0.9, ease: "none" }, "<");
   let prev = 6;
   PROF_DESTAQUES.forEach((z, i) => {
     const travel = Math.abs(prev - (z + 10)) / 9;

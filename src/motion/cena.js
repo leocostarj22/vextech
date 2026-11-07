@@ -5,6 +5,15 @@ import { casos } from "../data/casos";
 export const PROF_DESTAQUES = [-16, -40, -64];
 const Z_FIM = -96;
 export function criarCena(host, reduzido) {
+  const opacidadeHero = THREE.MathUtils.clamp(
+    Number(
+      getComputedStyle(document.documentElement).getPropertyValue(
+        "--hero-imagens-opacidade",
+      ),
+    ) || 0.55,
+    0,
+    1,
+  );
   const aspecto =
     Number(
       getComputedStyle(document.documentElement).getPropertyValue(
@@ -30,7 +39,7 @@ export function criarCena(host, reduzido) {
   let frame = 0,
     portrait = false;
   const alvo = { z: 6, x: 0, y: 0 };
-  const estado = { z: 6, puxar: 0, ativo: -1 };
+  const estado = { z: 6, puxar: 0, ativo: -1, entrada: 1 };
   const smooth = (a, b, x) => THREE.MathUtils.smoothstep(x, a, b);
   let seed = 41;
   const rand = () => {
@@ -134,6 +143,11 @@ export function criarCena(host, reduzido) {
   }
   function draw() {
     frame = 0;
+    const opacidadeAmbiente = THREE.MathUtils.lerp(
+      1,
+      opacidadeHero,
+      estado.entrada,
+    );
     const f = reduzido ? 1 : 0.14;
     camera.position.z += (estado.z - camera.position.z) * f;
     const intensidade = reduzido ? 0 : 1 - estado.puxar;
@@ -149,6 +163,7 @@ export function criarCena(host, reduzido) {
     planos.forEach((m) => {
       const d = camera.position.z - m.position.z;
       m.material.opacity =
+        opacidadeAmbiente *
         smooth(0.4, 2.2, d) *
         (1 - estado.puxar * (portrait ? 1 : 0.88)) *
         (1 - smooth(scene.fog.near, scene.fog.far, d));
@@ -169,6 +184,7 @@ export function criarCena(host, reduzido) {
       const d = camera.position.z - m.position.z;
       // A distância desvanece a textura sem pintar retângulos sobre o degradê.
       m.material.opacity =
+        THREE.MathUtils.lerp(opacidadeAmbiente, 1, p) *
         smooth(-0.1, 0.45, d) *
         (1 - smooth(scene.fog.near, scene.fog.far, d) * (1 - p));
     });
