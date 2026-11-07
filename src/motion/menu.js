@@ -34,6 +34,7 @@ export function ligarMenu(lenis, abrirSolucao) {
       el.inert = true;
     });
     painel.hidden = fundo.hidden = false;
+    painel.scrollTop = 0;
     header.classList.add("is-open");
     document.documentElement.classList.add("menu-aberto");
     toggle.setAttribute("aria-expanded", "true");
@@ -49,7 +50,11 @@ export function ligarMenu(lenis, abrirSolucao) {
   fundo.addEventListener("click", () => fecharMenu(true));
   header
     .querySelectorAll("a")
-    .forEach((link) => link.addEventListener("click", () => fecharMenu()));
+    .forEach((link) =>
+      link.addEventListener("click", () =>
+        fecharMenu(link.target === "_blank"),
+      ),
+    );
   expandir.addEventListener("click", () => {
     const abrir = solucoes.hidden;
     solucoes.hidden = !abrir;

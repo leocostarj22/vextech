@@ -1,0 +1,35 @@
+.redes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.redes a {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 40px;
+  font-size: 13px;
+  text-underline-offset: 5px;
+}
+.redes a:hover {
+  text-decoration: underline;
+}
+.redes a span {
+  font-size: 16px;
+}
+.nav__rodape .redes {
+  margin-top: 16px;
+  color: var(--nav-acento);
+}
+.contato__iniciar .redes {
+  margin-top: 25px;
+  color: var(--rodape-tinta);
+}
+@media (max-width: 600px) {
+  .redes a {
+    min-height: 44px;
+  }
+}

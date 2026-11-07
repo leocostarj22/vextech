@@ -242,7 +242,7 @@ test("menu compacto: tema independente, submenu, teclado e fecho", async ({
   await page.locator(".nav__marca").focus();
   await page.keyboard.press("Shift+Tab");
   await expect(
-    painel.getByRole("link", { name: "Contacto", exact: true }),
+    painel.getByRole("link", { name: /^Instagram da Vextech/ }),
   ).toBeFocused();
   await page.keyboard.press("Tab");
   await expect(page.locator(".nav__marca")).toBeFocused();

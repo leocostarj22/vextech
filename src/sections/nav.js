@@ -1,3 +1,4 @@
+import { redesSociais } from "./redes";
 import { logo } from "../brand/logo";
 import { casos } from "../data/casos";
 import "./nav.css";
@@ -27,6 +28,6 @@ export const nav = () => `
       <a class="nav__link" href="#carreiras">Carreiras</a>
       <a class="nav__link" href="#contacto">Contacto</a>
     </div>
-    <div class="nav__rodape"><p>Tecnologia com visão.<br>Pessoas que fazem acontecer.</p><span>Porto · Lisboa</span><span class="nav__assinatura">Visionary Engineering Experts</span></div>
+    <div class="nav__rodape"><p>Tecnologia com visão.<br>Pessoas que fazem acontecer.</p><span>Porto · Lisboa</span>${redesSociais()}<span class="nav__assinatura">Visionary Engineering Experts</span></div>
   </nav>
 </header>`;
