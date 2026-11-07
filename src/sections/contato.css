@@ -1,7 +1,7 @@
 .contato {
   padding: 85px var(--margem) 25px;
   overflow: hidden;
-  background: var(--rodape-fundo);
+  background: var(--rodape-background);
   color: var(--rodape-tinta);
 }
 .contato__colunas {
@@ -193,49 +193,6 @@
   }
 }
 
-/* Duas cópias do mesmo SVG: base discreta e cor revelada pelo cursor. */
 .contato__marca {
-  position: relative;
-  isolation: isolate;
-  --reveal-x: -200px;
-  --reveal-y: 50%;
-}
-.contato__marca-base {
-  display: block;
-  opacity: 0.08;
-}
-.contato__marca-revelada {
-  display: block;
-  position: absolute;
-  inset: 0;
-  color: var(--rodape-revelacao);
-  pointer-events: none;
-  opacity: 0;
-  mask-image: radial-gradient(
-    ellipse 24vw 30vw at var(--reveal-x) var(--reveal-y),
-    black 0%,
-    transparent 75%
-  );
-  -webkit-mask-image: radial-gradient(
-    ellipse 24vw 30vw at var(--reveal-x) var(--reveal-y),
-    black 0%,
-    transparent 75%
-  );
-  transition: opacity 0.35s;
-}
-.contato__marca.is-revealing .contato__marca-revelada {
-  opacity: 1;
-}
-.contato__marca:focus-visible .contato__marca-revelada {
-  opacity: 1;
-  mask-image: none;
-  -webkit-mask-image: none;
-}
-@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
-  .contato__marca-base {
-    opacity: 0.35;
-  }
-  .contato__marca-revelada {
-    display: none;
-  }
+  --revelacao-cor: var(--rodape-revelacao);
 }

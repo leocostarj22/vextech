@@ -14,7 +14,7 @@ export function animarIndice(reduzido) {
     gsap.to(floating, { autoAlpha: 0, scale: 0.6, duration: 0.2 });
   rows.forEach((row, i) => {
     const show = (e) => {
-      img.src = "/media/" + row.dataset.foto + ".jpg";
+      img.src = row.dataset.src;
       const box = row.getBoundingClientRect();
       gsap.set(
         floating,

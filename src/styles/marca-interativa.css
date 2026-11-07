@@ -1,0 +1,46 @@
+/* O SVG original é partilhado pelas camadas fixa e revelada. */
+.marca-interativa {
+  position: relative;
+  isolation: isolate;
+  --reveal-x: -200px;
+  --reveal-y: 50%;
+}
+.marca-interativa__base {
+  display: block;
+  opacity: var(--revelacao-base, 0.08);
+}
+.marca-interativa__revelada {
+  display: block;
+  position: absolute;
+  inset: 0;
+  color: var(--revelacao-cor, var(--ciano));
+  pointer-events: none;
+  opacity: 0;
+  mask-image: radial-gradient(
+    ellipse 24vw 30vw at var(--reveal-x) var(--reveal-y),
+    black 0%,
+    transparent 75%
+  );
+  -webkit-mask-image: radial-gradient(
+    ellipse 24vw 30vw at var(--reveal-x) var(--reveal-y),
+    black 0%,
+    transparent 75%
+  );
+  transition: opacity 0.35s;
+}
+.marca-interativa.is-revealing .marca-interativa__revelada {
+  opacity: 1;
+}
+.marca-interativa:focus-visible .marca-interativa__revelada {
+  opacity: 1;
+  mask-image: none;
+  -webkit-mask-image: none;
+}
+@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .marca-interativa__base {
+    opacity: 0.35;
+  }
+  .marca-interativa__revelada {
+    display: none;
+  }
+}

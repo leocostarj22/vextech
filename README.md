@@ -54,4 +54,4 @@ Pode forçar uma versão por URL: `/?tema=claro` ou `/?tema=escuro`. A versão a
 
 No rodapé, uma máscara suave acompanha o cursor para revelar o wordmark original da Vextech. Esta interpretação foi feita a partir das capturas e da descrição fornecidas pelo utilizador como referência da Affinity; não se conseguiu inspecionar diretamente o site externo. No teclado a marca revela-se por inteiro ao receber foco; no toque e com movimento reduzido mantém uma apresentação estática.
 
-Experiência atual: a opção anteriormente escura usa o ciano do logótipo (`#68d2df`) como fundo do túnel, método, detalhes e rodapé, com texto e botões em azul-escuro. A versão antes desta experiência está no commit `1f7a800`.
+A versão escura usa um degradê de azuis escuros com base em `#10111E`. O túnel mantém fundo transparente sobre o degradê e nevoeiro na cor de base. O nome VEXTECH da primeira secção também usa a revelação pelo cursor. A experiência anterior com fundo ciano está preservada no commit `b694a4d`.

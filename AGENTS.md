@@ -17,4 +17,6 @@ Site experimental da Vextech, baseado na demo Margem. O utilizador aprovou testa
 
 A demo Margem está preservada na tag margem-demo-v1, commit 77ba3a4c178cbc8180e0d10be9b42e3f3348d862. Não fazer reset destrutivo para regressar: consultar README.md e preservar trabalho local.
 
-- Revelação da marca no rodapé: preservar o SVG original e a máscara que segue o cursor. Teclado revela a marca completa; toque e movimento reduzido usam apresentação estática.
+- Revelação da marca no hero e no rodapé: preservar o SVG original e a máscara que segue o cursor. Teclado revela a marca completa; toque e movimento reduzido usam apresentação estática.
+
+- Tema escuro atual: degradê de azuis com base #10111e. O canvas transparente deixa passar o fundo CSS; as fotos desvanecem com a distância por opacidade para evitar retângulos de cor sólida sobre o degradê.

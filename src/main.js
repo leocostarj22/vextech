@@ -1,3 +1,5 @@
+import { revelarMarca } from "./motion/revelar-marca";
+import "./styles/marca-interativa.css";
 import { iniciarTema, ligarBotaoTema } from "./theme";
 import "@fontsource/geist/latin-400.css";
 import "@fontsource/geist/latin-500.css";
@@ -52,6 +54,7 @@ animarMetodo();
 animarEstudio(reduzido);
 animarIndice(reduzido);
 animarContato(reduzido);
+revelarMarca(document.querySelector(".tunel__marca"), reduzido);
 const lenis = scrollSuave(reduzido);
 const header = document.querySelector(".nav"),
   toggle = document.querySelector(".nav__toggle");
@@ -99,7 +102,7 @@ const dialog = document.querySelector("dialog");
 function abrirSolucao(index) {
   const c = casos[index];
   document.querySelector(".detalhe__conteudo").innerHTML =
-    `<img src="${c.src}" alt="Imagem ilustrativa de ${c.nome.toLowerCase()}"><div><p class="rotulo">0${index + 1} / 0${casos.length} — ${c.categoria}</p><h2 id="detalhe-titulo">${c.nome}</h2><p class="detalhe__descricao">${c.detalhe}</p><ul class="detalhe__pontos">${c.pontos.map((p) => `<li>${p}</li>`).join("")}</ul><button class="pilula pilula--ciano" data-interesse="${index}">Falar sobre esta solução →</button></div>`;
+    `<img src="${c.src}" style="object-position:${c.posicao || "center"}" alt="Imagem ilustrativa de ${c.nome.toLowerCase()}"><div><p class="rotulo">0${index + 1} / 0${casos.length} — ${c.categoria}</p><h2 id="detalhe-titulo">${c.nome}</h2><p class="detalhe__descricao">${c.detalhe}</p><ul class="detalhe__pontos">${c.pontos.map((p) => `<li>${p}</li>`).join("")}</ul><button class="pilula pilula--ciano" data-interesse="${index}">Falar sobre esta solução →</button></div>`;
   dialog.scrollTop = 0;
   dialog.showModal();
   lenis?.stop();

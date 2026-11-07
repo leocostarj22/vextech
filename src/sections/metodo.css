@@ -3,7 +3,7 @@
   min-height: 650px;
   overflow: hidden;
   padding: 45px 0 30px;
-  background: var(--imersao-fundo);
+  background: var(--imersao-background);
   color: var(--imersao-tinta);
 }
 .metodo__cabecalho {

@@ -14,3 +14,7 @@ O pacote atribui a primeira a Possessed Photography: https://unsplash.com/@posse
 Os SVGs Vextech foram exportados das versões vetoriais PDF fornecidas pelo utilizador; apenas o preenchimento preto foi trocado por currentColor para acompanhar o contexto claro ou escuro. Não se redesenhou o logótipo.
 
 Vídeo não foi adicionado nesta versão; mantém-se a renderização do túnel com fotografias para controlar peso e desempenho.
+
+## Consultoria especializada
+
+A imagem `public/media/consultoria.png` foi fornecida pelo utilizador em `consultoria.zip` (1672 × 941 px). Foi copiada sem alterações. Substitui a imagem da solução no destaque 3D, no detalhe, no hover do índice e nas paredes do túnel. A fotografia anterior `equipa.jpg` continua apenas na etapa Entender do método. As proporções do novo original são preservadas no plano 3D e no posicionamento do texto em telemóvel.

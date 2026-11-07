@@ -10,9 +10,9 @@ export function criarCena(host, reduzido) {
       .getPropertyValue("--imersao-fundo")
       .trim(),
   );
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
   renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
-  renderer.setClearColor(fundo);
+  renderer.setClearColor(fundo, 0);
   host.append(renderer.domElement);
   const scene = new THREE.Scene();
   scene.fog = new THREE.Fog(fundo, 9, 44);
@@ -44,6 +44,7 @@ export function criarCena(host, reduzido) {
       map: texture(src),
       transparent: true,
       depthWrite: false,
+      fog: false,
       side: THREE.DoubleSide,
     });
     m.onBeforeCompile = (shader) => {
@@ -73,7 +74,12 @@ export function criarCena(host, reduzido) {
   });
   const destaques = casos.map((c, i) => {
     const mesh = new THREE.Mesh(geometry, material(c.src.replace(/^\//, "")));
-    mesh.userData = { ang: [0.4, 2.6, 5.3][i], r: 4.6, z: PROF_DESTAQUES[i] };
+    mesh.userData = {
+      ang: [0.4, 2.6, 5.3][i],
+      r: 4.6,
+      altura: 6 / (c.aspecto || 1.5),
+      z: PROF_DESTAQUES[i],
+    };
     scene.add(mesh);
     return mesh;
   });
@@ -93,9 +99,10 @@ export function criarCena(host, reduzido) {
   }
   function distancia() {
     const tan = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
+    const altura = destaques[estado.ativo]?.userData.altura || 4;
     return portrait
       ? 6 / (0.9 * 2 * tan * camera.aspect)
-      : 0.9 * Math.min(4 / (2 * tan), 6 / (2 * tan * camera.aspect));
+      : 0.9 * Math.min(altura / (2 * tan), 6 / (2 * tan * camera.aspect));
   }
   function resize() {
     const w = host.clientWidth,
@@ -128,7 +135,9 @@ export function criarCena(host, reduzido) {
     planos.forEach((m) => {
       const d = camera.position.z - m.position.z;
       m.material.opacity =
-        smooth(0.4, 2.2, d) * (1 - estado.puxar * (portrait ? 1 : 0.88));
+        smooth(0.4, 2.2, d) *
+        (1 - estado.puxar * (portrait ? 1 : 0.88)) *
+        (1 - smooth(scene.fog.near, scene.fog.far, d));
       const shader = m.material.userData.shader;
       if (shader)
         shader.uniforms.uBias.value =
@@ -142,10 +151,12 @@ export function criarCena(host, reduzido) {
       m.rotation.x *= 1 - p;
       m.rotation.y *= 1 - p;
       const scale = THREE.MathUtils.lerp(0.36, 1, p);
-      m.scale.set(6 * scale, 4 * scale, 1);
+      m.scale.set(6 * scale, m.userData.altura * scale, 1);
       const d = camera.position.z - m.position.z;
-      m.material.opacity = smooth(-0.1, 0.45, d);
-      m.material.fog = p < 0.95;
+      // A distância desvanece a textura sem pintar retângulos sobre o degradê.
+      m.material.opacity =
+        smooth(-0.1, 0.45, d) *
+        (1 - smooth(scene.fog.near, scene.fog.far, d) * (1 - p));
     });
     renderer.render(scene, camera);
     if (
@@ -170,7 +181,7 @@ export function criarCena(host, reduzido) {
         .getPropertyValue("--imersao-fundo")
         .trim(),
     );
-    renderer.setClearColor(fundo);
+    renderer.setClearColor(fundo, 0);
     scene.fog.color.copy(fundo);
     render();
   });

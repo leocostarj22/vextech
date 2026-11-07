@@ -20,12 +20,14 @@
 :root {
   color-scheme: light;
   --imersao-fundo: #f2f4f3;
+  --imersao-background: var(--imersao-fundo);
   --imersao-tinta: var(--noite);
   --imersao-suave: #656574;
   --imersao-fio: #cdd3d4;
   --imersao-vidro: rgb(242 244 243 / 0.88);
   --imersao-acento: #23525b;
   --rodape-fundo: #eaf5f5;
+  --rodape-background: var(--rodape-fundo);
   --rodape-tinta: var(--noite);
   --rodape-suave: #59666b;
   --rodape-fio: #c8dada;
@@ -36,21 +38,27 @@
   --imersao-linha: var(--ciano);
 }
 :root[data-tema="escuro"] {
-  /* Experiência: fundo ciano da marca, com contraste azul-escuro. */
-  color-scheme: light;
-  --imersao-fundo: var(--ciano);
-  --imersao-tinta: var(--noite);
-  --imersao-suave: var(--mata);
-  --imersao-fio: rgb(17 17 31 / 0.25);
-  --imersao-vidro: rgb(104 210 223 / 0.88);
-  --imersao-acento: var(--noite);
-  --rodape-fundo: var(--ciano);
-  --rodape-tinta: var(--noite);
-  --rodape-suave: var(--mata);
-  --rodape-fio: rgb(17 17 31 / 0.25);
-  --rodape-revelacao: var(--noite);
-  --acao-fundo: var(--noite);
-  --acao-tinta: var(--branco);
-  --marca-icone: var(--noite);
-  --imersao-linha: var(--noite);
+  color-scheme: dark;
+  --imersao-fundo: #10111e;
+  --imersao-background: linear-gradient(
+    135deg,
+    #173b55 0%,
+    #122335 38%,
+    #10111e 78%
+  );
+  --imersao-tinta: var(--branco);
+  --imersao-suave: #c1c8d2;
+  --imersao-fio: rgb(255 255 255 / 0.2);
+  --imersao-vidro: rgb(16 17 30 / 0.88);
+  --imersao-acento: var(--ciano);
+  --rodape-fundo: var(--imersao-fundo);
+  --rodape-background: var(--imersao-background);
+  --rodape-tinta: var(--branco);
+  --rodape-suave: #c1c8d2;
+  --rodape-fio: rgb(255 255 255 / 0.2);
+  --rodape-revelacao: var(--ciano);
+  --acao-fundo: var(--ciano);
+  --acao-tinta: var(--noite);
+  --marca-icone: var(--ciano);
+  --imersao-linha: var(--ciano);
 }

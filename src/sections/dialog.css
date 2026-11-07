@@ -1,6 +1,6 @@
 .detalhe {
   border: 1px solid var(--imersao-fio);
-  background: var(--imersao-fundo);
+  background: var(--imersao-background);
   color: var(--imersao-tinta);
   padding: 0;
   width: min(1060px, 94vw);
@@ -60,7 +60,7 @@
   min-width: 170px;
 }
 .detalhe__pontos li:before {
-  content: "↗";
+  content: "→";
   color: var(--imersao-acento);
   margin-right: 10px;
 }

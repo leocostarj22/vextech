@@ -3,8 +3,10 @@ export const casos = [
     nome: "Consultoria especializada",
     curto: "Especialistas para o seu próximo desafio.",
     categoria: "Conhecimento que acrescenta",
-    foto: "equipa",
-    src: "/media/equipa.jpg",
+    foto: "consultoria",
+    src: "/media/consultoria.png",
+    aspecto: 1672 / 941,
+    posicao: "50% 20%",
     resumo:
       "Reforçamos a sua capacidade técnica com especialistas alinhados com os objetivos do seu negócio.",
     detalhe:
