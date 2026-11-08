@@ -7,7 +7,8 @@ import { fileURLToPath } from "node:url";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
 import { PDFDocument } from "pdf-lib";
-import jwt from "jsonwebtoken";
+import { criarAdminTeste } from "./helpers/admin.js";
+let adminTeste;
 
 const db = process.env.VEXTECH_TEST_DB;
 let pool, servidor, base, pasta, cookie, vagaId, pdf;
@@ -28,7 +29,8 @@ before(async () => {
   const { app } = await import("../src/app.js");
   servidor = app.listen(0, "127.0.0.1"); await new Promise((r) => servidor.once("listening", r));
   base = `http://127.0.0.1:${servidor.address().port}`;
-  cookie = `sessao=${jwt.sign({ id: 1, nome: "Teste", email: "teste@example.test" }, process.env.JWT_SECRET)}`;
+  adminTeste = await criarAdminTeste(pool);
+  cookie = adminTeste.cookie;
 });
 
 after(async () => {
@@ -36,6 +38,7 @@ after(async () => {
   if (pool) {
     for (const id of candidaturas) await pool.query("DELETE FROM candidaturas WHERE id = ?", [id]);
     if (vagaId) await pool.query("DELETE FROM vagas WHERE id = ?", [vagaId]);
+    if (adminTeste) await pool.query("DELETE FROM utilizadores WHERE id = ?", [adminTeste.id]);
     await pool.end();
   }
   if (pasta) await rm(pasta, { recursive: true, force: true });

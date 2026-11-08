@@ -51,6 +51,7 @@ const vistas = {
   candidaturas: "Candidaturas",
   vagas: "Vagas",
   equipa: "Convites",
+  perfil: "Meu perfil",
 };
 const estado = {
   vista: vistas[location.hash.slice(1)] ? location.hash.slice(1) : "dashboard",
@@ -66,7 +67,8 @@ let vagas = [],
   controller,
   sequencia = 0,
   sessaoAtiva = false,
-  perfilController;
+  perfilController,
+  meuPerfil;
 class SessaoTerminada extends Error {}
 function icons(root = document) {
   root
@@ -151,6 +153,10 @@ function estrutura() {
       "As vagas que ligam talento.",
       "Publica e mantém cada oportunidade atualizada.",
     ],
+    perfil: [
+      "O teu espaço na Vextech.",
+      "Mantém os teus dados atualizados e gere o acesso à tua conta.",
+    ],
     equipa: [
       "Uma equipa, novas perspetivas.",
       "Convida outra pessoa para administrar o Centro de talento.",
@@ -218,6 +224,102 @@ function oportunidades() {
 function convites() {
   return `<section class="panel invite-panel"><h2>Convidar novo admin</h2><p class="intro">Gera um link de registo de utilização única, válido por sete dias. Partilha-o diretamente com a pessoa; não existe envio automático de email.</p><form id="form-convite"><label>Email da pessoa a convidar<input name="email" type="email" maxlength="200" required autocomplete="email"></label><p class="erro" id="erro-convite" role="alert"></p><button class="btn" type="submit">Gerar convite ${ICONS.arrow}</button></form><div class="copiar" id="resultado-convite" hidden><label class="sr" for="link-convite">Link de registo</label><input id="link-convite" type="text" readonly><button type="button" class="secundario" id="copiar-convite">Copiar</button></div></section>`;
 }
+function atualizarIdentidade(p) {
+  $("#sessao").textContent = `${p.nome} · ${p.email}`;
+  $("#user-name").textContent = p.nome;
+}
+function campoPassword(id, name, label, autocomplete, nova = false) {
+  return `<label for="${id}">${label}</label><div class="password-field"><input id="${id}" name="${name}" type="password" autocomplete="${autocomplete}" ${nova ? 'minlength="8" maxlength="72"' : 'maxlength="1024"'} required><button class="password-toggle" type="button" data-password-toggle="${id}" aria-label="Mostrar ${label.toLowerCase()}" aria-pressed="false">Mostrar</button></div>`;
+}
+function paginaPerfil() {
+  return `<div class="profile-settings"><section class="panel account-panel" aria-labelledby="dados-titulo"><p class="eyebrow">Dados pessoais</p><h2 id="dados-titulo">Como te apresentas.</h2><p class="intro">Confirma as alterações com a tua password atual. Ao mudares o email de acesso, os outros acessos terão de iniciar sessão novamente.</p><form id="form-perfil" method="post"><label for="perfil-nome">Nome completo</label><input id="perfil-nome" name="nome" autocomplete="name" maxlength="120" value="${esc(meuPerfil.nome)}" required><label for="perfil-email">Email</label><input id="perfil-email" name="email" type="email" autocomplete="username" maxlength="200" value="${esc(meuPerfil.email)}" required>${campoPassword("perfil-password", "password_atual", "Password atual", "current-password")}<p class="account-status erro" id="perfil-estado" role="status" aria-live="polite"></p><button class="btn" type="submit">Guardar dados pessoais ${ICONS.arrow}</button></form></section><section class="panel account-panel" aria-labelledby="password-titulo"><p class="eyebrow">Segurança</p><h2 id="password-titulo">Um acesso só teu.</h2><p class="intro">Usa uma password única com pelo menos 8 caracteres. Os outros acessos serão terminados quando a alterares.</p><form id="form-password" method="post"><input class="sr" name="username" tabindex="-1" type="text" autocomplete="username" value="${esc(meuPerfil.email)}" readonly aria-label="Email da conta">${campoPassword("seguranca-atual", "password_atual", "Password atual", "current-password")}${campoPassword("seguranca-nova", "nova_password", "Nova password", "new-password", true)}${campoPassword("seguranca-confirmar", "confirmar_password", "Confirmar nova password", "new-password", true)}<p class="account-status erro" id="password-estado" role="status" aria-live="polite"></p><button class="btn" type="submit">Alterar password ${ICONS.arrow}</button></form></section></div>`;
+}
+function limparPasswords(form) {
+  form.querySelectorAll(".password-field input").forEach((input) => {
+    input.value = "";
+    input.type = "password";
+  });
+  form.querySelectorAll("[data-password-toggle]").forEach((b) => {
+    b.textContent = "Mostrar";
+    b.setAttribute("aria-pressed", "false");
+    b.setAttribute(
+      "aria-label",
+      `Mostrar ${form.querySelector(`label[for="${b.dataset.passwordToggle}"]`).textContent.toLowerCase()}`,
+    );
+  });
+}
+function ligarPerfil() {
+  $("#view-body")
+    .querySelectorAll("[data-password-toggle]")
+    .forEach(
+      (b) =>
+        (b.onclick = () => {
+          const input = document.getElementById(b.dataset.passwordToggle),
+            mostrar = input.type === "password";
+          input.type = mostrar ? "text" : "password";
+          b.textContent = mostrar ? "Ocultar" : "Mostrar";
+          b.setAttribute("aria-pressed", String(mostrar));
+          b.setAttribute(
+            "aria-label",
+            `${mostrar ? "Ocultar" : "Mostrar"} ${document.querySelector(`label[for="${input.id}"]`).textContent.toLowerCase()}`,
+          );
+        }),
+    );
+  for (const [id, url, statusId] of [
+    ["form-perfil", "/api/auth/perfil", "perfil-estado"],
+    ["form-password", "/api/auth/password", "password-estado"],
+  ]) {
+    const form = document.getElementById(id);
+    if (!form) continue;
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const status = document.getElementById(statusId),
+        botao = form.querySelector('[type="submit"]');
+      const campos = Object.fromEntries(new FormData(form));
+      delete campos.username;
+      status.textContent = "";
+      status.classList.remove("success");
+      if (
+        id === "form-password" &&
+        campos.nova_password !== campos.confirmar_password
+      ) {
+        status.textContent = "A confirmação da nova password não coincide.";
+        document.getElementById("seguranca-confirmar").focus();
+        return;
+      }
+      botao.disabled = true;
+      form.setAttribute("aria-busy", "true");
+      try {
+        const resultado = await api(url, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(campos),
+        });
+        if (id === "form-perfil") {
+          meuPerfil = resultado;
+          atualizarIdentidade(resultado);
+          form.elements.nome.value = resultado.nome;
+          form.elements.email.value = resultado.email;
+          const conta = $('#form-password [name="username"]');
+          if (conta) conta.value = resultado.email;
+        }
+        status.classList.add("success");
+        status.textContent =
+          id === "form-perfil"
+            ? "Dados pessoais atualizados."
+            : resultado.mensagem;
+      } catch (erro) {
+        if (!(erro instanceof SessaoTerminada))
+          status.textContent = erro.message;
+      } finally {
+        limparPasswords(form);
+        botao.disabled = false;
+        form.removeAttribute("aria-busy");
+      }
+    });
+  }
+}
+
 async function carregar(relerVagas = false) {
   controller?.abort();
   controller = new AbortController();
@@ -253,12 +355,19 @@ async function carregar(relerVagas = false) {
       lista = atual;
       estado.pagina = lista.pagina;
     }
+    if (estado.vista === "perfil") {
+      const atual = await api("/api/auth/perfil", { signal });
+      if (seq !== sequencia) return;
+      meuPerfil = atual;
+      atualizarIdentidade(atual);
+    }
     if (seq !== sequencia || !sessaoAtiva) return;
     $("#view-body").innerHTML = {
       dashboard,
       candidaturas,
       vagas: oportunidades,
       equipa: convites,
+      perfil: paginaPerfil,
     }[estado.vista]();
     $("#view-body").removeAttribute("aria-busy");
     $("#view-status").textContent = "";
@@ -283,6 +392,7 @@ async function carregar(relerVagas = false) {
   }
 }
 function ligarVista() {
+  ligarPerfil();
   $("#view-body")
     .querySelectorAll("[data-nav]")
     .forEach((b) => (b.onclick = () => ir(b.dataset.nav)));
@@ -446,6 +556,7 @@ $("#rail").addEventListener("keydown", (e) => {
     primeiro.focus();
   }
 });
+$("#user-name").onclick = () => ir("perfil");
 $("#sair").onclick = async () => {
   const b = $("#sair");
   b.disabled = true;
@@ -656,8 +767,7 @@ async function iniciar() {
   try {
     const s = await api("/api/auth/sessao");
     sessaoAtiva = true;
-    $("#sessao").textContent = `${s.nome} · ${s.email}`;
-    $("#user-name").textContent = s.nome;
+    atualizarIdentidade(s);
     vagas = await api("/api/vagas/admin");
     $("#inicio-estado").hidden = true;
     $("#app").hidden = false;

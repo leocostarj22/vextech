@@ -152,3 +152,9 @@ O painel `/admin/` usa agora o desenho aprovado: dashboard com dados reais e gr�
 Depois do pull, pare a API e execute em `server/`: `npm ci`, `npm run migrate` e `npm run dev`. A migração `004_recrutamento_indices.sql` acrescenta índices sem alterar as candidaturas. Abra `http://localhost:3001/admin/` e entre com a conta existente. Também pode abrir `/admin/` no endereço do Vite; os proxies de desenvolvimento encaminham o painel e as APIs para o backend.
 
 Consulte [implementação e validação da fase 1](docs/recrutamento/implementacao-fase-1.md). O protótipo anterior continua disponível como referência visual independente.
+
+### Perfil do administrador
+
+No menu **Meu perfil** (também acessível pelo nome no cabeçalho), cada administrador pode alterar o nome, o email de acesso e a password. Os dois formulários exigem a password atual. A nova password tem confirmação e pelo menos 8 caracteres; os campos de password são limpos depois de cada pedido. O email não pode coincidir com o de outra conta.
+
+Para atualizar, pare a API no terminal onde está em execução, faça pull e execute em `server/`: `npm run migrate` e `npm run dev`. A migração `005_perfil_admin.sql` acrescenta uma versão de sessão a cada conta, sem alterar os dados existentes. Ao alterar email ou password, a sessão atual é renovada e os restantes acessos dessa conta têm de iniciar sessão novamente. As sessões passam a consultar a conta na base de dados, para mostrar os dados atuais e recusar versões antigas. Vagas, candidaturas e currículos permanecem associados aos registos existentes.

@@ -9,7 +9,8 @@ import {
   lerFiltros,
   intervalos,
 } from "../src/recrutamento.js";
-import jwt from "jsonwebtoken";
+import { criarAdminTeste } from "./helpers/admin.js";
+let adminTeste;
 test("Lisboa: dias de 23/25 horas; gráfico e pesquisa partilham limites", () => {
   assert.equal(inicioDia("2026-03-30") - inicioDia("2026-03-29"), 23 * 3600000);
   assert.equal(inicioDia("2026-10-26") - inicioDia("2026-10-25"), 25 * 3600000);
@@ -64,7 +65,8 @@ before(async () => {
   server = app.listen(0, "127.0.0.1");
   await new Promise((r) => server.once("listening", r));
   base = `http://127.0.0.1:${server.address().port}`;
-  cookie = `sessao=${jwt.sign({ id: 1, nome: "Teste" }, process.env.JWT_SECRET)}`;
+  adminTeste = await criarAdminTeste(pool);
+  cookie = adminTeste.cookie;
 });
 after(async () => {
   if (server) {
@@ -76,6 +78,7 @@ after(async () => {
       await pool.query("DELETE FROM candidaturas WHERE id = ?", [id]);
     for (const id of jobs)
       await pool.query("DELETE FROM vagas WHERE id = ?", [id]);
+    if (adminTeste) await pool.query("DELETE FROM utilizadores WHERE id = ?", [adminTeste.id]);
     await pool.end();
   }
 });
