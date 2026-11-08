@@ -144,3 +144,11 @@ Em produção, mantenha estes diretórios privados fora do servidor de ficheiros
 ### Desenho do futuro painel de recrutamento
 
 A proposta visual e o planeamento do Centro de talento estão em [docs/recrutamento](docs/recrutamento/README.md). Abra `docs/recrutamento/prototipo.html` no navegador para experimentar dashboard, funil/lista, ficha lateral, vagas e temas. Os dados são ilustrativos e as alterações ficam apenas na memória da demonstração; esta proposta não substitui `/admin`. O [plano por fases](docs/recrutamento/plano.md) distingue os recursos atuais das funcionalidades a implementar.
+
+### Centro de talento — painel implementado (fase 1)
+
+O painel `/admin/` usa agora o desenho aprovado: dashboard com dados reais e gráfico clicável, temas claro/escuro, candidaturas pesquisáveis e paginadas, ficha com PDF privado, editor de vagas e convites. Os números são calculados pela API e não incluem os exemplos do protótipo. Etapas de seleção, funil, notas e agenda entram nas fases seguintes.
+
+Depois do pull, pare a API e execute em `server/`: `npm ci`, `npm run migrate` e `npm run dev`. A migração `004_recrutamento_indices.sql` acrescenta índices sem alterar as candidaturas. Abra `http://localhost:3001/admin/` e entre com a conta existente. Também pode abrir `/admin/` no endereço do Vite; os proxies de desenvolvimento encaminham o painel e as APIs para o backend.
+
+Consulte [implementação e validação da fase 1](docs/recrutamento/implementacao-fase-1.md). O protótipo anterior continua disponível como referência visual independente.

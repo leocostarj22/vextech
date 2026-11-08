@@ -1,8 +1,8 @@
 # Centro de talento Vextech — desenho e plano
 
-Proposta 01 · 8 de novembro de 2026 · Estado: desenho para revisão.
+Proposta 01 · 8 de novembro de 2026 · Estado: desenho aprovado; fase 1 implementada.
 
-O objetivo é transformar o painel de vagas num espaço de trabalho diário para recrutamento: perceber o que entrou, acompanhar cada candidatura e saber a próxima ação. Esta entrega contém apenas documentação e um protótipo autónomo. O site, o painel, a API e a base de dados mantêm o comportamento atual.
+O objetivo é transformar o painel de vagas num espaço de trabalho diário para recrutamento: perceber o que entrou, acompanhar cada candidatura e saber a próxima ação. O desenho original está preservado no protótipo autónomo. Após aprovação, a fase 1 foi implementada no painel real; consultar [implementação da fase 1](implementacao-fase-1.md). Os exemplos deste documento e do protótipo continuam separados dos dados reais.
 
 ## Desenho para experimentar
 
@@ -128,7 +128,7 @@ Não implementado nesta entrega:
 
 ## Verificação e passagem a implementação
 
-Antes de programar o painel real, rever a hierarquia das telas, legibilidade, nomes das etapas e a ficha lateral neste desenho. A fase 1 é o primeiro incremento recomendado; fases seguintes acrescentam capacidades quando a base estiver validada.
+O desenho foi aprovado e a fase 1 passou à implementação. A referência operacional está em [implementacao-fase-1.md](implementacao-fase-1.md). As fases seguintes acrescentam capacidades à base já implementada.
 
 A implementação terá verificações de autenticação/permissões, validação da API e migração, contagens e filtros, PDFs e persistência. No navegador: desktop 1440×840 e mobile 390×844, teclado, foco/restauro ao fechar a ficha, contraste, movimento reduzido, estados vazio/erro e sessão expirada. Emails, calendários e serviços externos ficam fora da primeira fase.
 

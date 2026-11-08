@@ -1,88 +1,179 @@
 <!doctype html>
-<html lang="pt">
+<html lang="pt-PT">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="robots" content="noindex, nofollow" />
-    <title>Vextech — Admin</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Centro de talento — Vextech</title>
+    <link rel="icon" href="assets/vextech-icon.svg" />
+    <script src="theme.js"></script>
     <link rel="stylesheet" href="admin.css" />
   </head>
   <body>
-    <main class="pagina">
-      <div class="cabecalho">
-        <div>
-          <h1>Vagas</h1>
-          <p class="sub" id="sessao"></p>
+    <a class="sr skip-admin" href="#conteudo">Saltar para o conteúdo</a>
+    <div id="inicio-estado" class="session-error status" role="status">
+      A verificar a sessão…
+    </div>
+    <div id="app" hidden>
+      <aside class="rail" id="rail" aria-label="Navegação principal">
+        <button
+          class="icon-button rail-close"
+          id="rail-close"
+          aria-label="Fechar navegação"
+          data-icon="close"
+        ></button>
+        <div class="brand">
+          <span class="icon"><img src="assets/vextech-icon.svg" alt="" /></span
+          ><span class="word" role="img" aria-label="Vextech"></span>
         </div>
-        <button type="button" class="secundario" id="sair">Sair</button>
-      </div>
-
-      <form id="form-vaga">
-        <input type="hidden" name="id" />
-        <label>Título<input name="titulo" required maxlength="160" /></label>
-        <label>Localização<input name="localizacao" required maxlength="120" /></label>
-        <label>Descrição da vaga<textarea name="descricao" maxlength="20000" placeholder="Apresentação, funções ou contexto da oportunidade."></textarea></label>
-        <label
-          >Requisitos (um por linha)<textarea name="requisitos" required></textarea
-        ></label>
-        <label>Capa da vaga (opcional)
-          <input type="file" name="capa" accept="image/png,image/jpeg,.png,.jpg,.jpeg" aria-describedby="capa-ajuda" />
-        </label>
-        <p class="aviso" id="capa-ajuda">PNG ou JPG, até 5 MB. Recomendamos o formato 16:9. Sem envio, é usada a capa automática.</p>
-        <img id="capa-preview" class="capa-preview" alt="Pré-visualização da capa da vaga" />
-        <span class="linha" id="remover-capa-linha" hidden><input type="checkbox" name="remover_capa" id="remover-capa" /><label for="remover-capa">Remover a capa enviada e usar a capa automática</label></span>
-        <span class="linha"
-          ><input type="checkbox" name="ativa" id="ativa" checked /><label
-            for="ativa"
-            >Vaga ativa (visível no site)</label
-          ></span
-        >
-        <p class="erro" id="erro-vaga"></p>
-        <div class="acoes">
-          <button type="submit" id="guardar">Adicionar vaga</button>
-          <button type="button" class="secundario" id="cancelar-edicao" hidden>
-            Cancelar edição
+        <p class="rail-sub">Centro de talento</p>
+        <p class="rail-group">Recrutamento</p>
+        <nav>
+          <button class="nav-item" data-view="dashboard">
+            <span data-icon="grid"></span><span>Visão geral</span>
+          </button>
+          <button
+            class="nav-item"
+            data-view="candidaturas"
+            aria-label="Candidaturas"
+          >
+            <span data-icon="people"></span><span>Candidaturas</span
+            ><b id="nav-count"></b>
+          </button>
+          <button class="nav-item" data-view="vagas" aria-label="Vagas">
+            <span data-icon="brief"></span><span>Vagas</span
+            ><b id="nav-jobs"></b>
+          </button>
+          <button class="nav-item" data-view="equipa">
+            <span data-icon="plus"></span><span>Convites</span>
+          </button>
+        </nav>
+        <div class="rail-bottom">
+          <a href="/" class="user-label">Visitar o site ↗</a>
+          <p id="sessao" class="user-label"></p>
+          <button id="sair" type="button">
+            <span data-icon="arrow"></span>Sair da sessão
           </button>
         </div>
-      </form>
-
-      <table>
-        <thead>
-          <tr>
-            <th>Título</th>
-            <th>Localização</th>
-            <th>Estado</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody id="lista-vagas"></tbody>
-      </table>
-
-      <hr class="separador" />
-
-      <section aria-labelledby="candidaturas-titulo">
-        <div class="cabecalho"><div><h1 id="candidaturas-titulo">Candidaturas recebidas</h1><p class="sub">Currículos privados, disponíveis apenas aos administradores.</p></div><button type="button" class="secundario" id="atualizar-candidaturas">Atualizar</button></div>
-        <p id="candidaturas-estado" class="aviso" role="status"></p>
-        <div id="lista-candidaturas"></div>
-      </section>
-
-      <hr class="separador" />
-
-      <h1>Convidar novo admin</h1>
-      <p class="sub">
-        Gera um link de registo de utilização única. Partilha-o diretamente
-        com a pessoa — não existe envio automático de email.
-      </p>
-      <form id="form-convite">
-        <label>Email da pessoa a convidar<input name="email" type="email" required /></label>
-        <p class="erro" id="erro-convite"></p>
-        <button type="submit">Gerar convite</button>
-      </form>
-      <div class="copiar" id="resultado-convite" hidden>
-        <input type="text" id="link-convite" readonly />
-        <button type="button" class="secundario" id="copiar-convite">Copiar</button>
+      </aside>
+      <button
+        class="rail-shade"
+        id="rail-shade"
+        aria-label="Fechar navegação"
+      ></button>
+      <div class="shell">
+        <header class="topbar">
+          <button
+            class="icon-button mobile-menu"
+            id="mobile-menu"
+            aria-label="Abrir navegação"
+            aria-expanded="false"
+            aria-controls="rail"
+            data-icon="menu"
+          ></button>
+          <div class="mobile-brand">
+            <span class="icon"
+              ><img src="assets/vextech-icon.svg" alt="" /></span
+            ><span class="word" role="img" aria-label="Vextech"></span>
+          </div>
+          <div class="crumb">
+            Talento <span>/</span><span id="crumb">Visão geral</span>
+          </div>
+          <div class="topbar-right">
+            <span id="user-name" class="user-label"></span
+            ><button
+              class="icon-button"
+              id="theme-toggle"
+              aria-label="Alternar tema"
+            ></button>
+          </div>
+        </header>
+        <main id="conteudo" tabindex="-1"></main>
       </div>
-    </main>
+    </div>
+    <dialog class="drawer" id="editor" aria-labelledby="editor-titulo">
+      <div class="drawer-content">
+        <div class="drawer-top">
+          <span>Gestão de oportunidades</span
+          ><button
+            class="drawer-close"
+            data-close
+            aria-label="Fechar editor"
+            data-icon="close"
+          ></button>
+        </div>
+        <h1 id="editor-titulo">Nova oportunidade.</h1>
+        <form id="form-vaga">
+          <input type="hidden" name="id" />
+          <label>Título<input name="titulo" required maxlength="160" /></label>
+          <label
+            >Localização<input name="localizacao" required maxlength="120"
+          /></label>
+          <label
+            >Descrição da vaga<textarea
+              name="descricao"
+              maxlength="20000"
+              placeholder="Apresentação, funções ou contexto da oportunidade."
+            ></textarea>
+          </label>
+          <label
+            >Requisitos (um por linha)<textarea
+              name="requisitos"
+              required
+            ></textarea>
+          </label>
+          <label
+            >Capa da vaga (opcional)
+            <input
+              type="file"
+              name="capa"
+              accept="image/png,image/jpeg,.png,.jpg,.jpeg"
+              aria-describedby="capa-ajuda"
+            />
+          </label>
+          <p class="aviso" id="capa-ajuda">
+            PNG ou JPG, até 5 MB. Recomendamos o formato 16:9. Sem envio, é
+            usada a capa automática.
+          </p>
+          <img
+            id="capa-preview"
+            class="capa-preview"
+            alt="Pré-visualização da capa da vaga"
+          />
+          <span class="linha" id="remover-capa-linha" hidden
+            ><input
+              type="checkbox"
+              name="remover_capa"
+              id="remover-capa"
+            /><label for="remover-capa"
+              >Remover a capa enviada e usar a capa automática</label
+            ></span
+          >
+          <span class="linha"
+            ><input type="checkbox" name="ativa" id="ativa" checked /><label
+              for="ativa"
+              >Vaga ativa (visível no site)</label
+            ></span
+          >
+          <p class="erro" id="erro-vaga"></p>
+          <div class="acoes">
+            <button type="submit" id="guardar">Adicionar vaga</button>
+            <button
+              type="button"
+              class="secundario"
+              id="cancelar-edicao"
+              hidden
+            >
+              Cancelar edição
+            </button>
+          </div>
+        </form>
+      </div>
+    </dialog>
+    <dialog class="drawer" id="ficha" aria-labelledby="ficha-titulo">
+      <div class="drawer-content" id="ficha-conteudo"></div>
+    </dialog>
+    <div class="toast" id="toast" role="status" hidden></div>
     <script type="module" src="index.js"></script>
   </body>
 </html>

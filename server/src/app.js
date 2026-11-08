@@ -8,6 +8,8 @@ import { vagasRouter } from "./routes/vagas.js";
 import { pastaCapas } from "./capas.js";
 import { candidaturasRouter } from "./routes/candidaturas.js";
 
+import { recrutamentoRouter } from "./routes/recrutamento.js";
+
 const pastaAdmin = fileURLToPath(new URL("../public/admin", import.meta.url));
 const capasAutomaticas = fileURLToPath(new URL("../../public/media/vagas", import.meta.url));
 const origensPermitidas = (process.env.CORS_ORIGINS || "")
@@ -27,6 +29,7 @@ app.use(
 app.use("/api/auth", authRouter);
 app.use("/api/vagas", vagasRouter);
 app.use("/api/candidaturas", candidaturasRouter);
+app.use("/api/recrutamento", recrutamentoRouter);
 app.use("/admin", express.static(pastaAdmin));
 app.use("/media/vagas", express.static(capasAutomaticas, { index: false, dotfiles: "deny" }));
 app.use("/uploads/vagas", express.static(pastaCapas, {

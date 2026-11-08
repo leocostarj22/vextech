@@ -1,6 +1,6 @@
 # Proposta do painel de recrutamento Vextech
 
-Desenho interativo e plano por fases, sem alterações ao painel em funcionamento.
+Desenho interativo aprovado e plano por fases. A [fase 1 já está implementada no painel real](implementacao-fase-1.md); este protótipo continua independente e ilustrativo.
 
 ## Abrir
 

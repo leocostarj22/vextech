@@ -7,6 +7,12 @@ export const pool = mysql.createPool({
   user: process.env.DB_USER || "vextech",
   password: process.env.DB_PASSWORD || "vextech",
   database: process.env.DB_NAME || "vextech",
+  timezone: "Z",
   waitForConnections: true,
   connectionLimit: 10,
+});
+
+// DATETIME e CURRENT_TIMESTAMP seguem UTC; a interface apresenta Europe/Lisbon.
+pool.on("connection", (connection) => {
+  connection.query("SET time_zone = '+00:00'");
 });

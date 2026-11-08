@@ -20,6 +20,9 @@ export default defineConfig(({ mode }) => {
   const destino = env.API_PROXY_TARGET?.trim() || env.VITE_API_URL?.trim() || "http://127.0.0.1:3001";
   const proxy = {
     "/api/vagas": { target: destino, changeOrigin: true },
+    "/api/recrutamento": { target: destino, changeOrigin: true },
+    "/api/auth": { target: destino, changeOrigin: true },
+    "/admin": { target: destino, changeOrigin: true },
     "/api/candidaturas": { target: destino, changeOrigin: true },
     "/uploads/vagas": { target: destino, changeOrigin: true },
   };

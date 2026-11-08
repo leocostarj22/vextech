@@ -1,21 +1,42 @@
 <!doctype html>
-<html lang="pt">
+<html lang="pt-PT">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex, nofollow" />
     <title>Vextech — Criar conta de admin</title>
+    <link rel="icon" href="assets/vextech-icon.svg" />
+    <script src="theme.js"></script>
     <link rel="stylesheet" href="admin.css" />
   </head>
   <body>
-    <main class="pagina pagina--estreita">
+    <main class="auth-page">
+      <div class="auth-top">
+        <div class="brand">
+          <span class="icon"><img src="assets/vextech-icon.svg" alt="" /></span
+          ><span class="word" role="img" aria-label="Vextech"></span>
+        </div>
+        <button
+          class="icon-button"
+          id="theme-toggle"
+          type="button"
+          aria-label="Alternar tema"
+        ></button>
+      </div>
       <h1>Criar a tua conta</h1>
-      <p class="sub">Foste convidado para o painel de vagas da Vextech.</p>
+      <p class="intro">Foste convidado para o Centro de talento da Vextech.</p>
       <form id="form-registo">
         <label>Nome<input name="nome" required maxlength="120" /></label>
-        <label>Password<input name="password" type="password" required minlength="8" autocomplete="new-password" /></label>
-        <p class="erro" id="erro"></p>
-        <button type="submit">Criar conta</button>
+        <label
+          >Password<input
+            name="password"
+            type="password"
+            required
+            minlength="8"
+            autocomplete="new-password"
+        /></label>
+        <p class="erro" id="erro" role="alert"></p>
+        <button class="btn" type="submit">Criar conta</button>
       </form>
     </main>
     <script type="module" src="registar.js"></script>
