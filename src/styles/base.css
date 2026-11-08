@@ -123,7 +123,7 @@ svg {
   color: var(--noite);
   padding: 12px;
 }
-.skip:focus {
+.skip:focus-visible {
   top: 16px;
 }
 .sr-only {

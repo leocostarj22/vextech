@@ -12,6 +12,7 @@ import { ligarFormulario } from "./motion/formulario";
 import { revelarMarca } from "./motion/revelar-marca";
 
 export function iniciarPaginaInterna() {
+  window.__vextechAbertura?.iniciado();
   iniciarTema();
   document.querySelector("#vagas-cabecalho").innerHTML = nav({ paginaLegal: true });
   document.querySelector("#vagas-rodape").innerHTML = contato();

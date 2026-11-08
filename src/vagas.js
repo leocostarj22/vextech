@@ -16,3 +16,4 @@ estado.textContent = resultado.estado !== "ok"
   : resultado.vagas.length
     ? `${resultado.vagas.length} ${resultado.vagas.length === 1 ? "oportunidade disponível" : "oportunidades disponíveis"}`
     : "Neste momento não temos vagas publicadas. Podes enviar uma candidatura espontânea.";
+window.__vextechAbertura?.pronto();

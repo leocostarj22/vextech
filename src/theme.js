@@ -31,9 +31,9 @@ export function iniciarTema() {
     /* A versão clara continua disponível sem armazenamento. */
   }
   const pedido = new URLSearchParams(location.search).get("tema");
-  aplicarTema(
-    ["claro", "escuro"].includes(pedido) ? pedido : guardado || "claro",
-  );
+  const validos = ["claro", "escuro"];
+  const sistema = matchMedia("(prefers-color-scheme: dark)").matches ? "escuro" : "claro";
+  aplicarTema(validos.includes(pedido) ? pedido : validos.includes(guardado) ? guardado : sistema);
 }
 
 export function ligarBotaoTema() {

@@ -49,7 +49,7 @@ Estrutura: dados em src/data, secções em src/sections, animações em src/moti
 
 ## Versões clara e escura
 
-A versão clara é a predefinida. O botão circular de sol/lua na navegação alterna as superfícies do túnel, método, diálogos e rodapé, incluindo o fundo e o nevoeiro do Three.js. O ícone indica o modo que será ativado; o nome acessível e a dica ao passar o rato descrevem essa ação. A preferência fica guardada no navegador. O controlo de tema fica sempre visível, ao lado do botão circular do menu.
+Na primeira visita, o site acompanha a preferência clara ou escura do sistema. Uma escolha guardada pelo botão de tema tem prioridade sobre o sistema; o parâmetro `?tema=` tem prioridade sobre ambos. O botão circular de sol/lua na navegação alterna as superfícies do túnel, método, diálogos e rodapé, incluindo o fundo e o nevoeiro do Three.js. O ícone indica o modo que será ativado; o nome acessível e a dica ao passar o rato descrevem essa ação. A preferência fica guardada no navegador. O controlo de tema fica sempre visível, ao lado do botão circular do menu.
 
 Pode forçar uma versão por URL: `/?tema=claro` ou `/?tema=escuro`. A versão anterior exclusivamente escura está preservada na tag `vextech-escuro-v1`.
 
@@ -58,6 +58,8 @@ No rodapé, uma máscara suave acompanha o cursor para revelar o wordmark origin
 A versão escura usa um degradê de azuis escuros com base em `#10111E`. O túnel mantém fundo transparente sobre o degradê e nevoeiro na cor de base. O nome VEXTECH da primeira secção também usa a revelação pelo cursor. A experiência anterior com fundo ciano está preservada no commit `b694a4d`.
 
 A navegação usa um painel compacto em desktop e telemóvel, com links para as secções e um submenu que abre as três soluções. O painel fecha por Escape, pelo botão, por um toque fora ou ao escolher um destino. O foco fica dentro da navegação enquanto está aberta, e o fundo fica temporariamente sem interação.
+
+As páginas públicas apresentam uma abertura com a marca Vextech centralizada e uma revelação azul semelhante à do hero e rodapé. O fundo acompanha o tema desde o primeiro paint. O carregamento espera pelos recursos iniciais, com um limite de segurança; não mostra uma percentagem fictícia nem bloqueia à espera da API de vagas na home. Com movimento reduzido, a marca é estática. O link «Saltar para as soluções» continua disponível pelo teclado, sem aparecer no canto durante o reload. O painel administrativo mantém o seu arranque habitual. Ver `docs/abertura.md`.
 
 ## Páginas legais
 

@@ -26,3 +26,4 @@ revelarMarca(
   document.querySelector(".contato__marca"),
   matchMedia("(prefers-reduced-motion: reduce)").matches,
 );
+window.__vextechAbertura?.pronto();

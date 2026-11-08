@@ -1,6 +1,7 @@
 import { defineConfig, loadEnv } from "vite";
 import { fileURLToPath } from "node:url";
 import { paginasLegais } from "./src/data/legal.js";
+import { abertura } from "./build/abertura.js";
 
 const pagina = (caminho) => fileURLToPath(new URL(caminho, import.meta.url));
 const normalizarPaginasLegais = (servidor) => {
@@ -26,7 +27,7 @@ export default defineConfig(({ mode }) => {
   appType: "mpa",
   server: { proxy },
   preview: { proxy },
-  plugins: [{
+  plugins: [abertura(), {
     name: "enderecos-legais",
     configureServer: normalizarPaginasLegais,
     configurePreviewServer: normalizarPaginasLegais,

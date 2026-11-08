@@ -38,6 +38,7 @@ document.querySelector("#app").innerHTML =
 
 try {
   const cena = criarCena(document.querySelector(".tunel__canvas"), reduzido);
+  window.__vextechAbertura?.aguardar(cena.pronta);
   animarTunel(cena, reduzido);
 } catch (error) {
   console.warn("WebGL indisponível; apresentação estática ativada.", error);
@@ -125,7 +126,12 @@ function atualizarLayout() {
 document.fonts.ready.then(atualizarLayout);
 const pedido = new URLSearchParams(location.search).get("solucao");
 const index = casos.findIndex((c) => c.foto === pedido);
-if (index >= 0) abrirSolucao(index);
+if (index >= 0) {
+  if (window.__vextechAbertura) window.__vextechAbertura.terminada.then(() => abrirSolucao(index));
+  else abrirSolucao(index);
+}
 window.addEventListener("load", atualizarLayout);
 
 animarCarreiras(reduzido, atualizarLayout);
+window.__vextechAbertura?.terminada.then(atualizarLayout);
+window.__vextechAbertura?.pronto();

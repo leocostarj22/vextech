@@ -1,0 +1,70 @@
+/* CSS crítico: chega no HTML, antes de qualquer módulo ou fonte. */
+@property --abertura-x {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: -45%;
+}
+:root {
+  --abertura-fundo: #f2f4f3;
+  --abertura-background: radial-gradient(ellipse at 50% 46%, #e4f1f1, #f2f4f3 65%);
+  --abertura-tinta: #11111f;
+  --abertura-azul: #68d2df;
+  --abertura-suave: #56666b;
+}
+:root[data-tema="escuro"] {
+  --abertura-fundo: #10111e;
+  --abertura-background: radial-gradient(ellipse at 50% 46%, #173b55 0%, #122335 38%, #10111e 78%);
+  --abertura-tinta: #fff;
+  --abertura-suave: #a2b6c5;
+}
+html.is-loading { overflow: hidden; }
+html.is-loading, html.is-loading body { background: var(--abertura-fundo); }
+#conteudo-site { display: contents; }
+.abertura {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  place-items: center;
+  margin: 0;
+  padding: 30px;
+  box-sizing: border-box;
+  background: var(--abertura-background);
+  color: var(--abertura-tinta);
+  touch-action: none;
+  overscroll-behavior: contain;
+  transition: opacity 0.4s ease;
+}
+html.is-loading .abertura { display: grid; }
+.abertura__centro { width: min(76vw, 540px); text-align: center; transition: transform 0.4s ease; }
+.abertura__marca { position: relative; }
+.abertura__camada { display: flex; flex-direction: column; align-items: center; gap: clamp(24px, 4vw, 36px); }
+.abertura__icone { display: block; width: clamp(48px, 7vw, 66px); }
+.abertura__nome { display: block; width: 100%; }
+.abertura svg { display: block; width: 100%; height: auto; }
+.abertura__base { opacity: 0.13; }
+.abertura__revelada {
+  position: absolute;
+  inset: 0;
+  color: var(--abertura-azul);
+  mask-image: radial-gradient(ellipse 38% 150% at var(--abertura-x) 50%, black 25%, transparent 85%);
+  -webkit-mask-image: radial-gradient(ellipse 38% 150% at var(--abertura-x) 50%, black 25%, transparent 85%);
+  animation: abertura-revelar 1.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+.abertura__assinatura { margin: 25px 0 0; color: var(--abertura-suave); font: 400 clamp(8px, 1.2vw, 10px)/1.6 Arial, sans-serif; letter-spacing: 0.22em; text-transform: uppercase; }
+.abertura__linha { display: block; width: 72px; height: 1px; margin: 34px auto 0; background: var(--abertura-azul); opacity: 0.5; transform: scaleX(0.35); animation: abertura-linha 1.8s ease-in-out infinite alternate; }
+.abertura--pronta .abertura__revelada { animation: none; mask-image: none; -webkit-mask-image: none; }
+.abertura--pronta .abertura__linha { animation: none; transform: scaleX(1); }
+.abertura--sair { opacity: 0; pointer-events: none; }
+.abertura--sair .abertura__centro { transform: translateY(-6px); }
+@keyframes abertura-revelar { from { --abertura-x: -45%; } to { --abertura-x: 145%; } }
+@keyframes abertura-linha { from { opacity: 0.15; transform: scaleX(0.35); } to { opacity: 0.7; transform: scaleX(1); } }
+.abertura-falha { margin: 110px 24px 30px; padding: 25px; color: var(--abertura-tinta); background: var(--abertura-fundo); font: 15px/1.6 Arial, sans-serif; }
+.abertura-falha[hidden] { display: none; }
+.abertura-falha a { color: inherit; text-decoration: underline; }
+/* Mantém o salto por teclado, sem mostrar o texto no primeiro paint. */
+.skip:not(:focus-visible) { position: fixed; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); transform: translateY(-200%); white-space: nowrap; }
+@media (prefers-reduced-motion: reduce) {
+  .abertura, .abertura * { animation: none !important; transition: none !important; }
+  .abertura__revelada { mask-image: none; -webkit-mask-image: none; }
+}

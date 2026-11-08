@@ -73,3 +73,4 @@ if (resultado.estado !== "ok") {
     }
   });
 }
+window.__vextechAbertura?.pronto();

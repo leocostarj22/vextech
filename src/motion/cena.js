@@ -33,7 +33,9 @@ export function criarCena(host, reduzido) {
   scene.fog = new THREE.Fog(fundo, 9, 44);
   const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 160);
   camera.position.z = 6;
-  const loader = new THREE.TextureLoader(),
+  const manager = new THREE.LoadingManager();
+  const pronta = new Promise((resolve) => { manager.onLoad = resolve; });
+  const loader = new THREE.TextureLoader(manager),
     cache = new Map(),
     geometry = new THREE.PlaneGeometry(1, 1);
   let frame = 0,
@@ -217,5 +219,5 @@ export function criarCena(host, reduzido) {
   });
   window.addEventListener("resize", resize);
   resize();
-  return { estado, render, distancia, camera, resize };
+  return { estado, render, distancia, camera, resize, pronta };
 }
