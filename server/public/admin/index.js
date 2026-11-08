@@ -94,6 +94,7 @@ async function carregarVagas() {
       formVaga.elements.id.value = vaga.id;
       formVaga.elements.titulo.value = vaga.titulo;
       formVaga.elements.localizacao.value = vaga.localizacao;
+      formVaga.elements.descricao.value = vaga.descricao || "";
       formVaga.elements.requisitos.value = vaga.requisitos.join("\n");
       formVaga.elements.ativa.checked = Boolean(vaga.ativa);
       botaoGuardar.textContent = "Guardar alterações";
@@ -122,6 +123,7 @@ formVaga.addEventListener("submit", async (e) => {
   const corpo = new FormData();
   corpo.set("titulo", formVaga.elements.titulo.value);
   corpo.set("localizacao", formVaga.elements.localizacao.value);
+  corpo.set("descricao", formVaga.elements.descricao.value);
   corpo.set("requisitos", JSON.stringify(linhasParaLista(formVaga.elements.requisitos.value)));
   corpo.set("ativa", String(formVaga.elements.ativa.checked));
   corpo.set("remover_capa", String(formVaga.elements.remover_capa.checked));
@@ -181,3 +183,34 @@ document.querySelector("#copiar-convite").addEventListener("click", async () => 
 });
 
 await carregarVagas();
+
+async function carregarCandidaturas() {
+  const estado = document.querySelector("#candidaturas-estado");
+  const lista = document.querySelector("#lista-candidaturas");
+  estado.textContent = "A carregar candidaturas…";
+  try {
+    const resposta = await fetch("/api/candidaturas", { cache: "no-store" });
+    if (!resposta.ok) throw new Error("Não foi possível carregar as candidaturas.");
+    const candidaturas = await resposta.json();
+    lista.innerHTML = candidaturas.map((c) => `<article class="candidatura-admin">
+      <div class="candidatura-admin__topo"><h2>${escapar(c.nome)}</h2><span>${escapar(new Date(c.criado_em).toLocaleString("pt-PT"))}</span></div>
+      <p><strong>${escapar(c.vaga_titulo)}</strong> · ${escapar(c.vaga_localizacao)}</p>
+      <p>${escapar(c.email)}${c.telefone ? ` · ${escapar(c.telefone)}` : ""}</p>
+      ${c.mensagem ? `<details><summary>Mensagem do candidato</summary><p class="candidatura-admin__mensagem">${escapar(c.mensagem)}</p></details>` : ""}
+      <div class="acoes"><a class="botao" href="/api/candidaturas/${Number(c.id)}/curriculo" target="_blank" rel="noopener noreferrer">Descarregar currículo (PDF)</a><button class="perigo" type="button" data-apagar-candidatura="${Number(c.id)}">Eliminar candidatura</button></div>
+    </article>`).join("");
+    estado.textContent = candidaturas.length ? `${candidaturas.length} candidatura(s) recebida(s).` : "Ainda não foram recebidas candidaturas.";
+    lista.querySelectorAll("[data-apagar-candidatura]").forEach((botao) => {
+      botao.addEventListener("click", async () => {
+        if (!confirm("Eliminar definitivamente esta candidatura e o respetivo currículo?")) return;
+        try {
+          const resposta = await fetch(`/api/candidaturas/${botao.dataset.apagarCandidatura}`, { method: "DELETE" });
+          if (!resposta.ok) throw new Error("Não foi possível eliminar a candidatura.");
+          await carregarCandidaturas();
+        } catch (erro) { estado.textContent = erro.message; }
+      });
+    });
+  } catch (erro) { estado.textContent = erro.message; }
+}
+document.querySelector("#atualizar-candidaturas").addEventListener("click", carregarCandidaturas);
+await carregarCandidaturas();

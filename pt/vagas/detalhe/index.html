@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="pt-PT">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#11111f" />
+    <meta name="description" content="Conhece esta oportunidade na Vextech e envia a tua candidatura com currículo em PDF." />
+    <title>Oportunidade — Carreiras Vextech</title>
+    <link rel="icon" href="/favicon.svg" />
+  </head>
+  <body class="pagina-vagas">
+    <a class="skip" href="#carreiras">Saltar para a vaga</a>
+    <div id="vagas-cabecalho"></div>
+    <main id="carreiras" class="vagas vaga-detalhe" aria-labelledby="vaga-titulo" tabindex="-1">
+      <nav class="vagas__caminho" aria-label="Caminho de navegação"><a href="/">Início</a><span aria-hidden="true">/</span><a href="/pt/vagas/">Vagas</a><span aria-hidden="true">/</span><span id="vaga-caminho" aria-current="page">Oportunidade</span></nav>
+      <p id="vaga-estado" role="status">A carregar a vaga…</p>
+      <div class="vaga-detalhe__hero">
+        <div><p class="rotulo">Vextech / Carreiras</p><h1 id="vaga-titulo">O teu próximo desafio.</h1><p id="vaga-local" class="vaga-detalhe__local"></p><a id="vaga-cta" class="pilula pilula--ciano" href="#candidatura" hidden>Candidata-te <span aria-hidden="true">→</span></a></div>
+        <figure class="vaga-detalhe__capa" hidden><img id="vaga-capa" alt="" width="1672" height="941" /></figure>
+      </div>
+      <div id="vaga-conteudo" class="vaga-detalhe__colunas" hidden>
+        <article class="vaga-detalhe__texto" aria-label="Descrição e requisitos da vaga">
+          <section id="vaga-descricao-bloco" hidden><h2>Descrição da vaga</h2><p id="vaga-descricao"></p></section>
+          <section id="vaga-requisitos-bloco"><h2>Requisitos</h2><ul id="vaga-requisitos"></ul></section>
+          <a class="vaga-detalhe__voltar" href="/pt/vagas/">← Ver todas as vagas</a>
+        </article>
+        <section id="candidatura" class="candidatura" aria-labelledby="candidatura-titulo">
+          <p class="rotulo">O próximo passo</p><h2 id="candidatura-titulo">Queremos conhecer-te.</h2>
+          <p class="candidatura__intro">Envia o teu currículo para te candidatares a esta vaga.</p>
+          <form id="form-candidatura" enctype="multipart/form-data" method="post">
+            <label for="candidato-nome">Nome completo<input id="candidato-nome" name="nome" autocomplete="name" required maxlength="120" /></label>
+            <label for="candidato-email">Email<input id="candidato-email" name="email" type="email" autocomplete="email" required maxlength="200" /></label>
+            <label for="candidato-telefone">Telemóvel (opcional)<input id="candidato-telefone" name="telefone" type="tel" autocomplete="tel" maxlength="40" /></label>
+            <label for="candidato-mensagem">Mensagem (opcional)<textarea id="candidato-mensagem" name="mensagem" rows="3" maxlength="5000"></textarea></label>
+            <label class="candidatura__ficheiro" for="candidato-cv">Currículo em PDF<input id="candidato-cv" name="curriculo" type="file" accept="application/pdf,.pdf" required aria-describedby="cv-ajuda" /><span id="cv-ajuda">Apenas PDF, até 5 MB.</span></label>
+            <div class="candidatura__privacidade"><input id="candidato-privacidade" name="privacidade" type="checkbox" required /><label for="candidato-privacidade">Li a <a href="/pt/politica-de-privacidade/" target="_blank" rel="noopener noreferrer">Política de Privacidade</a> e autorizo o tratamento dos meus dados para esta candidatura.</label></div>
+            <button class="pilula pilula--ciano" type="submit">Enviar candidatura <span aria-hidden="true">→</span></button>
+          </form>
+          <p id="candidatura-estado" role="status" aria-label="Estado da candidatura" tabindex="-1"></p>
+        </section>
+      </div>
+      <a class="vaga-detalhe__voltar" id="vaga-voltar" href="/pt/vagas/" hidden>← Ver todas as vagas</a>
+      <noscript><p>Ativa o JavaScript para consultar esta vaga e enviar a candidatura.</p></noscript>
+    </main>
+    <div id="vagas-rodape"></div>
+    <script type="module" src="/src/vaga.js"></script>
+  </body>
+</html>

@@ -6,7 +6,7 @@ const pagina = (caminho) => fileURLToPath(new URL(caminho, import.meta.url));
 const normalizarPaginasLegais = (servidor) => {
   servidor.middlewares.use((pedido, resposta, seguinte) => {
     const url = new URL(pedido.url, "http://localhost");
-    if ([...paginasLegais.map(({ caminho }) => caminho), "/pt/vagas/"].includes(`${url.pathname}/`)) {
+    if ([...paginasLegais.map(({ caminho }) => caminho), "/pt/vagas/", "/pt/vagas/detalhe/"].includes(`${url.pathname}/`)) {
       resposta.writeHead(308, { Location: `${url.pathname}/${url.search}` });
       resposta.end();
       return;
@@ -19,6 +19,7 @@ export default defineConfig(({ mode }) => {
   const destino = env.API_PROXY_TARGET?.trim() || env.VITE_API_URL?.trim() || "http://127.0.0.1:3001";
   const proxy = {
     "/api/vagas": { target: destino, changeOrigin: true },
+    "/api/candidaturas": { target: destino, changeOrigin: true },
     "/uploads/vagas": { target: destino, changeOrigin: true },
   };
   return {
@@ -38,6 +39,7 @@ export default defineConfig(({ mode }) => {
         privacidade: pagina("./pt/politica-de-privacidade/index.html"),
         cookies: pagina("./pt/politica-de-cookies/index.html"),
         vagas: pagina("./pt/vagas/index.html"),
+        vaga: pagina("./pt/vagas/detalhe/index.html"),
       },
     },
   },

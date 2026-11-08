@@ -39,7 +39,7 @@ Para voltar à Vextech, pare o servidor e execute `git switch main`, `npm ci` e 
 - Os três destaques do túnel apresentam soluções, não casos de clientes.
 - As vagas em Carreiras (Java Developer no Porto, PHP Developer em Braga) são reais, vindas do site atual da Vextech, e vêm da API em `server/` — sem backend a correr, a secção mostra só a candidatura espontânea.
 - As fotografias recebidas são ilustrativas; ver docs/media.md. A seleção final de imagens/vídeos externos e a validação de licenças ficam para a publicação.
-- O formulário valida campos localmente, mas não envia mensagens. A interface indica esse estado. O destino de contacto e o fluxo de candidaturas precisam de ser ligados antes da publicação.
+- O contacto geral e a candidatura espontânea validam campos localmente, mas não enviam mensagens; a interface indica esse estado. As candidaturas a vagas específicas já são guardadas pela API, com currículo PDF privado e consulta no painel. O destino do contacto geral ainda precisa de ser ligado antes da publicação.
 - A morada dos escritórios foi transcrita das capturas do site fornecidas pelo utilizador.
 - Sem vagas, números ou testemunhos inventados.
 - Conteúdo em português de Portugal; tradução inglesa não incluída.
@@ -108,7 +108,7 @@ Se não aparecerem cards, confirme primeiro que `http://localhost:3001/api/vagas
 
 Na página inicial, Carreiras apresenta apenas as duas vagas ativas mais recentes, em cards que se alinham durante o scroll. O botão «Ver todas as vagas» abre `/pt/vagas/`, com todas as oportunidades e os requisitos completos. O backend ordena por data de criação e, em caso de empate, pelo ID mais recente. Os cards reutilizam imagens ilustrativas do projeto, sem representar a equipa ou uma vaga específica.
 
-No telemóvel, os cards ficam em coluna. Com movimento reduzido ficam estáticos. A página de vagas partilha o menu, os temas e o formulário de contacto: «Candidata-te» preenche a mensagem com o título da vaga. O formulário continua em demonstração, sem enviar candidaturas. Sem API, a home mantém a candidatura espontânea; a página de vagas distingue indisponibilidade de ausência de vagas.
+No telemóvel, os cards ficam em coluna. Com movimento reduzido ficam estáticos. «Ver vaga» abre a página individual, com descrição, requisitos completos e formulário de candidatura com PDF. Sem API, a home mantém a candidatura espontânea; a página de vagas distingue indisponibilidade de ausência de vagas.
 
 ### Capas das vagas
 
@@ -126,3 +126,15 @@ npm run dev
 A migração acrescenta `vagas.capa` sem apagar vagas existentes e regista as migrações aplicadas para permitir repetir o comando. Os ficheiros enviados ficam em `server/uploads/vagas`, fora do Git; pode definir `UPLOADS_DIR` em `server/.env` para outro diretório persistente. Ao alojar ou copiar o backend, preserve tanto a base de dados como esse diretório. Em produção, encaminhe também `/uploads/vagas` para o backend; em desenvolvimento e preview, o Vite já o faz. O painel serve as capas automáticas a partir de `public/media/vagas`, que deve acompanhar o projeto.
 
 Os testes do backend usam uma base MySQL dedicada cujo nome termina em `_test`. Execute em `server/` com `VEXTECH_TEST_DB` e as variáveis `DB_HOST`, `DB_PORT`, `DB_USER` e `DB_PASSWORD` da base de teste: `npm test`. O teste verifica migração com dados existentes, idempotência, autenticação, envio PNG/JPG, limites, manutenção, substituição, remoção e limpeza dos ficheiros. Sem `VEXTECH_TEST_DB`, este teste é ignorado para evitar usar a base normal.
+
+### Página individual e candidaturas com PDF
+
+Cada vaga tem um endereço `/pt/vagas/detalhe/?id=ID`. Esta entrada HTML faz parte do build estático; não exige reescrever URLs nem gerar uma página por vaga no build. O detalhe lê `GET /api/vagas/:id`, apresenta a descrição em texto simples e todos os requisitos guardados no painel. As listas mostram apenas um resumo de até três requisitos por card. No painel, «Descrição da vaga» permite acrescentar contexto e funções sem alterar os requisitos existentes. As fontes consultadas estão em `docs/vagas-origem.md`; não se inventam nem substituem automaticamente dados das vagas.
+
+O formulário individual envia uma candidatura real para `POST /api/vagas/:id/candidaturas`, com nome e email obrigatórios, telefone e mensagem opcionais, currículo PDF obrigatório até 5 MB e confirmação da Política de Privacidade. A API verifica o conteúdo PDF, recusa documentos inválidos ou protegidos por palavra-passe, e só aceita vagas ativas. O limite é de 10 tentativas por IP em 15 minutos. A confirmação só aparece depois de gravar a candidatura. Não é enviado email nem é usada a demonstração do formulário geral.
+
+Depois do pull, pare a API e execute em `server/`: `npm ci`, `npm run migrate` e `npm run dev`. A migração `003_candidaturas.sql` acrescenta a descrição e a tabela de candidaturas sem apagar vagas. Noutro terminal, na raiz, inicie o frontend com `npm run dev`.
+
+Os currículos ficam em `server/private/curriculos`, fora do Git e de todas as pastas públicas. `CURRICULOS_DIR` permite escolher outro diretório privado persistente; preserve-o juntamente com a base de dados. O painel mostra «Candidaturas recebidas», com mensagens e descarga PDF autenticada (`/api/candidaturas/:id/curriculo`, como anexo, sem cache). Eliminar uma candidatura também elimina o respetivo ficheiro. Eliminar uma vaga conserva o histórico das candidaturas com o título/localização originais, até o administrador eliminar essas candidaturas.
+
+Em produção, mantenha estes diretórios privados fora do servidor de ficheiros estáticos e configure o proxy de confiança de acordo com o alojamento antes de expor a API, para o limite por IP refletir os candidatos. Estes passos não ligam automaticamente o VPS. Os testes com base dedicada também verificam PDF obrigatório/validado, confirmação de privacidade, vagas fechadas, limite de tentativas, privacidade dos ficheiros, descarga e eliminação autenticadas.

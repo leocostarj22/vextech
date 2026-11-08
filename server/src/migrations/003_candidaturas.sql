@@ -1,0 +1,16 @@
+ALTER TABLE vagas ADD COLUMN descricao TEXT NULL;
+
+CREATE TABLE candidaturas (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  vaga_id INT NULL,
+  vaga_titulo VARCHAR(160) NOT NULL,
+  vaga_localizacao VARCHAR(120) NOT NULL,
+  nome VARCHAR(120) NOT NULL,
+  email VARCHAR(200) NOT NULL,
+  telefone VARCHAR(40) NULL,
+  mensagem TEXT NULL,
+  cv_ficheiro VARCHAR(64) NOT NULL,
+  privacidade_aceite_em DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  criado_em DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_candidaturas_vaga FOREIGN KEY (vaga_id) REFERENCES vagas(id) ON DELETE SET NULL
+);

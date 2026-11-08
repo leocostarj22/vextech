@@ -12,6 +12,10 @@ test("Carreiras: duas vagas recentes, todas as vagas e candidatura", async ({ pa
   const errors = [];
   page.on("pageerror", (e) => errors.push(e.message));
   await page.route("**/api/vagas", (route) => route.fulfill({ json: vagasMock }));
+  await page.route("**/api/vagas/*", (route) => {
+    const id = Number(new URL(route.request().url()).pathname.split("/").pop());
+    return route.fulfill({ json: { ...vagasMock.find((v) => v.id === id), descricao: "Descrição completa da vaga de teste." } });
+  });
   await page.goto("/");
   const cards = page.locator(".carreiras__vaga");
   await expect(cards).toHaveCount(2);
@@ -30,22 +34,24 @@ test("Carreiras: duas vagas recentes, todas as vagas e candidatura", async ({ pa
   if (testInfo.project.name === "reduced-motion") {
     for (const card of await cards.all()) await expect(card).toHaveCSS("transform", "none");
   }
-  await cards.first().getByRole("button", { name: /Candidata-te/ }).click();
-  await expect(page.locator("#contacto-formulario")).toBeVisible();
-  await expect(page.locator("textarea[name=mensagem]")).toHaveValue(/Java Developer/);
-  await page.getByRole("button", { name: "Fechar formulário" }).click();
-  await page.getByRole("link", { name: "Ver todas as vagas" }).click();
+  await cards.first().getByRole("link", { name: /Ver vaga/ }).click();
+  await expect(page).toHaveURL(/detalhe\/\?id=1/);
+  await expect(page.locator("#vaga-titulo")).toHaveText("Java Developer");
+  await expect(page.locator("#vaga-descricao")).toHaveText("Descrição completa da vaga de teste.");
+  await expect(page.locator('input[name="curriculo"]')).toHaveAttribute("accept", "application/pdf,.pdf");
+  await page.locator(".vagas__caminho").getByRole("link", { name: "Vagas", exact: true }).click();
   await expect(page).toHaveURL(/\/pt\/vagas\//);
   await expect(page).toHaveTitle("Vagas — Carreiras Vextech");
   await expect(page.locator("#vagas-lista .vaga-card")).toHaveCount(4);
   await expect(page.locator("#vagas-estado")).toHaveText("4 oportunidades disponíveis");
-  await expect(page.locator("#vagas-lista")).toContainText("Quatro");
+  await expect(page.locator("#vagas-lista")).not.toContainText("Quatro");
   await expect(page.locator("canvas")).toHaveCount(0);
   await page.getByRole("button", { name: "Mudar para versão escura" }).click();
   await expect(page.locator("html")).toHaveAttribute("data-tema", "escuro");
   await page.locator("main").screenshot({ path: `test-results/${testInfo.project.name}-vagas-escuro.png` });
-  await page.locator("#vagas-lista").getByRole("button", { name: /Candidata-te — PHP Developer/ }).click();
-  await expect(page.locator("textarea[name=mensagem]")).toHaveValue(/PHP Developer/);
+  await page.locator("#vagas-lista").getByRole("link", { name: /Ver vaga — PHP Developer/ }).click();
+  await expect(page.locator("#vaga-titulo")).toHaveText("PHP Developer");
+  await expect(page.locator("#vaga-requisitos")).toContainText("Symfony ou Laravel");
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   expect(errors).toEqual([]);
 });

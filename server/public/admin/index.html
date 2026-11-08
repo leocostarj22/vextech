@@ -21,6 +21,7 @@
         <input type="hidden" name="id" />
         <label>Título<input name="titulo" required maxlength="160" /></label>
         <label>Localização<input name="localizacao" required maxlength="120" /></label>
+        <label>Descrição da vaga<textarea name="descricao" maxlength="20000" placeholder="Apresentação, funções ou contexto da oportunidade."></textarea></label>
         <label
           >Requisitos (um por linha)<textarea name="requisitos" required></textarea
         ></label>
@@ -56,6 +57,14 @@
         </thead>
         <tbody id="lista-vagas"></tbody>
       </table>
+
+      <hr class="separador" />
+
+      <section aria-labelledby="candidaturas-titulo">
+        <div class="cabecalho"><div><h1 id="candidaturas-titulo">Candidaturas recebidas</h1><p class="sub">Currículos privados, disponíveis apenas aos administradores.</p></div><button type="button" class="secundario" id="atualizar-candidaturas">Atualizar</button></div>
+        <p id="candidaturas-estado" class="aviso" role="status"></p>
+        <div id="lista-candidaturas"></div>
+      </section>
 
       <hr class="separador" />
 
