@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="pt">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Vextech — Criar conta de admin</title>
+    <link rel="stylesheet" href="admin.css" />
+  </head>
+  <body>
+    <main class="pagina pagina--estreita">
+      <h1>Criar a tua conta</h1>
+      <p class="sub">Foste convidado para o painel de vagas da Vextech.</p>
+      <form id="form-registo">
+        <label>Nome<input name="nome" required maxlength="120" /></label>
+        <label>Password<input name="password" type="password" required minlength="8" autocomplete="new-password" /></label>
+        <p class="erro" id="erro"></p>
+        <button type="submit">Criar conta</button>
+      </form>
+    </main>
+    <script type="module" src="registar.js"></script>
+  </body>
+</html>

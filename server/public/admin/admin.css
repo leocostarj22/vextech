@@ -1,0 +1,146 @@
+:root {
+  --tinta: #11111f;
+  --ciano: #68d2df;
+  --branco: #ffffff;
+  --cinza: #656574;
+  --fio: #dcd8cf;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  background: var(--tinta);
+  color: var(--branco);
+  font-family: system-ui, "Segoe UI", sans-serif;
+  min-height: 100svh;
+}
+.pagina {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 48px 24px 80px;
+}
+.pagina--estreita {
+  max-width: 420px;
+  padding-top: 90px;
+}
+h1 {
+  font-size: 28px;
+  font-weight: 500;
+  margin: 0 0 8px;
+}
+p.sub {
+  color: var(--ciano);
+  margin: 0 0 32px;
+  font-size: 14px;
+}
+form {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 28px;
+}
+label {
+  display: grid;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--cinza);
+}
+input,
+textarea {
+  background: rgb(255 255 255 / 0.06);
+  border: 1px solid rgb(255 255 255 / 0.2);
+  color: var(--branco);
+  padding: 10px 12px;
+  border-radius: 4px;
+  font-size: 15px;
+  font-family: inherit;
+}
+textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+input:focus,
+textarea:focus {
+  outline: 2px solid var(--ciano);
+  outline-offset: 1px;
+}
+.linha {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--cinza);
+}
+button {
+  background: var(--ciano);
+  color: var(--tinta);
+  border: 0;
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  width: fit-content;
+}
+button.secundario {
+  background: transparent;
+  color: var(--branco);
+  border: 1px solid rgb(255 255 255 / 0.3);
+}
+button.perigo {
+  background: transparent;
+  color: #e07a7a;
+  border: 1px solid #e07a7a;
+}
+.erro {
+  color: #e07a7a;
+  font-size: 13px;
+  min-height: 18px;
+}
+.aviso {
+  color: var(--ciano);
+  font-size: 13px;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+}
+th,
+td {
+  text-align: left;
+  padding: 12px 8px;
+  border-bottom: 1px solid rgb(255 255 255 / 0.12);
+  font-size: 14px;
+  vertical-align: top;
+}
+th {
+  color: var(--cinza);
+  font-weight: 500;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+.acoes {
+  display: flex;
+  gap: 8px;
+}
+.cabecalho {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+.separador {
+  border: 0;
+  border-top: 1px solid rgb(255 255 255 / 0.15);
+  margin: 40px 0;
+}
+.copiar {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.copiar input {
+  flex: 1;
+}

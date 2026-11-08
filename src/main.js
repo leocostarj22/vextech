@@ -22,6 +22,7 @@ import { animarEstudio } from "./motion/estudio";
 import { animarMetodo } from "./motion/metodo";
 import { animarIndice } from "./motion/indice";
 import { animarContato } from "./motion/contato";
+import { animarCarreiras } from "./motion/carreiras";
 import { scrollSuave } from "./motion/suave";
 import { casos } from "./data/casos";
 
@@ -55,6 +56,7 @@ animarMetodo();
 animarEstudio(reduzido);
 animarIndice(reduzido);
 animarContato(reduzido);
+animarCarreiras();
 revelarMarca(document.querySelector(".tunel__marca"), reduzido);
 const lenis = scrollSuave(reduzido);
 const header = document.querySelector(".nav");
@@ -119,7 +121,16 @@ const formPanel = document.querySelector("#contacto-formulario"),
 function abrirContacto(assunto) {
   formPanel.hidden = false;
   formToggle.setAttribute("aria-expanded", "true");
-  if (assunto) form.elements.assunto.value = assunto;
+  if (assunto) {
+    const opcoes = [...form.elements.assunto.options].map((o) => o.value);
+    if (opcoes.includes(assunto)) {
+      form.elements.assunto.value = assunto;
+    } else {
+      form.elements.assunto.value = "Candidatura espontânea";
+      form.elements.mensagem.value =
+        `Tenho interesse nesta vaga: ${assunto.replace(/^Candidatura — /, "")}.`;
+    }
+  }
   ScrollTrigger.refresh();
   lenis?.resize();
   const top = formPanel.getBoundingClientRect().top + scrollY - 100;
@@ -141,11 +152,10 @@ function fecharContacto() {
 formPanel
   .querySelector(".form__fechar")
   .addEventListener("click", fecharContacto);
-document
-  .querySelectorAll("[data-contacto]")
-  .forEach((b) =>
-    b.addEventListener("click", () => abrirContacto(b.dataset.contacto)),
-  );
+document.addEventListener("click", (e) => {
+  const botao = e.target.closest("[data-contacto]");
+  if (botao) abrirContacto(botao.dataset.contacto);
+});
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   form.querySelector(".form__resultado").textContent =

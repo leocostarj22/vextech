@@ -1,0 +1,32 @@
+services:
+  mysql:
+    image: mysql:8
+    container_name: vextech-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-vextech_root}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-vextech}
+      MYSQL_USER: ${MYSQL_USER:-vextech}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-vextech}
+    ports:
+      - "3306:3306"
+    volumes:
+      - vextech-mysql-data:/var/lib/mysql
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "mysqladmin",
+          "ping",
+          "-h",
+          "localhost",
+          "-u",
+          "root",
+          "-p${MYSQL_ROOT_PASSWORD:-vextech_root}",
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  vextech-mysql-data:

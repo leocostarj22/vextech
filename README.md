@@ -37,6 +37,7 @@ Para voltar à Vextech, pare o servidor e execute `git switch main`, `npm ci` e 
 ## Estado desta experiência
 
 - Os três destaques do túnel apresentam soluções, não casos de clientes.
+- As vagas em Carreiras (Java Developer no Porto, PHP Developer em Braga) são reais, vindas do site atual da Vextech, e vêm da API em `server/` — sem backend a correr, a secção mostra só a candidatura espontânea.
 - As fotografias recebidas são ilustrativas; ver docs/media.md. A seleção final de imagens/vídeos externos e a validação de licenças ficam para a publicação.
 - O formulário valida campos localmente, mas não envia mensagens. A interface indica esse estado. O destino de contacto e o fluxo de candidaturas precisam de ser ligados antes da publicação.
 - A morada dos escritórios foi transcrita das capturas do site fornecidas pelo utilizador.
@@ -63,3 +64,41 @@ A navegação usa um painel compacto em desktop e telemóvel, com links para as 
 As páginas `/pt/termos-e-condicoes/`, `/pt/politica-de-privacidade/` e `/pt/politica-de-cookies/` são entradas HTML independentes, com o mesmo menu, temas e identidade visual. O build gera um `index.html` em cada diretório, servível por alojamento estático sem reescrever os pedidos para a página inicial. As versões sem a barra final também são reconhecidas pelo servidor de desenvolvimento e pelos servidores que normalizam diretórios.
 
 Os textos foram mantidos conforme as capturas e a instrução expressa do utilizador. As expressões «Morada Empresa» e «Email Empresa» continuam no texto original. Ver docs/paginas-legais.md para a origem e as referências que ainda não foram confirmadas face à implementação atual.
+
+## Vagas e painel de administração
+
+A secção Carreiras lista vagas vindas de uma API própria (`server/`, Node.js + Express + MySQL), não de um ficheiro estático — assim a equipa da Vextech pode acrescentar ou retirar vagas sem alterar o código do site. Enquanto a variável `VITE_API_URL` não estiver definida, a secção mostra só o convite à candidatura espontânea.
+
+Por agora isto corre apenas em local, até o site ser aprovado pelo CEO da Vextech; o VPS e o domínio já existem mas ainda não estão ligados a este backend.
+
+### Preparar a base de dados (Docker)
+
+```sh
+docker compose up -d
+```
+
+Sobe um MySQL em `localhost:3306` com a base `vextech`. Para inspecionar os dados com o MySQL Workbench, liga uma nova conexão a `localhost:3306` com o utilizador e password definidos em `docker-compose.yml` (ou no `.env` da raiz, se os tiver sobreposto).
+
+### Preparar e correr a API
+
+```sh
+cd server
+npm install
+cp .env.example .env
+npm run migrate
+npm run seed:admin -- --nome="O teu nome" --email="tu@vextech.pt" --password="escolhe-uma-password-forte"
+npm run dev
+```
+
+A API fica em `http://localhost:3001`. O painel de administração está em `http://localhost:3001/admin/login.html` — entra com a conta criada pelo `seed:admin` para gerir vagas e para convidar outras pessoas (o convite gera um link de registo de uso único; não há envio automático de email, o link é copiado e partilhado manualmente).
+
+### Ligar o site à API
+
+Na raiz do projeto:
+
+```sh
+cp .env.example .env
+npm run dev
+```
+
+Com `VITE_API_URL=http://localhost:3001` no `.env`, a secção Carreiras passa a mostrar as vagas criadas no painel.

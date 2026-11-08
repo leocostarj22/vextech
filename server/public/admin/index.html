@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="pt">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Vextech — Admin</title>
+    <link rel="stylesheet" href="admin.css" />
+  </head>
+  <body>
+    <main class="pagina">
+      <div class="cabecalho">
+        <div>
+          <h1>Vagas</h1>
+          <p class="sub" id="sessao"></p>
+        </div>
+        <button type="button" class="secundario" id="sair">Sair</button>
+      </div>
+
+      <form id="form-vaga">
+        <input type="hidden" name="id" />
+        <label>Título<input name="titulo" required maxlength="160" /></label>
+        <label>Localização<input name="localizacao" required maxlength="120" /></label>
+        <label
+          >Requisitos (um por linha)<textarea name="requisitos" required></textarea
+        ></label>
+        <span class="linha"
+          ><input type="checkbox" name="ativa" id="ativa" checked /><label
+            for="ativa"
+            >Vaga ativa (visível no site)</label
+          ></span
+        >
+        <p class="erro" id="erro-vaga"></p>
+        <div class="acoes">
+          <button type="submit" id="guardar">Adicionar vaga</button>
+          <button type="button" class="secundario" id="cancelar-edicao" hidden>
+            Cancelar edição
+          </button>
+        </div>
+      </form>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Título</th>
+            <th>Localização</th>
+            <th>Estado</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="lista-vagas"></tbody>
+      </table>
+
+      <hr class="separador" />
+
+      <h1>Convidar novo admin</h1>
+      <p class="sub">
+        Gera um link de registo de utilização única. Partilha-o diretamente
+        com a pessoa — não existe envio automático de email.
+      </p>
+      <form id="form-convite">
+        <label>Email da pessoa a convidar<input name="email" type="email" required /></label>
+        <p class="erro" id="erro-convite"></p>
+        <button type="submit">Gerar convite</button>
+      </form>
+      <div class="copiar" id="resultado-convite" hidden>
+        <input type="text" id="link-convite" readonly />
+        <button type="button" class="secundario" id="copiar-convite">Copiar</button>
+      </div>
+    </main>
+    <script type="module" src="index.js"></script>
+  </body>
+</html>
