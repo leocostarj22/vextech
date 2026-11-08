@@ -109,3 +109,20 @@ Se não aparecerem cards, confirme primeiro que `http://localhost:3001/api/vagas
 Na página inicial, Carreiras apresenta apenas as duas vagas ativas mais recentes, em cards que se alinham durante o scroll. O botão «Ver todas as vagas» abre `/pt/vagas/`, com todas as oportunidades e os requisitos completos. O backend ordena por data de criação e, em caso de empate, pelo ID mais recente. Os cards reutilizam imagens ilustrativas do projeto, sem representar a equipa ou uma vaga específica.
 
 No telemóvel, os cards ficam em coluna. Com movimento reduzido ficam estáticos. A página de vagas partilha o menu, os temas e o formulário de contacto: «Candidata-te» preenche a mensagem com o título da vaga. O formulário continua em demonstração, sem enviar candidaturas. Sem API, a home mantém a candidatura espontânea; a página de vagas distingue indisponibilidade de ausência de vagas.
+
+### Capas das vagas
+
+Java e PHP usam as imagens fornecidas em `vagas.zip`. As restantes vagas usam `public/media/vagas/default.jpg`. No painel, o campo «Capa da vaga» permite enviar PNG/JPG até 5 MB (recomendado 16:9), com pré-visualização. A capa enviada tem prioridade. Editar o texto mantém a capa; a opção «Remover a capa enviada» repõe a imagem automática. Os uploads são validados pelo conteúdo, limitados a 32 megapíxeis e guardados com nomes aleatórios, depois de corrigir a orientação e remover metadados.
+
+Depois de atualizar esta versão, pare a API e execute:
+
+```sh
+cd server
+npm ci
+npm run migrate
+npm run dev
+```
+
+A migração acrescenta `vagas.capa` sem apagar vagas existentes e regista as migrações aplicadas para permitir repetir o comando. Os ficheiros enviados ficam em `server/uploads/vagas`, fora do Git; pode definir `UPLOADS_DIR` em `server/.env` para outro diretório persistente. Ao alojar ou copiar o backend, preserve tanto a base de dados como esse diretório. Em produção, encaminhe também `/uploads/vagas` para o backend; em desenvolvimento e preview, o Vite já o faz. O painel serve as capas automáticas a partir de `public/media/vagas`, que deve acompanhar o projeto.
+
+Os testes do backend usam uma base MySQL dedicada cujo nome termina em `_test`. Execute em `server/` com `VEXTECH_TEST_DB` e as variáveis `DB_HOST`, `DB_PORT`, `DB_USER` e `DB_PASSWORD` da base de teste: `npm test`. O teste verifica migração com dados existentes, idempotência, autenticação, envio PNG/JPG, limites, manutenção, substituição, remoção e limpeza dos ficheiros. Sem `VEXTECH_TEST_DB`, este teste é ignorado para evitar usar a base normal.

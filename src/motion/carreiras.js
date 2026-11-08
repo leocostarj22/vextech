@@ -2,6 +2,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { carregarVagas } from "../data/vagas";
 import { vagaCard } from "../sections/vaga-card";
+import { ligarFallbackCapas } from "../data/capas-vagas";
 
 export async function animarCarreiras(reduzido, atualizarLayout) {
   const lista = document.querySelector("#carreiras-lista");
@@ -23,6 +24,7 @@ export async function animarCarreiras(reduzido, atualizarLayout) {
   }
   estado.hidden = true;
   lista.innerHTML = vagas.slice(0, 2).map((vaga, i) => vagaCard(vaga, i)).join("");
+  ligarFallbackCapas(lista);
   document.querySelector(".carreiras__recentes").hidden = false;
   document.querySelector(".carreiras__todas").hidden = false;
   if (!reduzido) {

@@ -16,6 +16,40 @@ const erroVaga = document.querySelector("#erro-vaga");
 const listaVagas = document.querySelector("#lista-vagas");
 const botaoGuardar = document.querySelector("#guardar");
 const botaoCancelar = document.querySelector("#cancelar-edicao");
+const capaPreview = document.querySelector("#capa-preview");
+const removerLinha = document.querySelector("#remover-capa-linha");
+let capaAtual = null, previewLocal = null;
+const escapar = (texto) => String(texto).replace(/[&<>"']/g, (c) =>
+  ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+
+function mostrarCapa() {
+  if (previewLocal) URL.revokeObjectURL(previewLocal);
+  previewLocal = null;
+  const ficheiro = formVaga.elements.capa.files[0];
+  const titulo = formVaga.elements.titulo.value;
+  const automatica = /\bphp\b/i.test(titulo) ? "php.png" : /\bjava\b/i.test(titulo) ? "java.png" : "default.jpg";
+  if (ficheiro) previewLocal = URL.createObjectURL(ficheiro);
+  capaPreview.src = previewLocal || (!formVaga.elements.remover_capa.checked && capaAtual) || `/media/vagas/${automatica}`;
+  removerLinha.hidden = !capaAtual;
+}
+
+formVaga.elements.capa.addEventListener("change", () => {
+  erroVaga.textContent = "";
+  const ficheiro = formVaga.elements.capa.files[0];
+  if (ficheiro && (!["image/png", "image/jpeg"].includes(ficheiro.type) || ficheiro.size > 5 * 1024 * 1024)) {
+    erroVaga.textContent = "Escolhe uma imagem PNG ou JPG, até 5 MB.";
+    formVaga.elements.capa.value = "";
+  }
+  formVaga.elements.remover_capa.checked = false;
+  mostrarCapa();
+});
+formVaga.elements.titulo.addEventListener("input", mostrarCapa);
+formVaga.elements.remover_capa.addEventListener("change", () => {
+  if (formVaga.elements.remover_capa.checked) formVaga.elements.capa.value = "";
+  mostrarCapa();
+});
+mostrarCapa();
+
 
 function linhasParaLista(texto) {
   return texto
@@ -30,6 +64,9 @@ function limparFormulario() {
   formVaga.elements.ativa.checked = true;
   botaoGuardar.textContent = "Adicionar vaga";
   botaoCancelar.hidden = true;
+  capaAtual = null;
+  erroVaga.textContent = "";
+  mostrarCapa();
 }
 
 async function carregarVagas() {
@@ -38,8 +75,8 @@ async function carregarVagas() {
   listaVagas.innerHTML = vagas
     .map(
       (v) => `<tr>
-        <td>${v.titulo}</td>
-        <td>${v.localizacao}</td>
+        <td>${escapar(v.titulo)}</td>
+        <td>${escapar(v.localizacao)}</td>
         <td>${v.ativa ? "Ativa" : "Inativa"}</td>
         <td class="acoes">
           <button type="button" class="secundario" data-editar="${v.id}">Editar</button>
@@ -52,6 +89,8 @@ async function carregarVagas() {
   listaVagas.querySelectorAll("[data-editar]").forEach((botao) =>
     botao.addEventListener("click", () => {
       const vaga = vagas.find((v) => v.id === Number(botao.dataset.editar));
+      limparFormulario();
+      capaAtual = vaga.capa || null;
       formVaga.elements.id.value = vaga.id;
       formVaga.elements.titulo.value = vaga.titulo;
       formVaga.elements.localizacao.value = vaga.localizacao;
@@ -59,6 +98,7 @@ async function carregarVagas() {
       formVaga.elements.ativa.checked = Boolean(vaga.ativa);
       botaoGuardar.textContent = "Guardar alterações";
       botaoCancelar.hidden = false;
+      mostrarCapa();
       formVaga.scrollIntoView({ behavior: "smooth" });
     }),
   );
@@ -79,27 +119,32 @@ formVaga.addEventListener("submit", async (e) => {
   erroVaga.textContent = "";
 
   const id = formVaga.elements.id.value;
-  const corpo = {
-    titulo: formVaga.elements.titulo.value,
-    localizacao: formVaga.elements.localizacao.value,
-    requisitos: linhasParaLista(formVaga.elements.requisitos.value),
-    ativa: formVaga.elements.ativa.checked,
-  };
-
-  const resposta = await fetch(id ? `/api/vagas/${id}` : "/api/vagas", {
-    method: id ? "PUT" : "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(corpo),
-  });
-
-  if (!resposta.ok) {
-    const resultado = await resposta.json().catch(() => ({}));
-    erroVaga.textContent = resultado.erro || "Não foi possível guardar a vaga.";
-    return;
+  const corpo = new FormData();
+  corpo.set("titulo", formVaga.elements.titulo.value);
+  corpo.set("localizacao", formVaga.elements.localizacao.value);
+  corpo.set("requisitos", JSON.stringify(linhasParaLista(formVaga.elements.requisitos.value)));
+  corpo.set("ativa", String(formVaga.elements.ativa.checked));
+  corpo.set("remover_capa", String(formVaga.elements.remover_capa.checked));
+  const ficheiro = formVaga.elements.capa.files[0];
+  if (ficheiro) corpo.set("capa", ficheiro);
+  botaoGuardar.disabled = true;
+  try {
+    const resposta = await fetch(id ? `/api/vagas/${id}` : "/api/vagas", {
+      method: id ? "PUT" : "POST",
+      body: corpo,
+    });
+    if (!resposta.ok) {
+      const resultado = await resposta.json().catch(() => ({}));
+      erroVaga.textContent = resultado.erro || "Não foi possível guardar a vaga.";
+      return;
+    }
+    limparFormulario();
+    await carregarVagas();
+  } catch {
+    erroVaga.textContent = "Não foi possível ligar ao servidor. Tenta novamente.";
+  } finally {
+    botaoGuardar.disabled = false;
   }
-
-  limparFormulario();
-  await carregarVagas();
 });
 
 const formConvite = document.querySelector("#form-convite");

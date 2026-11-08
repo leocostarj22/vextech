@@ -40,3 +40,9 @@ A apresentação usa agora uma proporção comum de 16:9, definida em `--imagem-
 ## Ícones das redes sociais
 
 As imagens de LinkedIn e Instagram em `public/media/redes/` foram fornecidas em `sociais.zip` e copiadas sem alterações. São apresentadas com a mesma dimensão visual, preservando a proporção, nos links do menu e do rodapé. Os nomes acessíveis e os destinos dos perfis são mantidos.
+
+## Capas das vagas — vagas.zip
+
+Os três originais foram copiados sem alterações para `public/media/vagas/`: `java.png` e `php.png` (1672 × 941 px), e `default.jpg` (6000 × 3375 px). Sem capa personalizada, o título identifica Java ou PHP; os outros títulos usam a imagem predefinida. A escolha não depende da posição da vaga na lista. Uma capa enviada no painel tem prioridade e uma imagem indisponível volta à predefinida. O enquadramento mantém 16:9 com recorte proporcional.
+
+As capas posteriormente enviadas no painel são validadas e normalizadas no backend (PNG/JPG, até 5 MB e 32 megapíxeis, orientação corrigida e metadados removidos). Os ficheiros recebem nomes aleatórios e são guardados fora do Git, em `server/uploads/vagas` ou no diretório `UPLOADS_DIR`.

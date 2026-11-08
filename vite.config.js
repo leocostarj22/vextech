@@ -17,7 +17,10 @@ const normalizarPaginasLegais = (servidor) => {
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
   const destino = env.API_PROXY_TARGET?.trim() || env.VITE_API_URL?.trim() || "http://127.0.0.1:3001";
-  const proxy = { "/api/vagas": { target: destino, changeOrigin: true } };
+  const proxy = {
+    "/api/vagas": { target: destino, changeOrigin: true },
+    "/uploads/vagas": { target: destino, changeOrigin: true },
+  };
   return {
   appType: "mpa",
   server: { proxy },

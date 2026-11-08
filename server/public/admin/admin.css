@@ -144,3 +144,12 @@ th {
 .copiar input {
   flex: 1;
 }
+.capa-preview {
+  width: min(100%, 420px);
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid var(--fio);
+}
+#capa-ajuda { margin: 0; }
+[hidden] { display: none !important; }

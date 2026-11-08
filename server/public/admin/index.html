@@ -24,6 +24,12 @@
         <label
           >Requisitos (um por linha)<textarea name="requisitos" required></textarea
         ></label>
+        <label>Capa da vaga (opcional)
+          <input type="file" name="capa" accept="image/png,image/jpeg,.png,.jpg,.jpeg" aria-describedby="capa-ajuda" />
+        </label>
+        <p class="aviso" id="capa-ajuda">PNG ou JPG, até 5 MB. Recomendamos o formato 16:9. Sem envio, é usada a capa automática.</p>
+        <img id="capa-preview" class="capa-preview" alt="Pré-visualização da capa da vaga" />
+        <span class="linha" id="remover-capa-linha" hidden><input type="checkbox" name="remover_capa" id="remover-capa" /><label for="remover-capa">Remover a capa enviada e usar a capa automática</label></span>
         <span class="linha"
           ><input type="checkbox" name="ativa" id="ativa" checked /><label
             for="ativa"

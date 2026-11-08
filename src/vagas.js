@@ -8,6 +8,7 @@ import { nav } from "./sections/nav";
 import { contato } from "./sections/contato";
 import { carregarVagas } from "./data/vagas";
 import { vagaCard } from "./sections/vaga-card";
+import { ligarFallbackCapas } from "./data/capas-vagas";
 import { iniciarTema, ligarBotaoTema } from "./theme";
 import { ligarMenu } from "./motion/menu";
 import { ligarFormulario } from "./motion/formulario";
@@ -28,6 +29,7 @@ const lista = document.querySelector("#vagas-lista");
 const estado = document.querySelector("#vagas-estado");
 const resultado = await carregarVagas();
 lista.innerHTML = resultado.vagas.map((vaga, i) => vagaCard(vaga, i, { completa: true })).join("");
+ligarFallbackCapas(lista);
 lista.setAttribute("aria-busy", "false");
 estado.textContent = resultado.estado !== "ok"
   ? "Não foi possível carregar as vagas. Tenta novamente mais tarde."

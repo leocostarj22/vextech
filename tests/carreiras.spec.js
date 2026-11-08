@@ -19,6 +19,8 @@ test("Carreiras: duas vagas recentes, todas as vagas e candidatura", async ({ pa
   await expect(cards.nth(0)).toContainText("Porto");
   await expect(cards.nth(1)).toContainText("PHP Developer");
   await expect(cards.nth(1)).toContainText("Braga");
+  await expect(cards.nth(0).locator("img")).toHaveAttribute("src", "/media/vagas/java.png");
+  await expect(cards.nth(1).locator("img")).toHaveAttribute("src", "/media/vagas/php.png");
   await expect(page.locator("#carreiras")).not.toContainText("Vaga de teste anterior");
   // A rolagem acompanha a animação, sem interferir com o acesso às ações.
   await page.locator(".carreiras__todas").scrollIntoViewIfNeeded();
