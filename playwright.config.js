@@ -15,7 +15,7 @@ export default defineConfig({
     command: "npm run dev -- --host 0.0.0.0",
     url: "http://127.0.0.1:5173",
     reuseExistingServer: true,
-    env: { VITE_API_URL: "http://127.0.0.1:3001" },
+    env: { VITE_API_URL: "", API_PROXY_TARGET: "http://127.0.0.1:3001" },
   },
   projects: [
     { name: "desktop", use: { viewport: { width: 1440, height: 840 } } },

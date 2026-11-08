@@ -55,7 +55,8 @@ test("Carreiras: sem backend mantém candidatura e explica indisponibilidade na 
   await page.goto("/");
   await expect(page.getByRole("button", { name: "Candidatura espontânea" })).toBeVisible();
   await expect(page.locator(".carreiras__vaga")).toHaveCount(0);
-  await expect(page.locator(".carreiras__todas")).toBeHidden();
+  await expect(page.locator(".carreiras__todas")).toBeVisible();
+  await expect(page.locator("#carreiras-estado")).toContainText("Não foi possível carregar");
   await page.goto("/pt/vagas");
   await expect(page.locator("#vagas-lista")).toHaveAttribute("aria-busy", "false");
   await expect(page.locator("#vagas-estado")).toContainText("Não foi possível carregar");

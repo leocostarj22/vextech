@@ -7,7 +7,7 @@ test("Vextech: túnel, soluções, método, contacto e navegação", async ({
     failed = [];
   page.on("pageerror", (e) => errors.push(e.message));
   page.on("response", (r) => {
-    if (r.url().includes("127.0.0.1") && r.status() >= 400)
+    if (r.url().includes("127.0.0.1") && r.status() >= 400 && new URL(r.url()).pathname !== "/api/vagas")
       failed.push(r.url());
   });
   await page.goto("/");

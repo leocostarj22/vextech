@@ -6,8 +6,22 @@ import { vagaCard } from "../sections/vaga-card";
 export async function animarCarreiras(reduzido, atualizarLayout) {
   const lista = document.querySelector("#carreiras-lista");
   if (!lista) return;
-  const { vagas } = await carregarVagas();
-  if (!vagas.length) return;
+  const estado = document.querySelector("#carreiras-estado");
+  const tentar = document.querySelector("#carreiras-tentar");
+  tentar.hidden = true;
+  const resultado = await carregarVagas();
+  const { vagas } = resultado;
+  if (!vagas.length) {
+    estado.textContent = resultado.estado === "ok"
+      ? "Neste momento não temos vagas publicadas. Podes enviar uma candidatura espontânea."
+      : "Não foi possível carregar as vagas neste momento. Podes enviar uma candidatura espontânea.";
+    estado.hidden = false;
+    tentar.hidden = resultado.estado === "ok";
+    tentar.onclick = () => animarCarreiras(reduzido, atualizarLayout);
+    atualizarLayout();
+    return;
+  }
+  estado.hidden = true;
   lista.innerHTML = vagas.slice(0, 2).map((vaga, i) => vagaCard(vaga, i)).join("");
   document.querySelector(".carreiras__recentes").hidden = false;
   document.querySelector(".carreiras__todas").hidden = false;

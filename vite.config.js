@@ -1,4 +1,4 @@
-import { defineConfig } from "vite";
+import { defineConfig, loadEnv } from "vite";
 import { fileURLToPath } from "node:url";
 import { paginasLegais } from "./src/data/legal.js";
 
@@ -14,8 +14,14 @@ const normalizarPaginasLegais = (servidor) => {
     seguinte();
   });
 };
-export default defineConfig({
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), "");
+  const destino = env.API_PROXY_TARGET?.trim() || env.VITE_API_URL?.trim() || "http://127.0.0.1:3001";
+  const proxy = { "/api/vagas": { target: destino, changeOrigin: true } };
+  return {
   appType: "mpa",
+  server: { proxy },
+  preview: { proxy },
   plugins: [{
     name: "enderecos-legais",
     configureServer: normalizarPaginasLegais,
@@ -32,4 +38,5 @@ export default defineConfig({
       },
     },
   },
+  };
 });

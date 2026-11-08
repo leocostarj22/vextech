@@ -67,7 +67,7 @@ Os textos foram mantidos conforme as capturas e a instrução expressa do utiliz
 
 ## Vagas e painel de administração
 
-A secção Carreiras lista vagas vindas de uma API própria (`server/`, Node.js + Express + MySQL), não de um ficheiro estático — assim a equipa da Vextech pode acrescentar ou retirar vagas sem alterar o código do site. Enquanto a variável `VITE_API_URL` não estiver definida, a secção mostra só o convite à candidatura espontânea.
+A secção Carreiras lista vagas vindas de uma API própria (`server/`, Node.js + Express + MySQL), não de um ficheiro estático — assim a equipa da Vextech pode acrescentar ou retirar vagas sem alterar o código do site. Em desenvolvimento, o Vite encaminha automaticamente `/api/vagas` para a API local em `http://127.0.0.1:3001`. Não é necessário criar `.env` na raiz para carregar as vagas. A API e o MySQL precisam de estar em execução, e as vagas devem estar ativas no painel.
 
 Por agora isto corre apenas em local, até o site ser aprovado pelo CEO da Vextech; o VPS e o domínio já existem mas ainda não estão ligados a este backend.
 
@@ -94,14 +94,17 @@ A API fica em `http://localhost:3001`. O painel de administração está em `htt
 
 ### Ligar o site à API
 
-Na raiz do projeto:
+Com a API a correr na porta 3001, na raiz do projeto basta executar:
 
 ```sh
-cp .env.example .env
 npm run dev
 ```
 
-Com `VITE_API_URL=http://localhost:3001` no `.env`, a secção Carreiras passa a mostrar as vagas criadas no painel.
+O browser pede `/api/vagas` ao mesmo endereço do site e o Vite encaminha o pedido à API. Assim, o endereço do browser (`localhost` ou `127.0.0.1`) não provoca problemas de CORS. Para outra porta ou servidor, copie `.env.example` para `.env`, defina `API_PROXY_TARGET` e reinicie o Vite. `npm run preview` usa o mesmo encaminhamento local.
+
+Em produção, configure o servidor web para encaminhar `/api/vagas` para o backend; se este estiver noutro domínio, defina `VITE_API_URL` antes do build e autorize a origem do site no backend. Esta configuração não publica nem liga automaticamente o VPS.
+
+Se não aparecerem cards, confirme primeiro que `http://localhost:3001/api/vagas` devolve uma lista com vagas. `[]` significa que não existem vagas ativas na base de dados. Na versão local, `http://localhost:5173/api/vagas` deve devolver a mesma lista. Uma falha de ligação apresenta uma mensagem e «Tentar novamente», sem esconder silenciosamente a secção.
 
 Na página inicial, Carreiras apresenta apenas as duas vagas ativas mais recentes, em cards que se alinham durante o scroll. O botão «Ver todas as vagas» abre `/pt/vagas/`, com todas as oportunidades e os requisitos completos. O backend ordena por data de criação e, em caso de empate, pelo ID mais recente. Os cards reutilizam imagens ilustrativas do projeto, sem representar a equipa ou uma vaga específica.
 
