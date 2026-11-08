@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { rateLimit } from "express-rate-limit";
 import bcrypt from "bcrypt";
+import { novaPasswordValida } from "../password.js";
 import jwt from "jsonwebtoken";
 import { randomBytes } from "node:crypto";
 import { pool } from "../db.js";
@@ -86,8 +87,6 @@ const limitarPerfil = rateLimit({
 });
 const passwordAtualValida = (p) =>
   typeof p === "string" && p.length > 0 && p.length <= 1024;
-const novaPasswordValida = (p) =>
-  typeof p === "string" && p.length >= 8 && Buffer.byteLength(p, "utf8") <= 72;
 
 authRouter.get("/perfil", exigirAutenticacao, (req, res) => {
   res.json({ nome: req.utilizador.nome, email: req.utilizador.email });
