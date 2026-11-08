@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="pt-PT">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#11111f" />
+    <meta name="description" content="Descobre as vagas disponíveis na Vextech e dá o próximo passo na tua carreira em tecnologia." />
+    <title>Vagas — Carreiras Vextech</title>
+    <link rel="icon" href="/favicon.svg" />
+  </head>
+  <body class="pagina-vagas">
+    <a class="skip" href="#carreiras">Saltar para as vagas</a>
+    <div id="vagas-cabecalho"></div>
+    <main id="carreiras" class="vagas" aria-labelledby="vagas-titulo" tabindex="-1">
+      <nav class="vagas__caminho" aria-label="Caminho de navegação"><a href="/">Início</a><span aria-hidden="true">/</span><span aria-current="page">Vagas</span></nav>
+      <div class="vagas__cabecalho"><div><p class="rotulo">Vextech / Carreiras</p><h1 id="vagas-titulo">O teu talento.<br>O próximo desafio.</h1></div><p>Explora as oportunidades disponíveis.<br>O próximo passo pode começar aqui.</p></div>
+      <div class="vagas__barra"><h2>Vagas disponíveis</h2><p id="vagas-estado" role="status">A carregar oportunidades…</p></div>
+      <ul id="vagas-lista" class="vagas__lista" aria-label="Vagas disponíveis" aria-busy="true"></ul>
+      <noscript><p class="vagas__aviso">Ativa o JavaScript para consultar as vagas atualizadas.</p></noscript>
+      <div class="vagas__espontanea"><div><h2>Ainda não encontraste o teu lugar?</h2><p>Queremos conhecer o teu percurso.</p></div><button class="pilula pilula--ciano" data-contacto="Candidatura espontânea">Candidatura espontânea <span aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></span></button></div>
+    </main>
+    <div id="vagas-rodape"></div>
+    <script type="module" src="/src/vagas.js"></script>
+  </body>
+</html>

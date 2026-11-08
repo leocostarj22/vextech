@@ -1,132 +1,26 @@
-.carreiras {
-  padding: 110px var(--margem);
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8vw;
-  align-items: start;
-}
-.carreiras .rotulo {
-  margin-bottom: 27px;
-}
-.carreiras h2 {
-  font-size: clamp(38px, 4.2vw, 68px);
-  font-weight: 500;
-}
-.carreiras__texto > p:last-child {
-  color: var(--tinta-2);
-  font-size: 14px;
-  max-width: 360px;
-  margin-top: 25px;
-}
-.carreiras__vagas {
-  display: flex;
-  flex-direction: column;
-}
-.carreiras__lista {
-  list-style: none;
-  margin: 0 0 30px;
-  padding: 0;
-}
-.carreiras__vaga {
-  border-top: 1px solid var(--tinta);
-  padding: 22px 0;
-}
-.carreiras__vaga:last-child {
-  border-bottom: 1px solid var(--tinta);
-}
-.carreiras__vaga-cabecalho {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-.carreiras__vaga h3 {
-  margin: 0;
-  font-size: 19px;
-  font-weight: 500;
-}
-.carreiras__local {
-  font-size: 13px;
-  color: var(--tinta-2);
-  white-space: nowrap;
-}
-.carreiras__requisitos {
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px 18px;
-  margin: 12px 0 16px;
-  padding: 0;
-  font-size: 13px;
-  color: var(--tinta-2);
-}
-.carreiras__requisitos li:before {
-  content: "→";
-  margin-right: 6px;
-  color: var(--mata);
-}
-.carreiras__candidatar {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  border: 0;
-  background: transparent;
-  padding: 0;
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--tinta);
-  cursor: pointer;
-  transition: color 0.2s;
-}
-.carreiras__candidatar:hover {
-  color: var(--mata);
-}
-.carreiras__candidatar .seta {
-  transition: transform 0.2s;
-}
-.carreiras__candidatar:hover .seta {
-  transform: translateX(4px);
-}
-.carreiras__acao {
-  display: flex;
-  justify-content: space-between;
-  gap: 30px;
-  border: 0;
-  border-top: 1px solid var(--tinta);
-  border-bottom: 1px solid var(--tinta);
-  padding: 22px 0;
-  background: transparent;
-  text-align: left;
-  font-size: 19px;
-  font-weight: 500;
-  transition: color 0.2s;
-}
-.carreiras__acao:hover {
-  color: var(--mata);
+.carreiras { padding: 110px var(--margem) 90px; overflow: clip; }
+.carreiras__cabecalho { display: grid; grid-template-columns: 1fr 1fr; gap: 8vw; align-items: end; max-width: 1200px; margin: 0 auto; }
+.carreiras .rotulo { margin-bottom: 27px; }
+.carreiras h2 { font-size: clamp(42px, 5.2vw, 78px); font-weight: 500; }
+.carreiras__introducao { max-width: 340px; color: var(--tinta-2); font-size: 15px; }
+.carreiras__recentes { display: block; margin-top: 30px; color: var(--mata); }
+.carreiras__lista { list-style: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 44px; max-width: 960px; padding: 0; margin: 75px auto 65px; }
+.carreiras__lista:empty { display: none; }
+.carreiras__acoes { display: flex; align-items: center; justify-content: space-between; gap: 28px; max-width: 960px; margin: 45px auto 0; }
+.carreiras__todas { min-height: 48px; padding: 13px 24px; background: var(--noite); color: white; font-size: 14px; }
+.carreiras__todas:hover { background: var(--mata); color: white; }
+.carreiras__todas svg { width: 18px; height: 18px; }
+.carreiras__acao { display: flex; align-items: center; justify-content: space-between; gap: 28px; background: transparent; border: 0; border-bottom: 1px solid var(--fio); padding: 14px 0; text-align: left; font-size: 15px; }
+.carreiras__acao:hover { color: var(--mata); }
+@media (max-width: 800px) {
+  .carreiras { padding-top: 75px; padding-bottom: 65px; }
+  .carreiras__cabecalho { grid-template-columns: 1fr; gap: 25px; }
+  .carreiras__introducao { font-size: 14px; }
+  .carreiras__lista { gap: 24px; margin-top: 38px; margin-bottom: 35px; }
+  .carreiras__acoes { flex-wrap: wrap; margin-top: 28px; }
 }
 @media (max-width: 600px) {
-  .carreiras {
-    padding: 75px 20px;
-    display: block;
-  }
-  .carreiras h2 {
-    font-size: 44px;
-  }
-  .carreiras__texto > p:last-child {
-    font-size: 13px;
-  }
-  .carreiras__vagas {
-    margin-top: 35px;
-  }
-  .carreiras__vaga-cabecalho {
-    flex-direction: column;
-    gap: 4px;
-  }
-  .carreiras__acao {
-    width: 100%;
-    margin-top: 10px;
-    font-size: 17px;
-    padding: 18px 0;
-  }
+  .carreiras h2 { font-size: 48px; }
+  .carreiras__lista { grid-template-columns: 1fr; }
+  .carreiras__acao { width: 100%; }
 }

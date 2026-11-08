@@ -8,6 +8,7 @@ Site experimental da Vextech, baseado na demo Margem. O utilizador aprovou testa
 - Cores em src/styles/tokens.css: #11111f, #68d2df e branco. As superfícies seguem o tema claro (predefinido) ou escuro; o fundo e o nevoeiro Three.js acompanham --imersao-fundo também ao alternar de tema.
 - Logótipos originais em SVG em src/brand/vextech-*.svg, convertidos dos vetores PDF enviados pelo utilizador. Nunca redesenhar o wordmark com uma fonte.
 - Tipografia editorial, linhas finas, espaço generoso, sem grelhas de cartões ou decoração neon.
+- Exceção aprovada para Carreiras: cards com imagens ilustrativas, cores da marca e movimento ligado ao scroll. Na home, apenas as duas vagas ativas mais recentes; todas as vagas e requisitos completos em `/pt/vagas/`. Não adicionar vagas de demonstração como fallback. Respeitar movimento reduzido e manter candidatura espontânea quando a API não estiver disponível.
 - Túnel leve: texturas partilhadas, renderização quando necessário, pixel ratio máximo 2. Mobile com texto dos destaques abaixo da imagem. Respeitar prefers-reduced-motion.
 - Imagens em public/media são ilustrativas, recebidas no pacote da marca; não representam projetos de clientes nem equipa real. Ver docs/media.md.
 - Contacto em modo de demonstração até existir destino de envio confirmado; não simular uma mensagem enviada.

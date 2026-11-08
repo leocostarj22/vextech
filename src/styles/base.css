@@ -4,6 +4,17 @@
 html {
   scroll-padding-top: 90px;
 }
+/* Mantém a rolagem nativa, com o azul da marca no indicador. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--ciano) transparent;
+}
+::-webkit-scrollbar { width: 7px; height: 7px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--ciano); border-radius: 99px; }
+@media (forced-colors: active) {
+  * { scrollbar-color: auto; }
+}
 body {
   margin: 0;
   background: var(--fundo);

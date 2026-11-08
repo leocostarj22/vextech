@@ -102,3 +102,7 @@ npm run dev
 ```
 
 Com `VITE_API_URL=http://localhost:3001` no `.env`, a secção Carreiras passa a mostrar as vagas criadas no painel.
+
+Na página inicial, Carreiras apresenta apenas as duas vagas ativas mais recentes, em cards que se alinham durante o scroll. O botão «Ver todas as vagas» abre `/pt/vagas/`, com todas as oportunidades e os requisitos completos. O backend ordena por data de criação e, em caso de empate, pelo ID mais recente. Os cards reutilizam imagens ilustrativas do projeto, sem representar a equipa ou uma vaga específica.
+
+No telemóvel, os cards ficam em coluna. Com movimento reduzido ficam estáticos. A página de vagas partilha o menu, os temas e o formulário de contacto: «Candidata-te» preenche a mensagem com o título da vaga. O formulário continua em demonstração, sem enviar candidaturas. Sem API, a home mantém a candidatura espontânea; a página de vagas distingue indisponibilidade de ausência de vagas.

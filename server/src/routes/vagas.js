@@ -14,14 +14,14 @@ function validarCorpo(corpo) {
 
 vagasRouter.get("/", async (req, res) => {
   const [linhas] = await pool.query(
-    "SELECT id, titulo, localizacao, requisitos FROM vagas WHERE ativa = 1 ORDER BY criado_em DESC",
+    "SELECT id, titulo, localizacao, requisitos FROM vagas WHERE ativa = 1 ORDER BY criado_em DESC, id DESC",
   );
   res.json(linhas);
 });
 
 vagasRouter.get("/admin", exigirAutenticacao, async (req, res) => {
   const [linhas] = await pool.query(
-    "SELECT id, titulo, localizacao, requisitos, ativa, criado_em FROM vagas ORDER BY criado_em DESC",
+    "SELECT id, titulo, localizacao, requisitos, ativa, criado_em FROM vagas ORDER BY criado_em DESC, id DESC",
   );
   res.json(linhas);
 });

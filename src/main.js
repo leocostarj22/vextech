@@ -23,6 +23,7 @@ import { animarMetodo } from "./motion/metodo";
 import { animarIndice } from "./motion/indice";
 import { animarContato } from "./motion/contato";
 import { animarCarreiras } from "./motion/carreiras";
+import { ligarFormulario } from "./motion/formulario";
 import { scrollSuave } from "./motion/suave";
 import { casos } from "./data/casos";
 
@@ -56,7 +57,6 @@ animarMetodo();
 animarEstudio(reduzido);
 animarIndice(reduzido);
 animarContato(reduzido);
-animarCarreiras();
 revelarMarca(document.querySelector(".tunel__marca"), reduzido);
 const lenis = scrollSuave(reduzido);
 const header = document.querySelector(".nav");
@@ -115,52 +115,7 @@ dialog.addEventListener("click", (e) => {
 });
 dialog.addEventListener("close", () => lenis?.start());
 
-const formPanel = document.querySelector("#contacto-formulario"),
-  form = formPanel.querySelector("form"),
-  formToggle = document.querySelector("[data-formulario]");
-function abrirContacto(assunto) {
-  formPanel.hidden = false;
-  formToggle.setAttribute("aria-expanded", "true");
-  if (assunto) {
-    const opcoes = [...form.elements.assunto.options].map((o) => o.value);
-    if (opcoes.includes(assunto)) {
-      form.elements.assunto.value = assunto;
-    } else {
-      form.elements.assunto.value = "Candidatura espontânea";
-      form.elements.mensagem.value =
-        `Tenho interesse nesta vaga: ${assunto.replace(/^Candidatura — /, "")}.`;
-    }
-  }
-  ScrollTrigger.refresh();
-  lenis?.resize();
-  const top = formPanel.getBoundingClientRect().top + scrollY - 100;
-  if (lenis) lenis.scrollTo(top, { immediate: true });
-  else window.scrollTo({ top, behavior: "instant" });
-  form.elements.nome.focus({ preventScroll: true });
-}
-formToggle.addEventListener("click", () => {
-  if (formPanel.hidden) abrirContacto();
-  else fecharContacto();
-});
-function fecharContacto() {
-  formPanel.hidden = true;
-  formToggle.setAttribute("aria-expanded", "false");
-  ScrollTrigger.refresh();
-  lenis?.resize();
-  formToggle.focus();
-}
-formPanel
-  .querySelector(".form__fechar")
-  .addEventListener("click", fecharContacto);
-document.addEventListener("click", (e) => {
-  const botao = e.target.closest("[data-contacto]");
-  if (botao) abrirContacto(botao.dataset.contacto);
-});
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
-  form.querySelector(".form__resultado").textContent =
-    `Obrigado, ${form.elements.nome.value.trim()}. O formulário foi testado. A mensagem não foi enviada: esta versão é uma demonstração.`;
-});
+const abrirContacto = ligarFormulario({ lenis, atualizarLayout });
 
 function atualizarLayout() {
   ScrollTrigger.refresh();
@@ -172,3 +127,5 @@ const pedido = new URLSearchParams(location.search).get("solucao");
 const index = casos.findIndex((c) => c.foto === pedido);
 if (index >= 0) abrirSolucao(index);
 window.addEventListener("load", atualizarLayout);
+
+animarCarreiras(reduzido, atualizarLayout);

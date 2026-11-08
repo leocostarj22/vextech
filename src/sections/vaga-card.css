@@ -1,0 +1,38 @@
+.carreiras__vaga { list-style: none; min-width: 0; }
+.vaga-card {
+  --card-fundo: var(--ciano);
+  --card-tinta: var(--noite);
+  --card-fio: rgb(17 17 31 / 0.25);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  border-radius: 16px;
+  background: var(--card-fundo);
+  color: var(--card-tinta);
+  box-shadow: 0 16px 38px rgb(16 17 30 / 0.08);
+}
+.vaga-card--azul { --card-fundo: #173b55; --card-tinta: #fff; --card-fio: rgb(255 255 255 / 0.28); }
+.vaga-card__imagem { position: relative; aspect-ratio: 16 / 9; border-radius: 8px; overflow: hidden; background: #10111e; }
+.vaga-card__imagem::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, rgb(16 17 30 / 0.65), transparent 75%); }
+.vaga-card__imagem img { width: 100%; height: 100%; object-fit: cover; opacity: 0.85; }
+.vaga-card__numero { position: absolute; left: 20px; bottom: 10px; z-index: 1; font-size: clamp(50px, 5vw, 76px); line-height: 1; letter-spacing: -0.07em; color: white; }
+.vaga-card__assinatura { position: absolute; bottom: 18px; right: 18px; z-index: 1; font-size: 9px; letter-spacing: 0.09em; color: white; }
+.vaga-card__conteudo { padding: 25px 20px 10px; display: flex; flex-direction: column; flex: 1; }
+.vaga-card__local { display: flex; gap: 8px; align-items: center; font-size: 12px; margin-bottom: 14px; }
+.vaga-card__local svg { flex: 0 0 16px; width: 16px; height: 18px; }
+.vaga-card h3 { font-size: clamp(29px, 3vw, 44px); line-height: 1.05; font-weight: 500; letter-spacing: -0.045em; overflow-wrap: anywhere; }
+.vaga-card__requisitos { margin: 22px 0; padding-left: 16px; font-size: 13px; line-height: 1.65; }
+.vaga-card__requisitos li { padding-left: 2px; margin-bottom: 5px; overflow-wrap: anywhere; }
+.vaga-card__mais { font-size: 12px; text-decoration: underline; text-underline-offset: 4px; margin: 0 0 20px; align-self: flex-start; }
+.carreiras__candidatar { display: flex; justify-content: space-between; align-items: center; gap: 12px; width: 100%; background: transparent; color: inherit; border: 0; border-top: 1px solid var(--card-fio); padding: 17px 0 0; margin-top: auto; text-align: left; font-size: 14px; font-weight: 500; }
+.vaga-card__seta { display: grid; place-items: center; width: 38px; height: 38px; flex-shrink: 0; background: var(--card-tinta); color: var(--card-fundo); border-radius: 50%; font-size: 22px; transition: transform 0.2s; }
+.vaga-card__seta svg { width: 18px; height: 18px; }
+.carreiras__candidatar:hover .vaga-card__seta { transform: rotate(45deg); }
+.vaga-card :focus-visible { outline-color: var(--card-tinta); }
+@media (max-width: 600px) {
+  .vaga-card { border-radius: 12px; padding: 9px; }
+  .vaga-card__conteudo { padding: 22px 15px 10px; }
+  .vaga-card h3 { font-size: 34px; }
+  .vaga-card__numero { font-size: 54px; }
+}
