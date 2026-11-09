@@ -13,9 +13,13 @@
   gap: 20px;
   padding: var(--nav-top) var(--margem);
   color: var(--nav-tinta);
+  background: var(--nav-fundo);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   transition:
     transform 0.3s,
-    color 0.2s;
+    color 0.2s,
+    background 0.2s;
 }
 .nav--clara {
   --nav-fundo: rgb(255 255 255 / 0.95);
