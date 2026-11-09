@@ -43,6 +43,8 @@ try {
 } catch (error) {
   console.warn("WebGL indisponível; apresentação estática ativada.", error);
   document.querySelector(".tunel").classList.add("tunel--fallback");
+  document.querySelector(".tunel__canvas").style.backgroundImage =
+    `linear-gradient(var(--vidro), var(--vidro)), url("${import.meta.env.BASE_URL}media/infraestrutura.jpg")`;
   const fallback = document.createElement("div");
   fallback.className = "fallback-cases";
   fallback.innerHTML = casos

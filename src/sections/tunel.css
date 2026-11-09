@@ -172,9 +172,8 @@
   text-align: center;
 }
 .tunel--fallback .tunel__canvas {
-  background:
-    linear-gradient(var(--vidro), var(--vidro)),
-    url("/media/infraestrutura.jpg") center/cover;
+  background-position: center;
+  background-size: cover;
 }
 .fallback-cases {
   padding: 70px var(--margem);
