@@ -2,5 +2,5 @@ RewriteEngine On
 
 RewriteRule ^api/(.*)$ http://127.0.0.1:4001/api/$1 [P,L]
 RewriteRule ^admin/(.*)$ http://127.0.0.1:4001/admin/$1 [P,L]
-RewriteRule ^admin$ admin/ [R=301,L]
+RewriteRule ^admin$ %{REQUEST_URI}/ [R=301,L]
 RewriteRule ^uploads/vagas/(.*)$ http://127.0.0.1:4001/uploads/vagas/$1 [P,L]
