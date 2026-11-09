@@ -92,10 +92,12 @@ function fecharSessao() {
   $("#inicio-estado").innerHTML =
     'A sessão terminou. Entra novamente para continuar. <a class="btn" href="login.html">Entrar</a>';
 }
+const raizApi = new URL("../api/", location.href).href;
+const urlApi = (caminho) => caminho.replace(/^\/api\//, raizApi);
 async function api(url, options = {}) {
   let r;
   try {
-    r = await fetch(url, { cache: "no-store", ...options });
+    r = await fetch(urlApi(url), { cache: "no-store", ...options });
   } catch (e) {
     if (e.name === "AbortError") throw e;
     throw new Error("Não foi possível ligar ao servidor. Tenta novamente.");
@@ -738,7 +740,7 @@ async function descarregar(id) {
   botao.disabled = true;
   $("#ficha-erro").textContent = "";
   try {
-    const r = await fetch(`/api/candidaturas/${Number(id)}/curriculo`, {
+    const r = await fetch(urlApi(`/api/candidaturas/${Number(id)}/curriculo`), {
       cache: "no-store",
     });
     if (r.status === 401) {

@@ -6,7 +6,7 @@ form.addEventListener("submit", async (e) => {
   const b = form.querySelector("button");
   b.disabled = true;
   try {
-    const r = await fetch("/api/auth/login", {
+    const r = await fetch(new URL("../api/auth/login", location.href), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(Object.fromEntries(new FormData(form))),
