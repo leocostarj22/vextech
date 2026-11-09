@@ -158,3 +158,15 @@ Consulte [implementação e validação da fase 1](docs/recrutamento/implementac
 No menu **Meu perfil** (também acessível pelo nome no cabeçalho), cada administrador pode alterar o nome, o email de acesso e a password. Os dois formulários exigem a password atual. A nova password tem confirmação e pelo menos 8 caracteres; os campos de password são limpos depois de cada pedido. O email não pode coincidir com o de outra conta.
 
 Para atualizar, pare a API no terminal onde está em execução, faça pull e execute em `server/`: `npm run migrate` e `npm run dev`. A migração `005_perfil_admin.sql` acrescenta uma versão de sessão a cada conta, sem alterar os dados existentes. Ao alterar email ou password, a sessão atual é renovada e os restantes acessos dessa conta têm de iniciar sessão novamente. As sessões passam a consultar a conta na base de dados, para mostrar os dados atuais e recusar versões antigas. Vagas, candidaturas e currículos permanecem associados aos registos existentes.
+
+### Recuperar a password esquecida do admin
+
+Com acesso ao servidor e ao MySQL configurado em `server/.env`, não é necessário saber a password antiga. Na pasta `server/`, execute:
+
+```sh
+npm run reset:admin
+```
+
+O comando pede o email da conta, a nova password e a confirmação. A password não aparece enquanto escreve e não é passada como argumento nem guardada no histórico do terminal. Pode cancelar com `Ctrl+C`. São aceites apenas terminais interativos.
+
+A recuperação atualiza apenas a password da conta indicada, mantém os seus dados e termina as sessões antigas. Depois, entre em `/admin/login.html` com o mesmo email e a nova password. Não é necessário iniciar outra instância da API nem ocupar novamente a porta 3001. Se ainda não aplicou a migração do perfil, execute primeiro `npm run migrate`. A recuperação é um comando local de manutenção; não existe um endpoint público para redefinir passwords sem autenticação.

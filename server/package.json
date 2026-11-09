@@ -10,7 +10,8 @@
     "start": "node src/server.js",
     "migrate": "node src/scripts/migrate.js",
     "test": "node --test --test-concurrency=1 test/*.test.js",
-    "seed:admin": "node src/scripts/seed-admin.js"
+    "seed:admin": "node src/scripts/seed-admin.js",
+    "reset:admin": "node src/scripts/reset-admin-password.js"
   },
   "dependencies": {
     "bcrypt": "5.1.1",
