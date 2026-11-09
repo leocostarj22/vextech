@@ -38,6 +38,7 @@ Para voltar à Vextech, pare o servidor e execute `git switch main`, `npm ci` e 
 
 - Os três destaques do túnel apresentam soluções, não casos de clientes.
 - As vagas em Carreiras (Java Developer no Porto, PHP Developer em Braga) são reais, vindas do site atual da Vextech, e vêm da API em `server/` — sem backend a correr, a secção mostra só a candidatura espontânea.
+- Em produção, o site e o painel de administração já estão publicados em https://leocostadeveloper.com/vextech/ — ver "Produção (VPS)" na secção seguinte.
 - As fotografias recebidas são ilustrativas; ver docs/media.md. A seleção final de imagens/vídeos externos e a validação de licenças ficam para a publicação.
 - O contacto geral e a candidatura espontânea validam campos localmente, mas não enviam mensagens; a interface indica esse estado. As candidaturas a vagas específicas já são guardadas pela API, com currículo PDF privado e consulta no painel. O destino do contacto geral ainda precisa de ser ligado antes da publicação.
 - A morada dos escritórios foi transcrita das capturas do site fornecidas pelo utilizador.
@@ -71,7 +72,7 @@ Os textos foram mantidos conforme as capturas e a instrução expressa do utiliz
 
 A secção Carreiras lista vagas vindas de uma API própria (`server/`, Node.js + Express + MySQL), não de um ficheiro estático — assim a equipa da Vextech pode acrescentar ou retirar vagas sem alterar o código do site. Em desenvolvimento, o Vite encaminha automaticamente `/api/vagas` para a API local em `http://127.0.0.1:3001`. Não é necessário criar `.env` na raiz para carregar as vagas. A API e o MySQL precisam de estar em execução, e as vagas devem estar ativas no painel.
 
-Por agora isto corre apenas em local, até o site ser aprovado pelo CEO da Vextech; o VPS e o domínio já existem mas ainda não estão ligados a este backend.
+Em produção, o site corre na VPS da Vextech em https://leocostadeveloper.com/vextech/ — ver "Produção (VPS)" mais abaixo.
 
 ### Preparar a base de dados (Docker)
 
@@ -104,9 +105,23 @@ npm run dev
 
 O browser pede `/api/vagas` ao mesmo endereço do site e o Vite encaminha o pedido à API. Assim, o endereço do browser (`localhost` ou `127.0.0.1`) não provoca problemas de CORS. Para outra porta ou servidor, copie `.env.example` para `.env`, defina `API_PROXY_TARGET` e reinicie o Vite. `npm run preview` usa o mesmo encaminhamento local.
 
-Em produção, configure o servidor web para encaminhar `/api/vagas` para o backend; se este estiver noutro domínio, defina `VITE_API_URL` antes do build e autorize a origem do site no backend. Esta configuração não publica nem liga automaticamente o VPS.
-
 Se não aparecerem cards, confirme primeiro que `http://localhost:3001/api/vagas` devolve uma lista com vagas. `[]` significa que não existem vagas ativas na base de dados. Na versão local, `http://localhost:5173/api/vagas` deve devolver a mesma lista. Uma falha de ligação apresenta uma mensagem e «Tentar novamente», sem esconder silenciosamente a secção.
+
+### Produção (VPS)
+
+O site e o painel estão publicados em https://leocostadeveloper.com/vextech/ (painel em https://leocostadeveloper.com/vextech/admin/login.html), numa VPS cPanel/AlmaLinux com MariaDB. A raiz do domínio continua a servir outro site do utilizador — o Vextech fica isolado em `/vextech/`.
+
+O build de produção usa um subcaminho, por isso o `base` do Vite é definido por variável de ambiente (sem ela, o build e o `npm run dev`/`npm test` locais continuam a servir a partir de `/`, sem qualquer alteração):
+
+```sh
+npm ci
+PUBLIC_BASE_PATH=/vextech/ npm run build
+rsync -a --delete dist/ ~/public_html/vextech/
+```
+
+`public/.htaccess` (ficheiro versionado, copiado para `dist/` em cada build) reencaminha `/vextech/api/`, `/vextech/admin/` e `/vextech/uploads/vagas/` para a API Node local (`http://127.0.0.1:4001`), via `mod_rewrite` com a flag `[P]` — funciona sem acesso root/WHM, só com o que o `.htaccess` de uma conta cPanel normal permite. O backend corre com `pm2` (`cd server && npx pm2 start ecosystem.config.cjs`), com `NODE_ENV=production` e `server/.env` criado manualmente na VPS (nunca commitado). Como a VPS não dá acesso a `pm2 startup` (sem `sudo`), a recuperação após um reinício é feita por um Cron Job do próprio cPanel (não pela `crontab` da shell, que não persiste nesta conta) a cada poucos minutos, a verificar se o processo está vivo e a correr `pm2 resurrect` se não estiver.
+
+Atualizações: o workflow `.github/workflows/deploy.yml` builda e publica a cada push para `main`, mas só fica ativo depois de configurados os segredos `VPS_HOST`, `VPS_USER` e `VPS_SSH_KEY` em Settings → Secrets and variables → Actions do repositório no GitHub (usar uma chave SSH dedicada ao deploy, sem passphrase, nunca uma chave pessoal). Sem esses segredos, atualizar manualmente por SSH: `git pull`, os dois comandos de build acima, e em `server/`, `npm ci --omit=dev && npm run migrate && npx pm2 restart ecosystem.config.cjs`.
 
 Na página inicial, Carreiras apresenta apenas as duas vagas ativas mais recentes, em cards que se alinham durante o scroll. O botão «Ver todas as vagas» abre `/pt/vagas/`, com todas as oportunidades e os requisitos completos. O backend ordena por data de criação e, em caso de empate, pelo ID mais recente. Os cards reutilizam imagens ilustrativas do projeto, sem representar a equipa ou uma vaga específica.
 
