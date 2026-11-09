@@ -7,20 +7,20 @@
   },
   {
     "id": "consultoria",
-    "src": "media/consultoria.png",
+    "src": "media/consultoria.jpg",
     "w": 1672,
     "h": 941
   },
   {
     "id": "nearshore",
     "src": "media/nearshore.jpg",
-    "w": 7373,
-    "h": 4147
+    "w": 2400,
+    "h": 1350
   },
   {
     "id": "chave-na-mao",
     "src": "media/chave-na-mao.jpg",
-    "w": 5384,
-    "h": 3029
+    "w": 2400,
+    "h": 1350
   }
 ]

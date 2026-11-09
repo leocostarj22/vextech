@@ -95,7 +95,7 @@
 }
 .tunel__progresso {
   height: 1px;
-  background: var(--imersao-linha);
+  background: color-mix(in srgb, var(--imersao-linha) 35%, transparent);
   position: absolute;
   bottom: 0;
   width: 100%;
