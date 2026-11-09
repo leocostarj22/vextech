@@ -229,7 +229,7 @@ authRouter.post(
     );
 
     res.status(201).json({
-      link: `/admin/registar.html?token=${token}`,
+      link: `registar.html?token=${token}`,
       expira_em: expiraEm,
     });
   }),

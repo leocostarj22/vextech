@@ -1,0 +1,39 @@
+name: Deploy para a VPS
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configurar chave SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.VPS_SSH_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -p 22 "${{ secrets.VPS_HOST }}" >> ~/.ssh/known_hosts
+
+      - name: Atualizar código e publicar
+        env:
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+          VPS_USER: ${{ secrets.VPS_USER }}
+        run: |
+          ssh -i ~/.ssh/deploy_key -p 22 "$VPS_USER@$VPS_HOST" bash -s <<'REMOTE'
+          set -e
+          cd ~/vextech
+          git fetch origin main
+          git reset --hard origin/main
+
+          npm ci
+          PUBLIC_BASE_PATH=/vextech/ npm run build
+          rsync -a --delete dist/ ~/public_html/vextech/
+
+          cd server
+          npm ci --omit=dev
+          npm run migrate
+          npx pm2 restart ecosystem.config.cjs --update-env || npx pm2 start ecosystem.config.cjs
+          npx pm2 save
+          REMOTE

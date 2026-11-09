@@ -4,7 +4,7 @@ export const casos = [
     curto: "Especialistas para o seu próximo desafio.",
     categoria: "Conhecimento que acrescenta",
     foto: "consultoria",
-    src: "/media/consultoria.png",
+    src: `${import.meta.env.BASE_URL}media/consultoria.png`,
     posicao: "50% 20%",
     resumo:
       "Reforçamos a sua capacidade técnica com especialistas alinhados com os objetivos do seu negócio.",
@@ -21,7 +21,7 @@ export const casos = [
     curto: "Da ideia à entrega, com uma só equipa.",
     categoria: "Responsabilidade de ponta a ponta",
     foto: "chave-na-mao",
-    src: "/media/chave-na-mao.jpg",
+    src: `${import.meta.env.BASE_URL}media/chave-na-mao.jpg`,
     resumo:
       "Do planeamento à implementação, assumimos o percurso para entregar uma solução à medida.",
     detalhe:
@@ -37,7 +37,7 @@ export const casos = [
     curto: "Perto do seu negócio. Onde precisar.",
     categoria: "Equipas ligadas ao seu mundo",
     foto: "nearshore",
-    src: "/media/nearshore.jpg",
+    src: `${import.meta.env.BASE_URL}media/nearshore.jpg`,
     resumo:
       "Equipas remotas com proximidade geográfica, cultural e de fuso horário, para trabalhar consigo.",
     detalhe:

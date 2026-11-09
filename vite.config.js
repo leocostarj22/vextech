@@ -4,10 +4,15 @@ import { paginasLegais } from "./src/data/legal.js";
 import { abertura } from "./build/abertura.js";
 
 const pagina = (caminho) => fileURLToPath(new URL(caminho, import.meta.url));
-const normalizarPaginasLegais = (servidor) => {
+const normalizarPaginasLegais = (base) => (servidor) => {
+  const caminhos = [
+    ...paginasLegais.map(({ caminho }) => `${base}${caminho.replace(/^\//, "")}`),
+    `${base}pt/vagas/`,
+    `${base}pt/vagas/detalhe/`,
+  ];
   servidor.middlewares.use((pedido, resposta, seguinte) => {
     const url = new URL(pedido.url, "http://localhost");
-    if ([...paginasLegais.map(({ caminho }) => caminho), "/pt/vagas/", "/pt/vagas/detalhe/"].includes(`${url.pathname}/`)) {
+    if (caminhos.includes(`${url.pathname}/`)) {
       resposta.writeHead(308, { Location: `${url.pathname}/${url.search}` });
       resposta.end();
       return;
@@ -18,6 +23,7 @@ const normalizarPaginasLegais = (servidor) => {
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
   const destino = env.API_PROXY_TARGET?.trim() || env.VITE_API_URL?.trim() || "http://127.0.0.1:3001";
+  const base = (env.PUBLIC_BASE_PATH?.trim() || "/").replace(/\/*$/, "/");
   const proxy = {
     "/api/vagas": { target: destino, changeOrigin: true },
     "/api/recrutamento": { target: destino, changeOrigin: true },
@@ -27,13 +33,14 @@ export default defineConfig(({ mode }) => {
     "/uploads/vagas": { target: destino, changeOrigin: true },
   };
   return {
+  base,
   appType: "mpa",
   server: { proxy },
   preview: { proxy },
   plugins: [abertura(), {
     name: "enderecos-legais",
-    configureServer: normalizarPaginasLegais,
-    configurePreviewServer: normalizarPaginasLegais,
+    configureServer: normalizarPaginasLegais(base),
+    configurePreviewServer: normalizarPaginasLegais(base),
   }],
   build: {
     rolldownOptions: {

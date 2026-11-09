@@ -1,12 +1,12 @@
 import { apiUrl } from "./vagas";
-export const capaPredefinida = "/media/vagas/default.jpg";
+export const capaPredefinida = `${import.meta.env.BASE_URL}media/vagas/default.jpg`;
 
 export function capaVaga(vaga) {
   if (typeof vaga.capa === "string" && /^\/uploads\/vagas\/[a-f0-9-]+\.(png|jpg)$/.test(vaga.capa)) {
     return apiUrl(vaga.capa);
   }
-  if (/\bphp\b/i.test(vaga.titulo)) return "/media/vagas/php.png";
-  if (/\bjava\b/i.test(vaga.titulo)) return "/media/vagas/java.png";
+  if (/\bphp\b/i.test(vaga.titulo)) return `${import.meta.env.BASE_URL}media/vagas/php.png`;
+  if (/\bjava\b/i.test(vaga.titulo)) return `${import.meta.env.BASE_URL}media/vagas/java.png`;
   return capaPredefinida;
 }
 

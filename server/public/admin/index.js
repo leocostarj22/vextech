@@ -477,7 +477,7 @@ function ligarVista() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(Object.fromEntries(new FormData(e.target))),
       });
-      $("#link-convite").value = new URL(r.link, location.origin).href;
+      $("#link-convite").value = new URL(r.link, location.href).href;
       $("#resultado-convite").hidden = false;
       e.target.reset();
     } catch (e) {

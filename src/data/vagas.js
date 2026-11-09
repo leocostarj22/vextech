@@ -1,6 +1,8 @@
-const base = import.meta.env.DEV ? "" : (import.meta.env.VITE_API_URL || "").trim().replace(/\/+$/, "");
+const base = import.meta.env.DEV
+  ? ""
+  : (import.meta.env.VITE_API_URL || "").trim().replace(/\/+$/, "") || import.meta.env.BASE_URL.replace(/\/+$/, "");
 export const apiUrl = (caminho) => `${base}${caminho}`;
-export const urlVaga = (id) => `/pt/vagas/detalhe/?id=${encodeURIComponent(id)}`;
+export const urlVaga = (id) => `${import.meta.env.BASE_URL}pt/vagas/detalhe/?id=${encodeURIComponent(id)}`;
 const normalizar = (vaga) => ({ ...vaga, requisitos: Array.isArray(vaga.requisitos) ? vaga.requisitos.filter((r) => typeof r === "string") : [] });
 const valida = (vaga) => vaga && /^[1-9]\d*$/.test(String(vaga.id)) && typeof vaga.titulo === "string" && typeof vaga.localizacao === "string";
 

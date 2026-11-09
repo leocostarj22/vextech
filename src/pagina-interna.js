@@ -16,9 +16,9 @@ export function iniciarPaginaInterna() {
   iniciarTema();
   document.querySelector("#vagas-cabecalho").innerHTML = nav({ paginaLegal: true });
   document.querySelector("#vagas-rodape").innerHTML = contato();
-  document.querySelector(".contato__marca").href = "/#inicio";
-  document.querySelector(".contato__rodape > a").href = "/#inicio";
-  document.querySelector(".contato__carreiras").href = "/pt/vagas/";
+  document.querySelector(".contato__marca").href = `${import.meta.env.BASE_URL}#inicio`;
+  document.querySelector(".contato__rodape > a").href = `${import.meta.env.BASE_URL}#inicio`;
+  document.querySelector(".contato__carreiras").href = `${import.meta.env.BASE_URL}pt/vagas/`;
   ligarBotaoTema();
   ligarMenu(null);
   ligarFormulario();

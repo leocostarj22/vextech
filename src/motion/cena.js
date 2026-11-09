@@ -50,7 +50,8 @@ export function criarCena(host, reduzido) {
   };
   function texture(src) {
     if (!cache.has(src)) {
-      const t = loader.load("/" + src, (textura) => {
+      const url = src.startsWith("/") ? src : import.meta.env.BASE_URL + src;
+      const t = loader.load(url, (textura) => {
         const origem = textura.image.width / textura.image.height;
         // Equivalente a object-fit: cover: enquadramento comum sem deformação.
         const x = Math.min(1, aspecto / origem);
@@ -98,7 +99,7 @@ export function criarCena(host, reduzido) {
     return mesh;
   });
   const destaques = casos.map((c, i) => {
-    const mesh = new THREE.Mesh(geometry, material(c.src.replace(/^\//, "")));
+    const mesh = new THREE.Mesh(geometry, material(c.src));
     mesh.userData = {
       ang: [0.4, 2.6, 5.3][i],
       r: 4.6,
