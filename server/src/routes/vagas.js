@@ -10,6 +10,11 @@ vagasRouter.param("id", (req, res, next, id) => {
   next();
 });
 const tratar = (fn) => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next);
+// O MariaDB guarda JSON como LONGTEXT e não o descodifica como o MySQL; o próprio mysql2 só o faz para o tipo JSON nativo.
+const comRequisitos = (linha) => ({
+  ...linha,
+  requisitos: typeof linha.requisitos === "string" ? JSON.parse(linha.requisitos) : linha.requisitos,
+});
 
 function lerCorpo(req) {
   const corpo = req.body || {};
@@ -38,20 +43,20 @@ vagasRouter.get("/", tratar(async (req, res) => {
   const [linhas] = await pool.query(
     "SELECT id, titulo, localizacao, requisitos, capa FROM vagas WHERE ativa = 1 ORDER BY criado_em DESC, id DESC",
   );
-  res.json(linhas);
+  res.json(linhas.map(comRequisitos));
 }));
 
 vagasRouter.get("/admin", exigirAutenticacao, tratar(async (req, res) => {
   const [linhas] = await pool.query(
     "SELECT id, titulo, localizacao, requisitos, descricao, capa, ativa, criado_em FROM vagas ORDER BY criado_em DESC, id DESC",
   );
-  res.json(linhas);
+  res.json(linhas.map(comRequisitos));
 }));
 
 vagasRouter.get("/:id", tratar(async (req, res) => {
   const [linhas] = await pool.query("SELECT id, titulo, localizacao, descricao, requisitos, capa FROM vagas WHERE id = ? AND ativa = 1", [req.params.id]);
   if (!linhas.length) return res.status(404).json({ erro: "Esta vaga já não está disponível." });
-  res.json(linhas[0]);
+  res.json(comRequisitos(linhas[0]));
 }));
 vagasRouter.post("/:id/candidaturas", ...candidatar);
 
